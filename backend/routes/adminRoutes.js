@@ -5,6 +5,7 @@ const { authenticateToken, authorizeAdmin } = require('../middleware/authMiddlew
 
 router.use(authenticateToken, authorizeAdmin);
 
+router.get('/stats', adminController.getDashboardStats);
 router.get('/pending', adminController.getPendingResources);
 router.post('/moderate/:id', adminController.moderateResource);
 

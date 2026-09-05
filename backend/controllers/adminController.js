@@ -1,5 +1,27 @@
 const db = require('../config/db');
 
+exports.getDashboardStats = async (req, res) => {
+    try {
+        const [[users]] = await db.query('SELECT COUNT(*) as count FROM users WHERE role = "student"');
+        const [[resources]] = await db.query('SELECT COUNT(*) as count FROM resources WHERE status = "approved"');
+        const [[pending]] = await db.query('SELECT COUNT(*) as count FROM resources WHERE status = "pending"');
+        const [[rejected]] = await db.query('SELECT COUNT(*) as count FROM resources WHERE status = "rejected"');
+        const [[downloads]] = await db.query('SELECT COALESCE(SUM(downloads), 0) as count FROM resources');
+        const [[views]] = await db.query('SELECT COALESCE(SUM(views), 0) as count FROM resources');
+        
+        res.json({
+            users: users.count,
+            resources: resources.count,
+            pending: pending.count,
+            rejected: rejected.count,
+            downloads: downloads.count,
+            views: views.count
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 exports.getPendingResources = async (req, res) => {
     try {
         const [rows] = await db.query(`

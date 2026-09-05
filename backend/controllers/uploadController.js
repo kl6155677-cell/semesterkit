@@ -21,3 +21,15 @@ exports.uploadResource = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+exports.uploadImageOnly = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ error: 'No image uploaded' });
+        }
+        const filePath = req.file.path.replace(/\\/g, '/'); // Normalize path
+        res.status(201).json({ url: filePath });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};

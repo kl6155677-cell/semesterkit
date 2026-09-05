@@ -14,7 +14,7 @@ if (process.env.CLOUDINARY_URL) {
         cloudinary: cloudinary,
         params: {
             folder: 'semesterkit_uploads',
-            allowed_formats: ['jpg', 'png', 'pdf', 'zip', 'docx']
+            allowed_formats: ['jpg', 'png', 'jpeg', 'pdf', 'zip', 'docx', 'doc', 'ppt', 'pptx']
         }
     });
 } else {
@@ -34,13 +34,14 @@ const upload = multer({
     limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
     fileFilter: (req, file, cb) => {
         const ext = path.extname(file.originalname).toLowerCase();
-        if (ext !== '.pdf' && ext !== '.doc' && ext !== '.docx' && ext !== '.zip' && ext !== '.rar' && ext !== '.ppt' && ext !== '.pptx') {
-            return cb(new Error('Only PDFs, DOCs, PPTs and ZIPs are allowed'));
+        if (!['.pdf', '.doc', '.docx', '.zip', '.rar', '.ppt', '.pptx', '.jpg', '.jpeg', '.png'].includes(ext)) {
+            return cb(new Error('Only PDFs, DOCs, PPTs, ZIPs and images are allowed'));
         }
         cb(null, true);
     }
 });
 
 router.post('/', authenticateToken, upload.single('file'), uploadController.uploadResource);
+router.post('/image', authenticateToken, upload.single('file'), uploadController.uploadImageOnly);
 
 module.exports = router;

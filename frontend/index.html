@@ -83,12 +83,12 @@
             Learn • Share • Grow Together
           </div>
 <!-- Main Heading -->
-<h1 class="text-4xl sm:text-5xl font-extrabold text-[#0f172a] leading-tight tracking-tight">
+<h1 id="hero-title" class="text-4xl sm:text-5xl font-extrabold text-[#0f172a] leading-tight tracking-tight">
             Everything You Need<br/>
 <span class="text-[#1d7bf5]">For Your Engineering Journey</span>
 </h1>
 <!-- Description -->
-<p class="text-base sm:text-lg text-gray-600 max-w-xl leading-relaxed">
+<p id="hero-subtitle" class="text-base sm:text-lg text-gray-600 max-w-xl leading-relaxed">
             Get semester-wise notes, PYQs, books, lab manuals and more for NITs, IIITs, and other engineering colleges. Upload and help fellow students too!
           </p>
 <!-- Search Box -->
@@ -145,7 +145,7 @@
 <span class="text-xs font-bold text-gray-800">Study Material</span>
 </div>
 <!-- Student Illustration SVG Graphic -->
-<div class="relative w-80 sm:w-96">
+<div id="hero-image-container" class="relative w-80 sm:w-96">
 <svg class="w-full h-auto drop-shadow-xl" fill="none" viewbox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
 <!-- Soft blue background circle -->
 <circle cx="200" cy="220" fill="#e0f2fe" opacity="0.6" r="160"></circle>
@@ -242,71 +242,8 @@
         View All <span class="ml-1">→</span>
 </a>
 </div>
-<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-<!-- NIT Trichy -->
-<div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm flex flex-col items-center text-center hover:shadow transition">
-<div class="w-16 h-16 rounded-full bg-amber-50 border border-amber-100 flex items-center justify-center mb-3">
-<svg class="w-9 h-9 text-amber-700" fill="currentColor" viewbox="0 0 24 24">
-<circle cx="12" cy="12" fill="none" r="10" stroke="currentColor" stroke-width="2"></circle>
-<path d="M12 6v6l4 2"></path>
-<circle cx="12" cy="12" fill="currentColor" r="2"></circle>
-</svg>
-</div>
-<h4 class="text-sm font-bold text-gray-900 leading-snug">NIT Trichy</h4>
-<span class="text-xs text-gray-400 mt-1">12.4K materials</span>
-</div>
-<!-- NIT Surathkal -->
-<div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm flex flex-col items-center text-center hover:shadow transition">
-<div class="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center mb-3">
-<svg class="w-9 h-9 text-slate-700" fill="currentColor" viewbox="0 0 24 24">
-<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
-</svg>
-</div>
-<h4 class="text-sm font-bold text-gray-900 leading-snug">NIT Surathkal</h4>
-<span class="text-xs text-gray-400 mt-1">10.8K materials</span>
-</div>
-<!-- NIT Warangal -->
-<div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm flex flex-col items-center text-center hover:shadow transition">
-<div class="w-16 h-16 rounded-full bg-rose-50 border border-rose-100 flex items-center justify-center mb-3">
-<svg class="w-9 h-9 text-rose-700" fill="currentColor" viewbox="0 0 24 24">
-<path d="M19 4H5a2 2 0 00-2 2v14h2V8h14v12h2V6a2 2 0 00-2-2zM9 10h6v10H9V10z"></path>
-</svg>
-</div>
-<h4 class="text-sm font-bold text-gray-900 leading-snug">NIT Warangal</h4>
-<span class="text-xs text-gray-400 mt-1">9.7K materials</span>
-</div>
-<!-- NIT Rourkela -->
-<div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm flex flex-col items-center text-center hover:shadow transition">
-<div class="w-16 h-16 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
-<svg class="w-9 h-9 text-red-700" fill="currentColor" viewbox="0 0 24 24">
-<circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" stroke-width="2"></circle>
-<path d="M12 3v3m0 12v3M3 12h3m12 0h3m-2.6-6.4l-2.1 2.1M7.7 16.3l-2.1 2.1m0-12.8l2.1 2.1m8.6 8.6l2.1 2.1"></path>
-</svg>
-</div>
-<h4 class="text-sm font-bold text-gray-900 leading-snug">NIT Rourkela</h4>
-<span class="text-xs text-gray-400 mt-1">8.9K materials</span>
-</div>
-<!-- NIT Calicut -->
-<div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm flex flex-col items-center text-center hover:shadow transition">
-<div class="w-16 h-16 rounded-full bg-cyan-50 border border-cyan-100 flex items-center justify-center mb-3">
-<svg class="w-9 h-9 text-cyan-800" fill="currentColor" viewbox="0 0 24 24">
-<circle cx="12" cy="12" fill="none" r="8" stroke="currentColor" stroke-width="2"></circle>
-<path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm1 14.93V15a1 1 0 00-2 0v1.93A8 8 0 014.07 13H6a1 1 0 000-2H4.07A8 8 0 0111 4.07V6a1 1 0 002 0V4.07A8 8 0 0119.93 11H18a1 1 0 000 2h1.93A8 8 0 0113 16.93z"></path>
-</svg>
-</div>
-<h4 class="text-sm font-bold text-gray-900 leading-snug">NIT Calicut</h4>
-<span class="text-xs text-gray-400 mt-1">8.1K materials</span>
-</div>
-<!-- IIT Bombay -->
-<div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm flex flex-col items-center text-center hover:shadow transition">
-<div class="w-16 h-16 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center mb-3">
-<svg class="w-9 h-9 text-sky-700" fill="currentColor" viewbox="0 0 24 24">
-<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-</svg>
-</div>
-<h4 class="text-sm font-bold text-gray-900 leading-snug">IIT Bombay</h4>
-<span class="text-xs text-gray-400 mt-1">25.4K materials</span>
-</div>
+<div id="top-colleges-container" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+<!-- Dynamic Colleges Will Load Here -->
 </div>
 </section>
 <!-- END: TopUniversities -->
@@ -321,7 +258,7 @@
 <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path></svg>
 </div>
 <div>
-<div class="text-xl sm:text-2xl font-extrabold text-gray-900">50K+</div>
+<div id="stat-resources" class="text-xl sm:text-2xl font-extrabold text-gray-900">0</div>
 <div class="text-xs sm:text-sm text-gray-500 font-medium">Study Materials</div>
 </div>
 </div>
@@ -331,7 +268,7 @@
 <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path></svg>
 </div>
 <div>
-<div class="text-xl sm:text-2xl font-extrabold text-gray-900">15K+</div>
+<div id="stat-users" class="text-xl sm:text-2xl font-extrabold text-gray-900">0</div>
 <div class="text-xs sm:text-sm text-gray-500 font-medium">Students Contributing</div>
 </div>
 </div>
@@ -341,7 +278,7 @@
 <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"></path></svg>
 </div>
 <div>
-<div class="text-xl sm:text-2xl font-extrabold text-gray-900">200+</div>
+<div id="stat-colleges" class="text-xl sm:text-2xl font-extrabold text-gray-900">0</div>
 <div class="text-xs sm:text-sm text-gray-500 font-medium">Colleges Covered</div>
 </div>
 </div>
@@ -351,7 +288,7 @@
 <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"></path></svg>
 </div>
 <div>
-<div class="text-xl sm:text-2xl font-extrabold text-gray-900">1M+</div>
+<div id="stat-downloads" class="text-xl sm:text-2xl font-extrabold text-gray-900">0</div>
 <div class="text-xs sm:text-sm text-gray-500 font-medium">Downloads</div>
 </div>
 </div>
@@ -432,67 +369,9 @@
 </a>
 </div>
 <!-- Contributors List -->
-<div class="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm space-y-3.5">
-<!-- Rank 1 -->
-<div class="flex items-center justify-between">
-<div class="flex items-center space-x-3">
-<span class="w-6 h-6 rounded-full bg-amber-400 text-white text-xs font-bold flex items-center justify-center">1</span>
-<img alt="Aditya_S" class="w-9 h-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgfeedXMe4tM1tPt-eSCT_X_-zjjQLkj-Nsi3uchLq5RoDFFO2wld8PdbV21pGP2etZngnPj5oSfzhmEPeafMJTk3WGVVGPH0b2JWSVeGL5LHpqYcEx6GC2W9bXIh1wtZzOD41CTeQVKgo95WH8gOvDpRWNDvLlBnYhJoIXJsx0tTTx8i8vtfr6JRO62PjlzOfoZeyIcSlD7BA3yC-Er4osTdn8m5w0IqQwaDQ3O5v7KwODII06Akk"/>
-<div>
-<h4 class="text-xs sm:text-sm font-bold text-gray-900">Aditya_S</h4>
-<p class="text-[11px] text-gray-400">NIT Surathkal</p>
-</div>
-</div>
-<span class="text-xs font-semibold text-gray-600">1.2K uploads</span>
-</div>
-<!-- Rank 2 -->
-<div class="flex items-center justify-between">
-<div class="flex items-center space-x-3">
-<span class="w-6 h-6 rounded-full bg-slate-300 text-gray-700 text-xs font-bold flex items-center justify-center">2</span>
-<img alt="Priya_Verma" class="w-9 h-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkdm2k7F2zuq4wD5M5jE0N5wgzq2kcJcL9azrKafTRgaP4yvh4HY5wLf1drPMevdoxqDYQdIZPh4XQfQIxD9pIU9NS7P1dD1boHlckTgJqppXnnrp9vZAvq7sjNLCwv4pv3vsIhB2iRJYne0J19UMsuxFrC3hdyz-jwNgEn1SL_l6pNmCQ6OeSvzdc8p7hCO6eAav2xREjbGVIJcXOxmRjGyqwIpdEnMQ4xZfKUjNJf17O_xodhw5H"/>
-<div>
-<h4 class="text-xs sm:text-sm font-bold text-gray-900">Priya_Verma</h4>
-<p class="text-[11px] text-gray-400">IIT Bombay</p>
-</div>
-</div>
-<span class="text-xs font-semibold text-gray-600">980 uploads</span>
-</div>
-<!-- Rank 3 -->
-<div class="flex items-center justify-between">
-<div class="flex items-center space-x-3">
-<span class="w-6 h-6 rounded-full bg-amber-600 text-white text-xs font-bold flex items-center justify-center">3</span>
-<img alt="engineer_ayaan" class="w-9 h-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8sD0-osA6VjtGCEBRORhy4pZbBmvRlLJmNN9XpeBSWXw425AZIkuyGnCJpZv_ENCJjdFe8pPFppRvyTssriPwqKdfnbzxnxHJ-mDWKNQZgHL3gKM8BVnGa2kJh40t_ajsupnVS02wS2OsZh-o_nrqhwt8qMce-_tuC9ROVho6QqO3J-v1oNRBTsUtnv1VgSIUmGWWXK2hM2iTekK0izGB7k8Nk8ROegdDhZXZhZPZmmyjdJ1gpjmm"/>
-<div>
-<h4 class="text-xs sm:text-sm font-bold text-gray-900">engineer_ayaan</h4>
-<p class="text-[11px] text-gray-400">NIT Warangal</p>
-</div>
-</div>
-<span class="text-xs font-semibold text-gray-600">870 uploads</span>
-</div>
-<!-- Rank 4 -->
-<div class="flex items-center justify-between">
-<div class="flex items-center space-x-3">
-<span class="w-6 h-6 text-gray-500 text-xs font-bold flex items-center justify-center">4</span>
-<img alt="Sneha_Codes" class="w-9 h-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh6pYAexVugYpa0DRuiaaT8U-1PqTK1fwZeeBvkdJcQTCwiUED7zSGBtMN1sA3rU1z5qeCwWZY_CjOXC9x80ARs6ioeTeWcG3RlOtsnxyyLsXp21dr76BBOjnXNnkjbLVIfR8rct_KsSEmfwA9tKINkCdkuDrXXpIZ01XHhMt_zUXwkgk1HTr0_Ev0AVz1MLZSMwnIGYA6-rro71S0giDJmSWNl_JdKnB6ZxTwPN2SURTtpuhy64-e"/>
-<div>
-<h4 class="text-xs sm:text-sm font-bold text-gray-900">Sneha_Codes</h4>
-<p class="text-[11px] text-gray-400">NIT Rourkela</p>
-</div>
-</div>
-<span class="text-xs font-semibold text-gray-600">760 uploads</span>
-</div>
-<!-- Rank 5 -->
-<div class="flex items-center justify-between">
-<div class="flex items-center space-x-3">
-<span class="w-6 h-6 text-gray-500 text-xs font-bold flex items-center justify-center">5</span>
-<img alt="kartik.me" class="w-9 h-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAKN9MzTyXvEK2VPcfjIjxhapzZWngr9r54hBSetcZa4ovMAyHRp8JtGMNE8BONHu0egdrbrWqceGePCaoEIiXmQl9IKRvVomfmvUXz_Y56oWaEGJ6TmIBD9_DcCJsDLxoCo4T2qLseMeOhwACx_6c3BBxg4uIRCzht_t8td0bIN1z7TCghl0a44byxZyIvNAB2UI19cyX6m9_n4Py4_DKS13QlYOPPQnmSl9fzGBJO3isMz1jsmBk"/>
-<div>
-<h4 class="text-xs sm:text-sm font-bold text-gray-900">kartik.me</h4>
-<p class="text-[11px] text-gray-400">NIT Calicut</p>
-</div>
-</div>
-<span class="text-xs font-semibold text-gray-600">690 uploads</span>
-</div>
+<div id="top-contributors-container" class="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm space-y-3.5">
+<!-- Dynamic Contributors Will Load Here -->
+<p class="text-sm text-gray-500 text-center py-4">Loading top contributors...</p>
 </div>
 </div>
 </div>

@@ -34,6 +34,8 @@ exports.getResources = async (req, res) => {
 
         if (sort === 'popular') {
             sql += ` ORDER BY r.downloads DESC, r.views DESC`;
+        } else if (sort === 'trending') {
+            sql += ` ORDER BY r.views DESC, r.downloads DESC`;
         } else {
             sql += ` ORDER BY r.created_at DESC`;
         }

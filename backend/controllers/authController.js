@@ -42,7 +42,17 @@ exports.login = async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role, acs_credits: user.acs_credits } });
+        res.json({ token, user: { id: user.id, name: user.name, role: user.role, acs_credits: user.acs_credits } });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+exports.getMe = async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT id, name, email, role, acs_credits, college_id FROM users WHERE id = ?', [req.user.id]);
+        if (rows.length === 0) return res.status(404).json({ error: 'User not found' });
+        res.json(rows[0]);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

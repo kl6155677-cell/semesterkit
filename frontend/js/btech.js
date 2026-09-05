@@ -16,16 +16,11 @@ async function loadResources() {
 }
 
 function renderResources(resources) {
-    // Find the container for resource cards
-    // In btech.html, it's a grid with columns
-    const grids = document.querySelectorAll('.grid.grid-cols-1.md\\:grid-cols-2.gap-4');
-    if (grids.length === 0) return;
+    const container = document.getElementById('resources-grid');
+    if (!container) return;
     
-    const container = grids[0];
-    
-    // Optional: Keep the first one as template or build from scratch. Let's build from scratch to be clean.
     if (resources.length === 0) {
-        container.innerHTML = '<div class="col-span-2 text-center py-10 text-slate-500">No resources found.</div>';
+        container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500">No resources found.</div>';
         return;
     }
 

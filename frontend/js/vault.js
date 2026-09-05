@@ -1,12 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Check auth
     if (!localStorage.getItem('token')) {
         window.location.href = '/login.html';
         return;
     }
 
-    const user = JSON.parse(localStorage.getItem('user'));
-    document.getElementById('acs-credits').textContent = user.acs_credits || 0;
+    try {
+        const user = await window.api.get('/auth/me');
+        document.getElementById('acs-credits').textContent = user.acs_credits || 0;
+        localStorage.setItem('user', JSON.stringify(user));
+    } catch (e) {
+        console.error(e);
+        const localUser = JSON.parse(localStorage.getItem('user'));
+        if (localUser) document.getElementById('acs-credits').textContent = localUser.acs_credits || 0;
+    }
 
     // Load initial tab
     loadTab('bookmarks');

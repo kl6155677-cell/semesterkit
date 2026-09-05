@@ -97,8 +97,14 @@ CREATE TABLE IF NOT EXISTS downloads (
     FOREIGN KEY (resource_id) REFERENCES resources(id)
 );
 
--- Initial Data Seed (optional)
-INSERT IGNORE INTO colleges (name, type) VALUES ('NIT Trichy', 'NIT'), ('IIT Bombay', 'IIT');
-INSERT IGNORE INTO branches (name) VALUES ('Computer Science'), ('Electrical Engineering');
-INSERT IGNORE INTO semesters (name, level) VALUES ('1st Semester', 'B.Tech'), ('3rd Semester', 'B.Tech');
-INSERT IGNORE INTO resource_types (name) VALUES ('Notes'), ('PYQs'), ('Books'), ('Lab Manuals');
+-- 10. Settings Table
+CREATE TABLE IF NOT EXISTS settings (
+    setting_key VARCHAR(50) PRIMARY KEY,
+    setting_value TEXT
+);
+
+-- Insert default settings
+INSERT IGNORE INTO settings (setting_key, setting_value) VALUES ('hero_image', '');
+INSERT IGNORE INTO settings (setting_key, setting_value) VALUES ('site_name', 'SemesterKit.com');
+INSERT IGNORE INTO settings (setting_key, setting_value) VALUES ('tagline', 'Everything You Need For Your Engineering Journey');
+

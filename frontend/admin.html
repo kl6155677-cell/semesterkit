@@ -1,63 +1,229 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Admin Dashboard - SemesterKit.com</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: { 50: '#f0f7ff', 100: '#e0effe', 500: '#1d7bf5', 600: '#1565d8', 700: '#0f4ea8' },
-            navy: { 900: '#0b1325', 950: '#070c18' }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            handwriting: ['Caveat', 'cursive']
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Admin Dashboard - SemesterKit.com</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                brand: { 50: '#f0f7ff', 100: '#e0effe', 500: '#1d7bf5', 600: '#1565d8', 700: '#0f4ea8' },
+                navy: { 900: '#0b1325', 950: '#070c18' }
+              },
+              fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+                handwriting: ['Caveat', 'cursive']
+              }
+            }
           }
         }
-      }
-    }
-  </script>
+    </script>
+    <style>
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+        .tab-link.active { background-color: #1d7bf5; color: white; }
+    </style>
 </head>
 <body class="bg-[#f8faff] text-[#1e293b] font-sans antialiased min-h-screen flex flex-col">
 <header class="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-<div class="flex items-center space-x-2.5">
-<div class="text-[#1d7bf5]">
-<svg class="w-9 h-9" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
-</div>
-<a class="text-2xl font-extrabold text-[#111827] tracking-tight" href="/">SemesterKit<span class="text-[#1d7bf5]">.com</span></a>
-</div>
-<div class="flex items-center space-x-4">
-<button class="px-5 py-2 text-sm font-semibold text-red-500 hover:text-red-700 transition" type="button" onclick="localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href='/';">Logout</button>
-</div>
-</div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+            <div class="text-[#1d7bf5]">
+                <svg class="w-9 h-9" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
+            </div>
+            <a class="text-2xl font-extrabold text-[#111827] tracking-tight" href="/">SemesterKit<span class="text-[#1d7bf5]">.com</span></a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="px-5 py-2 text-sm font-semibold text-red-500 hover:text-red-700 transition" type="button" onclick="localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href='/';">Logout</button>
+        </div>
+    </div>
 </header>
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
-  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-    <div class="border-b border-gray-100 p-6 sm:p-8 bg-slate-900 text-white flex items-center justify-between">
-      <div>
-        <h1 class="text-3xl font-extrabold">Admin Dashboard</h1>
-        <p class="text-slate-400 mt-1">Review pending uploads and manage platform data.</p>
-      </div>
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
+        <div class="border-b border-gray-100 p-6 sm:p-8 bg-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold">Admin Dashboard</h1>
+                <p class="text-slate-400 mt-1">Review pending uploads and manage platform data.</p>
+            </div>
+            <!-- Quick Stats in Header -->
+            <div class="flex gap-4 text-center">
+                <div class="bg-slate-800 rounded px-4 py-2">
+                    <div id="admin-stat-pending" class="text-xl font-bold text-emerald-400">0</div>
+                    <div class="text-[10px] text-slate-400 uppercase tracking-wide">Pending</div>
+                </div>
+                <div class="bg-slate-800 rounded px-4 py-2">
+                    <div id="admin-stat-resources" class="text-xl font-bold text-brand-400">0</div>
+                    <div class="text-[10px] text-slate-400 uppercase tracking-wide">Approved</div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="p-6 sm:p-8 bg-gray-50 min-h-[400px]">
-      <h2 class="text-xl font-bold text-gray-900 mb-4">Pending Moderation Queue</h2>
-      <div id="admin-content" class="grid grid-cols-1 gap-4">
-        <p class="text-gray-500">Loading pending resources...</p>
-      </div>
+
+    <div class="flex flex-col md:flex-row gap-6">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 flex-shrink-0">
+            <nav class="space-y-1 bg-white p-3 rounded-xl border border-slate-200">
+                <button class="tab-link active w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-pending">Pending Resources</button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-settings">Site Settings & Hero</button>
+                <div class="h-px bg-slate-100 my-2"></div>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-colleges">Manage Colleges</button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-branches">Manage Branches</button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-semesters">Manage Semesters</button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-subjects">Manage Subjects</button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-resource-types">Resource Types</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow bg-white border border-slate-200 rounded-xl p-6 min-h-[500px] shadow-sm">
+            
+            <!-- Tab: Pending Resources -->
+            <div id="tab-pending" class="tab-pane active">
+                <h2 class="text-xl font-bold text-gray-900 mb-4 border-b pb-2">Pending Moderation Queue</h2>
+                <div id="admin-pending-content" class="grid grid-cols-1 gap-4">
+                    <p class="text-gray-500 text-sm">Loading pending resources...</p>
+                </div>
+            </div>
+
+            <!-- Tab: Settings & Hero -->
+            <div id="tab-settings" class="tab-pane">
+                <h2 class="text-xl font-bold text-gray-900 mb-4 border-b pb-2">Site Settings & Hero Image</h2>
+                <div class="max-w-xl space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Hero Title</label>
+                        <input type="text" id="setting-hero-title" class="w-full rounded border-gray-300 p-2 text-sm" placeholder="e.g. Everything You Need..." />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Hero Subtitle</label>
+                        <input type="text" id="setting-hero-subtitle" class="w-full rounded border-gray-300 p-2 text-sm" placeholder="e.g. For Your Engineering Journey" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Hero Image</label>
+                        <div class="flex gap-4 items-center">
+                            <img id="hero-preview" src="" alt="Hero Preview" class="w-32 h-32 object-cover bg-gray-100 rounded border hidden" />
+                            <div class="flex-1">
+                                <input type="file" id="hero-image-upload" class="w-full text-sm mb-2" accept="image/*" />
+                                <button onclick="uploadHeroImage()" class="px-4 py-2 bg-slate-800 text-white text-sm rounded font-medium hover:bg-slate-700">Upload to Cloudinary</button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="setting-hero-image-url" />
+                    </div>
+                    <button onclick="saveSettings()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold rounded shadow transition">Save Settings</button>
+                </div>
+            </div>
+
+            <!-- Tab: Colleges -->
+            <div id="tab-colleges" class="tab-pane">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h2 class="text-xl font-bold text-gray-900">Manage Colleges</h2>
+                    <button onclick="openModal('college')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add College</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3">Type</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-colleges">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab: Branches -->
+            <div id="tab-branches" class="tab-pane">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h2 class="text-xl font-bold text-gray-900">Manage Branches</h2>
+                    <button onclick="openModal('branch')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add Branch</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-branches"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab: Semesters -->
+            <div id="tab-semesters" class="tab-pane">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h2 class="text-xl font-bold text-gray-900">Manage Semesters</h2>
+                    <button onclick="openModal('semester')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add Semester</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3">Level</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-semesters"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab: Subjects -->
+            <div id="tab-subjects" class="tab-pane">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h2 class="text-xl font-bold text-gray-900">Manage Subjects</h2>
+                    <button onclick="openModal('subject')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add Subject</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3">Branch ID</th><th class="px-4 py-3">Semester ID</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-subjects"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab: Resource Types -->
+            <div id="tab-resource-types" class="tab-pane">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h2 class="text-xl font-bold text-gray-900">Manage Resource Types</h2>
+                    <button onclick="openModal('res_type')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add Type</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-resource-types"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
 </main>
+
+<!-- Generic Modal for CRUD -->
+<div id="crud-modal" class="fixed inset-0 bg-slate-900/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-md overflow-hidden">
+        <div class="border-b border-gray-100 p-4 bg-gray-50 flex justify-between items-center">
+            <h3 id="modal-title" class="font-bold text-gray-900">Add Item</h3>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">&times;</button>
+        </div>
+        <div class="p-5 space-y-4" id="modal-body">
+            <!-- Dynamic fields -->
+        </div>
+        <div class="border-t border-gray-100 p-4 bg-gray-50 flex justify-end gap-2">
+            <button onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded">Cancel</button>
+            <button onclick="saveCrudItem()" class="px-4 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded">Save</button>
+        </div>
+    </div>
+</div>
 
 <script src="js/api.js"></script>
 <script src="js/app.js"></script>
 <script src="js/admin.js"></script>
-</body></html>
+</body>
+</html>
