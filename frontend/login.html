@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - SemesterKit.com</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#f0f7ff', 100: '#e0effe', 500: '#1d7bf5', 600: '#1565d8', 700: '#0f4ea8' },
+            navy: { 900: '#0b1325', 950: '#070c18' }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            handwriting: ['Caveat', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#f8faff] text-[#1e293b] font-sans antialiased min-h-screen flex flex-col">
+<!-- BEGIN: MainHeader -->
+<header class="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<div class="text-[#1d7bf5]">
+<svg class="w-9 h-9" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
+</div>
+<a class="text-2xl font-extrabold text-[#111827] tracking-tight" href="/">SemesterKit<span class="text-[#1d7bf5]">.com</span></a>
+</div>
+<nav class="hidden md:flex items-center space-x-8 text-[15px] font-medium text-gray-600">
+<a class="hover:text-[#1d7bf5] transition" href="/index.html">Home</a>
+<a class="hover:text-[#1d7bf5] transition" href="/btech.html">B.Tech</a>
+<a class="hover:text-[#1d7bf5] transition" href="/mtech.html">M.Tech</a>
+<a class="hover:text-[#1d7bf5] transition" href="/phd.html">PhD</a>
+<a class="hover:text-[#1d7bf5] transition" href="/upload.html">Upload</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="px-5 py-2 text-sm font-semibold text-[#1d7bf5] hover:text-[#1565d8] transition" type="button" onclick="window.location.href='/login.html'">Login</button>
+<button class="px-6 py-2.5 bg-[#1d7bf5] hover:bg-[#1565d8] text-white text-sm font-semibold rounded-full shadow-sm transition" type="button" onclick="window.location.href='/register.html'">Sign Up</button>
+</div>
+</div>
+</header>
+
+<main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-extrabold text-[#0f172a]">Welcome Back</h2>
+      <p class="mt-2 text-sm text-gray-600">Log in to access your vault and downloads</p>
+    </div>
+    
+    <form id="login-form" class="space-y-6">
+      <div id="error-message" class="hidden bg-red-50 text-red-500 text-sm p-3 rounded-lg border border-red-100"></div>
+      
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+        <input id="email" name="email" type="email" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-[#1d7bf5] focus:outline-none focus:ring-1 focus:ring-[#1d7bf5] shadow-sm text-sm" placeholder="student@college.edu">
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input id="password" name="password" type="password" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-[#1d7bf5] focus:outline-none focus:ring-1 focus:ring-[#1d7bf5] shadow-sm text-sm" placeholder="••••••••">
+      </div>
+
+      <div>
+        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-[#1d7bf5] hover:bg-[#1565d8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1d7bf5] transition">
+          Sign In
+        </button>
+      </div>
+    </form>
+    
+    <div class="mt-6 text-center text-sm">
+      <span class="text-gray-500">Don't have an account?</span>
+      <a href="/register.html" class="font-semibold text-[#1d7bf5] hover:text-[#1565d8]">Sign up</a>
+    </div>
+  </div>
+</main>
+
+<footer class="w-full bg-[#0b1325] text-gray-300 pt-8 pb-8 border-t border-slate-800 mt-auto">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-gray-400">
+  © 2026 SemesterKit.com. All rights reserved.
+</div>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const errorDiv = document.getElementById('error-message');
+    
+    try {
+      const data = await window.api.post('/auth/login', { email, password });
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = '/vault.html';
+    } catch (err) {
+      errorDiv.textContent = err.message;
+      errorDiv.classList.remove('hidden');
+    }
+  });
+</script>
+</body></html>

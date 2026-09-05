@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard - SemesterKit.com</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#f0f7ff', 100: '#e0effe', 500: '#1d7bf5', 600: '#1565d8', 700: '#0f4ea8' },
+            navy: { 900: '#0b1325', 950: '#070c18' }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            handwriting: ['Caveat', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#f8faff] text-[#1e293b] font-sans antialiased min-h-screen flex flex-col">
+<header class="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center space-x-2.5">
+<div class="text-[#1d7bf5]">
+<svg class="w-9 h-9" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
+</div>
+<a class="text-2xl font-extrabold text-[#111827] tracking-tight" href="/">SemesterKit<span class="text-[#1d7bf5]">.com</span></a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="px-5 py-2 text-sm font-semibold text-red-500 hover:text-red-700 transition" type="button" onclick="localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href='/';">Logout</button>
+</div>
+</div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <div class="border-b border-gray-100 p-6 sm:p-8 bg-slate-900 text-white flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-extrabold">Admin Dashboard</h1>
+        <p class="text-slate-400 mt-1">Review pending uploads and manage platform data.</p>
+      </div>
+    </div>
+    
+    <div class="p-6 sm:p-8 bg-gray-50 min-h-[400px]">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">Pending Moderation Queue</h2>
+      <div id="admin-content" class="grid grid-cols-1 gap-4">
+        <p class="text-gray-500">Loading pending resources...</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+</body></html>
