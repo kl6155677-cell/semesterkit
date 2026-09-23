@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: semesterkit
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: DB_HOST
+        value: gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+      - key: DB_PORT
+        value: 4000
+      - key: DB_USER
+        value: 2RRkmDJa4HWZiW4.root
+      - key: DB_PASSWORD
+        value: 9s72czJdkMFoWKzg
+      - key: DB_NAME
+        value: semesterkit
+      - key: JWT_SECRET
+        value: supersecretjwtkeyforsemesterkit
+      - key: CLOUDINARY_URL
+        value: cloudinary://882433192297953:25jMBgCkVYNQxOhoh8YY7wNncuw@taro5cue

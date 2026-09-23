@@ -1,82 +1,204 @@
 document.addEventListener('DOMContentLoaded', () => {
-    loadResources();
+    initBTechPage();
 });
 
-async function loadResources() {
-    try {
-        // Extract query from URL if available
-        const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('query') || '';
+let currentFilters = {
+    program: 'B.Tech',
+    college_id: null,
+    branch_id: null,
+    semester_id: null,
+    resource_type_id: null,
+    query: '',
+    sort: 'latest',
+    page: 1
+};
 
-        const data = await window.api.get(`/resources?query=${query}`);
-        renderResources(data);
-    } catch (err) {
-        console.error('Error loading resources', err);
+async function initBTechPage() {
+    // Read query params from URL
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('query')) currentFilters.query = params.get('query');
+    if (params.get('college_id')) currentFilters.college_id = params.get('college_id');
+    if (params.get('branch_id')) currentFilters.branch_id = params.get('branch_id');
+    if (params.get('semester_id')) currentFilters.semester_id = params.get('semester_id');
+    if (params.get('type_id')) currentFilters.resource_type_id = params.get('type_id');
+
+    // Populate dynamic sidebar filters
+    await loadSidebarFilters();
+
+    // Setup filter listeners
+    setupFilterEvents();
+
+    // Load resources from API
+    await loadResources();
+}
+
+async function loadSidebarFilters() {
+    if (!window.api) return;
+    try {
+        const [colleges, branches, semesters, resourceTypes] = await Promise.all([
+            window.api.get('/meta/colleges').catch(() => []),
+            window.api.get('/meta/branches?program=B.Tech').catch(() => []),
+            window.api.get('/meta/semesters?level=B.Tech').catch(() => []),
+            window.api.get('/meta/resource-types?program=B.Tech').catch(() => [])
+        ]);
+
+        // 1. Populate Colleges Filter
+        const collegeContainer = document.querySelector('.space-y-1\\.5.text-xs.text-slate-600');
+        if (collegeContainer && colleges.length > 0) {
+            collegeContainer.innerHTML = colleges.map(c => `
+                <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800 ${currentFilters.college_id == c.id ? 'text-brand-600 font-bold' : ''}">
+                    <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5 filter-college-cb" type="checkbox" value="${c.id}" ${currentFilters.college_id == c.id ? 'checked' : ''} />
+                    <span>${c.name}</span>
+                </label>
+            `).join('');
+        }
+
+        // 2. Populate Branches if container exists
+        const branchContainer = document.querySelectorAll('.space-y-1\\.5.text-xs.text-slate-600')[1];
+        if (branchContainer && branches.length > 0) {
+            branchContainer.innerHTML = branches.map(b => `
+                <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800 ${currentFilters.branch_id == b.id ? 'text-brand-600 font-bold' : ''}">
+                    <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5 filter-branch-cb" type="checkbox" value="${b.id}" ${currentFilters.branch_id == b.id ? 'checked' : ''} />
+                    <span>${b.name}</span>
+                </label>
+            `).join('');
+        }
+    } catch (e) {
+        console.warn('Sidebar filter load error:', e);
     }
 }
 
-function renderResources(resources) {
-    const container = document.getElementById('resources-grid');
+function setupFilterEvents() {
+    // College checkboxes
+    document.addEventListener('change', (e) => {
+        if (e.target.classList.contains('filter-college-cb')) {
+            const checked = document.querySelectorAll('.filter-college-cb:checked');
+            currentFilters.college_id = checked.length > 0 ? checked[0].value : null;
+            currentFilters.page = 1;
+            loadResources();
+        }
+        if (e.target.classList.contains('filter-branch-cb')) {
+            const checked = document.querySelectorAll('.filter-branch-cb:checked');
+            currentFilters.branch_id = checked.length > 0 ? checked[0].value : null;
+            currentFilters.page = 1;
+            loadResources();
+        }
+    });
+
+    // Sort select
+    const sortSelect = document.querySelector('select[aria-label*="sort"], select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            currentFilters.sort = e.target.value.toLowerCase().includes('download') ? 'downloads' : (e.target.value.toLowerCase().includes('view') ? 'views' : 'latest');
+            loadResources();
+        });
+    }
+
+    // Material type pills in header/nav if any
+    const typePills = document.querySelectorAll('header .type-pill, nav .type-pill');
+    typePills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            currentFilters.resource_type_id = pill.dataset.id || null;
+            loadResources();
+        });
+    });
+}
+
+async function loadResources() {
+    const container = document.getElementById('resources-grid') || document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-4, main .grid.grid-cols-1');
     if (!container) return;
-    
-    if (resources.length === 0) {
-        container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-500">No resources found.</div>';
+
+    container.innerHTML = `
+        <div class="col-span-full py-12 text-center text-slate-400">
+            <div class="inline-block animate-spin w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full mb-2"></div>
+            <p class="text-xs">Loading approved engineering resources...</p>
+        </div>
+    `;
+
+    try {
+        let endpoint = `/resources?program=${currentFilters.program}&sort=${currentFilters.sort}&page=${currentFilters.page}&limit=12`;
+        if (currentFilters.query) endpoint += `&query=${encodeURIComponent(currentFilters.query)}`;
+        if (currentFilters.college_id) endpoint += `&college_id=${currentFilters.college_id}`;
+        if (currentFilters.branch_id) endpoint += `&branch_id=${currentFilters.branch_id}`;
+        if (currentFilters.semester_id) endpoint += `&semester_id=${currentFilters.semester_id}`;
+        if (currentFilters.resource_type_id) endpoint += `&resource_type_id=${currentFilters.resource_type_id}`;
+
+        const resources = await window.api.get(endpoint);
+        renderResources(resources, container);
+    } catch (err) {
+        container.innerHTML = `
+            <div class="col-span-full text-center py-12 text-slate-500 bg-white rounded-xl border border-dashed border-slate-300">
+                <p class="text-sm font-semibold text-slate-700">Error loading resources: ${err.message}</p>
+            </div>
+        `;
+    }
+}
+
+function renderResources(resources, container) {
+    if (!resources || resources.length === 0) {
+        container.innerHTML = `
+            <div class="col-span-full text-center py-12 text-slate-500 bg-white rounded-xl border border-dashed border-slate-300">
+                <p class="text-sm font-semibold text-slate-700">No resources found</p>
+                <p class="text-xs text-slate-400 mt-1">Try clearing some filters or searching for another subject or college.</p>
+                <button onclick="clearFilters()" class="mt-4 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">Reset All Filters</button>
+            </div>
+        `;
         return;
     }
 
-    container.innerHTML = ''; // Clear static dummy content
+    container.innerHTML = '';
 
     resources.forEach(res => {
         const card = document.createElement('div');
-        card.className = 'bg-white rounded-xl border border-slate-200/90 p-4 hover:shadow-md transition-shadow relative';
+        card.className = 'bg-white rounded-xl border border-slate-200/90 p-4 hover:shadow-md transition-shadow relative flex flex-col justify-between';
         
         let typeBadgeColor = 'bg-blue-600';
-        let typeLabel = 'DOC';
-        if (res.file_path && res.file_path.toLowerCase().endsWith('.pdf')) {
+        let typeLabel = (res.file_type || 'DOC').toUpperCase();
+        if (typeLabel === 'PDF') {
             typeBadgeColor = 'bg-red-500';
-            typeLabel = 'PDF';
-        } else if (res.file_path && res.file_path.toLowerCase().endsWith('.zip')) {
+        } else if (typeLabel === 'ZIP' || typeLabel === 'RAR') {
             typeBadgeColor = 'bg-amber-500';
-            typeLabel = 'ZIP';
         }
 
-        // Bookmark check icon
-        // Simplification: Not checking actual state yet in this loop for speed
         const bookmarkSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>`;
+        const firstLetter = (res.contributor_name || 'U').charAt(0).toUpperCase();
 
         card.innerHTML = `
-            <div class="flex items-start justify-between gap-3">
-              <div class="flex items-start gap-3">
-                <span class="w-9 h-9 rounded-lg ${typeBadgeColor} text-white font-bold text-[11px] flex items-center justify-center flex-shrink-0 shadow-xs">
-                  ${typeLabel}
-                </span>
-                <div>
-                  <h3 class="font-bold text-slate-900 text-sm hover:text-brand-600 cursor-pointer" onclick="window.location.href='/resource.html?id=${res.id}'">${res.title}</h3>
-                  <p class="text-xs text-slate-500 mt-0.5">${res.description || ''}</p>
-                  <div class="flex gap-1.5 mt-2">
-                    <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-600 border border-emerald-100">${res.resource_type_name || 'Resource'}</span>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-brand-600 border border-blue-100">${res.semester_name || 'General'}</span>
+            <div>
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-start gap-3">
+                    <span class="w-9 h-9 rounded-lg ${typeBadgeColor} text-white font-bold text-[11px] flex items-center justify-center flex-shrink-0 shadow-xs uppercase">
+                      ${typeLabel}
+                    </span>
+                    <div>
+                      <h3 class="font-bold text-slate-900 text-sm hover:text-blue-600 cursor-pointer" onclick="window.location.href='/resource.html?id=${res.id}'">${res.title}</h3>
+                      <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">${res.description || 'No description provided.'}</p>
+                      <div class="flex flex-wrap gap-1.5 mt-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-600 border border-emerald-100">${res.resource_type_name || 'Resource'}</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-600 border border-blue-100">${res.semester_name || 'B.Tech'}</span>
+                        ${res.is_featured ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">★ Featured</span>` : ''}
+                      </div>
+                    </div>
                   </div>
+                  <button class="text-slate-400 hover:text-blue-600 p-1 transition" onclick="toggleBookmark(${res.id}, this)" title="Save to Vault">
+                    ${bookmarkSvg}
+                  </button>
                 </div>
-              </div>
-              <button class="text-slate-400 hover:text-slate-600" onclick="toggleBookmark(${res.id}, this)">
-                ${bookmarkSvg}
-              </button>
             </div>
             <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500">
               <div class="flex items-center gap-2">
-                <div class="w-6 h-6 rounded-full bg-slate-300 text-slate-700 font-bold flex items-center justify-center text-[10px] uppercase">${(res.contributor_name || 'U').charAt(0)}</div>
+                <div class="w-6 h-6 rounded-full bg-slate-300 text-slate-700 font-bold flex items-center justify-center text-[10px] uppercase">${firstLetter}</div>
                 <div>
-                  <span class="font-medium text-slate-800">${res.contributor_name || 'Unknown'}</span>
-                  <span class="text-[10px] text-slate-400 block -mt-0.5">${res.college_name || ''}</span>
+                  <span class="font-medium text-slate-800">${res.contributor_name || 'Anonymous'}</span>
+                  <span class="text-[10px] text-slate-400 block -mt-0.5">${res.college_name || 'Engineering College'}</span>
                 </div>
               </div>
               <div class="flex items-center gap-3">
-                <span class="flex items-center gap-1">
+                <span class="flex items-center gap-1" title="Views">
                   <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                   ${res.views || 0}
                 </span>
-                <span class="flex items-center gap-1">
+                <span class="flex items-center gap-1" title="Downloads">
                   <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                   ${res.downloads || 0}
                 </span>
@@ -87,33 +209,39 @@ function renderResources(resources) {
     });
 }
 
-async function downloadResource(id) {
-    try {
-        const data = await window.api.post(`/resources/${id}/download`);
-        // The backend should return the file path or a stream
-        alert('Download triggered for: ' + data.filePath); // In a real app, window.open or trigger download link
-        // Mock download link trigger
-        // window.open(`${CONFIG.API_BASE_URL.replace('/api', '')}/${data.filePath}`);
-    } catch (err) {
-        alert(err.message);
-    }
+function clearFilters() {
+    currentFilters = {
+        program: 'B.Tech',
+        college_id: null,
+        branch_id: null,
+        semester_id: null,
+        resource_type_id: null,
+        query: '',
+        sort: 'latest',
+        page: 1
+    };
+    document.querySelectorAll('.filter-college-cb, .filter-branch-cb').forEach(cb => cb.checked = false);
+    loadResources();
 }
 
 async function toggleBookmark(id, btnElement) {
+    if (!localStorage.getItem('token')) {
+        alert('Please login to save resources to your vault.');
+        window.location.href = '/login.html';
+        return;
+    }
     try {
         const data = await window.api.post(`/resources/${id}/bookmark`);
         if (data.bookmarked) {
             btnElement.classList.remove('text-slate-400');
-            btnElement.classList.add('text-brand-600', 'fill-current');
+            btnElement.classList.add('text-blue-600', 'fill-current');
+            showToast('Saved to My Vault!');
         } else {
             btnElement.classList.add('text-slate-400');
-            btnElement.classList.remove('text-brand-600', 'fill-current');
+            btnElement.classList.remove('text-blue-600', 'fill-current');
+            showToast('Removed from My Vault');
         }
     } catch (err) {
-        if (err.message.includes('Access Denied')) {
-            alert('Please login to save resources.');
-        } else {
-            alert(err.message);
-        }
+        showToast(err.message, 'error');
     }
 }

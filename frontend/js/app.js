@@ -1,91 +1,171 @@
 document.addEventListener('DOMContentLoaded', () => {
     updateAuthUI();
+    setupSearchHandlers();
+    loadGlobalCMSData();
+    if (document.getElementById('hero-title') || document.getElementById('stat-resources')) {
+        loadHomePageData();
+    }
 });
 
+// 1. Auth UI & User Navigation Sync
 function updateAuthUI() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    
-    // Find auth buttons (usually in header)
-    // The Stitch UI has <button>Login</button> and <button>Sign Up</button>
-    // Let's find them by their text content or common classes
-    const buttons = document.querySelectorAll('button');
-    
-    let loginBtn = null;
-    let signupBtn = null;
+    const token = localStorage.getItem('token');
+    const userStr = localStorage.getItem('user');
+    let user = null;
+    try {
+        if (token && userStr) user = JSON.parse(userStr);
+    } catch(e) {}
 
-    buttons.forEach(btn => {
-        if (btn.textContent.trim().toLowerCase() === 'login') loginBtn = btn;
-        if (btn.textContent.trim().toLowerCase() === 'sign up') signupBtn = btn;
+    // Find Auth action containers across all headers
+    const navRightContainers = document.querySelectorAll('header .flex.items-center.space-x-4, header .flex.items-center.gap-4, header .flex.items-center.gap-5, header .flex.items-center.gap-3, header .flex.items-center.space-x-3');
+    
+    navRightContainers.forEach(container => {
+        if (user) {
+            const displayName = user.name ? user.name.split(' ')[0] : 'Student';
+            const initial = displayName.charAt(0).toUpperCase();
+
+            container.innerHTML = `
+                <a class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition" href="/upload.html" title="Upload Material">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </a>
+                <a href="/vault.html" class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full hover:bg-gray-100 transition border border-gray-200">
+                    <div class="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center">
+                        ${initial}
+                    </div>
+                    <span class="text-xs font-bold text-gray-800">${displayName}</span>
+                </a>
+                <button onclick="logoutUser()" class="px-3 py-1.5 text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition" title="Logout">
+                    Logout
+                </button>
+            `;
+        } else {
+            container.innerHTML = `
+                <button aria-label="Search" class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition" type="button" onclick="const s = document.querySelector('#main-search-input, input[placeholder*=\\'Search\\']'); if(s) { s.focus(); } else { window.location.href='/btech.html'; }">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </button>
+                <button class="px-4 py-1.5 text-xs font-semibold text-[#1d7bf5] hover:text-[#1565d8] transition" type="button" onclick="window.location.href='/login.html'">Login</button>
+                <button class="px-4 py-1.5 bg-[#1d7bf5] hover:bg-[#1565d8] text-white text-xs font-semibold rounded-full shadow-sm transition" type="button" onclick="window.location.href='/register.html'">Sign Up</button>
+            `;
+        }
     });
 
-    if (user) {
-        if (loginBtn) {
-            loginBtn.textContent = 'My Vault';
-            loginBtn.onclick = () => {
-                alert('My Vault: Credits: ' + user.acs_credits);
-            };
+    // Intercept all upload CTA buttons if not logged in
+    document.querySelectorAll('a[href*="upload.html"], button[onclick*="upload.html"]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            if (!localStorage.getItem('token')) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = '/login.html?redirect=upload.html';
+            }
+        });
+    });
+}
+
+function logoutUser() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/';
+}
+
+// 2. Search handlers with debouncing
+function setupSearchHandlers() {
+    const searchInputs = document.querySelectorAll('input[type="text"][placeholder*="Search"], input[type="search"], #main-search-input');
+    searchInputs.forEach(input => {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && input.value.trim()) {
+                e.preventDefault();
+                const q = encodeURIComponent(input.value.trim());
+                window.location.href = `/btech.html?query=${q}`;
+            }
+        });
+    });
+
+    const searchButtons = document.querySelectorAll('button');
+    searchButtons.forEach(btn => {
+        if (btn.textContent.trim().toLowerCase() === 'search') {
+            btn.addEventListener('click', (e) => {
+                const parent = btn.parentElement;
+                const input = parent ? parent.querySelector('input') : document.querySelector('#main-search-input');
+                if (input && input.value.trim()) {
+                    e.preventDefault();
+                    const q = encodeURIComponent(input.value.trim());
+                    window.location.href = `/btech.html?query=${q}`;
+                }
+            });
         }
-        if (signupBtn) {
-            signupBtn.textContent = 'Logout';
-            signupBtn.classList.remove('bg-[#1d7bf5]');
-            signupBtn.classList.add('bg-red-500', 'hover:bg-red-600');
-            signupBtn.onclick = () => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                window.location.reload();
-            };
+    });
+}
+
+// 3. Load Global CMS Data (Header Logo, Footer, Social Links)
+async function loadGlobalCMSData() {
+    if (!window.api) return;
+    try {
+        const [settings, footerData] = await Promise.all([
+            window.api.get('/meta/settings').catch(() => null),
+            window.api.get('/meta/footer').catch(() => null)
+        ]);
+
+        if (settings) {
+            // Update Site Title / Logo if customized
+            if (settings.site_name) {
+                document.querySelectorAll('.brand-name').forEach(el => el.textContent = settings.site_name);
+            }
+            if (settings.search_placeholder) {
+                const searchInput = document.getElementById('main-search-input');
+                if (searchInput) searchInput.placeholder = settings.search_placeholder;
+            }
+            // Update SEO Meta tags if available
+            if (settings.seo_meta_title && document.title.includes('SemesterKit.com')) {
+                document.title = settings.seo_meta_title;
+            }
         }
-    } else {
-        if (loginBtn) {
-            loginBtn.onclick = () => window.location.href = '/login.html';
+
+        // Render dynamic footer links if footer columns container exists
+        if (footerData && footerData.columns) {
+            renderDynamicFooter(footerData.columns, settings);
         }
-        if (signupBtn) {
-            signupBtn.onclick = () => window.location.href = '/register.html';
-        }
+    } catch (e) {
+        console.warn('Global CMS load error:', e);
     }
 }
 
-// Global search handler
-const searchInputs = document.querySelectorAll('input[type="text"][placeholder*="Search"], input[type="search"]');
-searchInputs.forEach(input => {
-    input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const query = encodeURIComponent(e.target.value);
-            window.location.href = `/btech.html?query=${query}`;
-        }
-    });
-});
+function renderDynamicFooter(columns, settings = {}) {
+    const footerColumnsGrid = document.querySelector('footer .lg\\:col-span-5.grid, footer .footer-links-grid');
+    if (!footerColumnsGrid) return;
 
-const searchButtons = document.querySelectorAll('button');
-searchButtons.forEach(btn => {
-    if (btn.textContent.trim().toLowerCase() === 'search') {
-        btn.addEventListener('click', (e) => {
-            const input = e.target.previousElementSibling;
-            if (input && input.tagName === 'INPUT') {
-                const query = encodeURIComponent(input.value);
-                window.location.href = `/btech.html?query=${query}`;
-            }
-        });
-    }
-});
+    const columnKeys = Object.keys(columns);
+    if (columnKeys.length === 0) return;
 
-// Load Home Page Data
-document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Stats
-    if (document.getElementById('stat-resources')) {
-        try {
-            const stats = await window.api.get('/meta/stats');
-            document.getElementById('stat-resources').textContent = stats.resources;
-            document.getElementById('stat-users').textContent = stats.users;
-            document.getElementById('stat-colleges').textContent = stats.colleges;
-            document.getElementById('stat-downloads').textContent = stats.downloads;
-        } catch (e) {
-            console.error('Failed to load stats', e);
-        }
+    footerColumnsGrid.innerHTML = columnKeys.map(colTitle => `
+        <div class="space-y-3">
+            <h5 class="text-sm font-semibold text-white">${colTitle}</h5>
+            <ul class="space-y-2 text-xs text-gray-400">
+                ${columns[colTitle].map(link => `
+                    <li><a class="hover:text-white transition" href="${link.url}">${link.title}</a></li>
+                `).join('')}
+            </ul>
+        </div>
+    `).join('');
+}
 
-        // Load Settings for Hero
-        try {
-            const settings = await window.api.get('/meta/settings');
+// 4. Load Homepage Specific Dynamic CMS Data
+let currentTestimonialIndex = 0;
+let testimonialsData = [];
+
+async function loadHomePageData() {
+    if (!window.api) return;
+
+    try {
+        const [settings, stats, colleges, contributors, testimonials] = await Promise.all([
+            window.api.get('/meta/settings').catch(() => null),
+            window.api.get('/meta/stats').catch(() => null),
+            window.api.get('/meta/colleges?featured=1').catch(() => null),
+            window.api.get('/meta/top-contributors').catch(() => null),
+            window.api.get('/meta/testimonials').catch(() => null)
+        ]);
+
+        // A. Hero Section Settings
+        if (settings) {
             if (settings.hero_title) {
                 const titleEl = document.getElementById('hero-title');
                 if (titleEl) titleEl.innerHTML = settings.hero_title;
@@ -94,67 +174,217 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const subEl = document.getElementById('hero-subtitle');
                 if (subEl) subEl.textContent = settings.hero_subtitle;
             }
-            if (settings.hero_image_url) {
-                const imgContainer = document.getElementById('hero-image-container');
-                if (imgContainer) {
-                    imgContainer.innerHTML = `<img src="${settings.hero_image_url}" class="w-full h-auto drop-shadow-xl object-contain" alt="Hero Image" />`;
+            if (settings.hero_badge) {
+                const badgeEl = document.querySelector('section .inline-flex.items-center.rounded-full');
+                if (badgeEl) badgeEl.textContent = settings.hero_badge;
+            }
+            if (settings.hero_doodle_text) {
+                const doodleEl = document.querySelector('#hero-image-container .font-handwriting, section .font-handwriting');
+                if (doodleEl && doodleEl.innerHTML.includes('Students')) {
+                    doodleEl.innerHTML = settings.hero_doodle_text;
                 }
             }
-        } catch (e) {
-            console.error('Failed to load settings', e);
-        }
-    }
-
-    // 2. Colleges
-    const collegesContainer = document.getElementById('top-colleges-container');
-    if (collegesContainer) {
-        try {
-            const colleges = await window.api.get('/meta/colleges');
-            // display top 6
-            collegesContainer.innerHTML = colleges.slice(0, 6).map(c => `
-                <div class="bg-white rounded-xl border border-gray-100 p-4 hover:shadow-md transition text-center cursor-pointer">
-                    <div class="w-12 h-12 mx-auto bg-slate-50 rounded-full flex items-center justify-center mb-3">
-                        <span class="text-slate-400 font-bold text-lg">${c.name.charAt(0)}</span>
-                    </div>
-                    <h3 class="text-xs font-bold text-gray-900 truncate" title="${c.name}">${c.name}</h3>
-                </div>
-            `).join('');
-        } catch (e) {
-            collegesContainer.innerHTML = `<p class="text-sm text-red-500 col-span-full text-center">Failed to load colleges</p>`;
-        }
-    }
-
-    // 3. Top Contributors
-    const contributorsContainer = document.getElementById('top-contributors-container');
-    if (contributorsContainer) {
-        try {
-            const contributors = await window.api.get('/meta/top-contributors');
-            if (contributors.length === 0) {
-                contributorsContainer.innerHTML = `<p class="text-sm text-gray-500 text-center py-4">No contributors yet.</p>`;
-            } else {
-                contributorsContainer.innerHTML = contributors.map((c, index) => `
-                    <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition cursor-pointer">
-                        <div class="flex items-center space-x-3">
-                            <div class="relative">
-                                <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">
-                                    ${c.name.charAt(0).toUpperCase()}
-                                </div>
-                                ${index < 3 ? `<div class="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 text-white rounded-full flex items-center justify-center text-[10px] font-bold border border-white">${index + 1}</div>` : ''}
-                            </div>
-                            <div>
-                                <h4 class="text-sm font-bold text-gray-900">${c.name}</h4>
-                                <p class="text-[11px] text-gray-500 font-medium">${c.college_name}</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-sm font-bold text-[#1d7bf5]">${c.acs_credits} ACS</div>
-                            <div class="text-[10px] text-gray-400 font-medium">Credits</div>
-                        </div>
-                    </div>
-                `).join('');
+            if (settings.popular_searches) {
+                renderPopularSearches(settings.popular_searches);
             }
-        } catch (e) {
-            contributorsContainer.innerHTML = `<p class="text-sm text-red-500 text-center py-4">Failed to load contributors</p>`;
+            if (settings.hero_image_url && settings.hero_image_url.trim()) {
+                const imgContainer = document.getElementById('hero-image-container');
+                if (imgContainer) {
+                    const svgEl = imgContainer.querySelector('svg.drop-shadow-xl');
+                    if (svgEl) {
+                        svgEl.parentElement.innerHTML = `<img src="${settings.hero_image_url}" alt="SemesterKit Hero" class="w-80 sm:w-96 h-auto drop-shadow-xl rounded-2xl object-cover" />`;
+                    }
+                }
+            }
+
+            // CTA Section
+            if (settings.cta_title) {
+                const ctaTitle = document.querySelector('section.max-w-7xl h3.text-lg, section.max-w-7xl h3.text-xl');
+                if (ctaTitle) ctaTitle.textContent = settings.cta_title;
+            }
+            if (settings.cta_description) {
+                const ctaDesc = document.querySelector('section.max-w-7xl p.text-xs, section.max-w-7xl p.text-sm');
+                if (ctaDesc) ctaDesc.textContent = settings.cta_description;
+            }
+            if (settings.cta_button_text) {
+                const ctaBtn = document.querySelector('section.max-w-7xl button.bg-\\[\\#1d7bf5\\]');
+                if (ctaBtn) ctaBtn.textContent = settings.cta_button_text;
+            }
         }
+
+        // B. Statistics
+        if (stats) {
+            if (stats.resources !== undefined && document.getElementById('stat-resources')) document.getElementById('stat-resources').textContent = stats.resources;
+            if (stats.users !== undefined && document.getElementById('stat-users')) document.getElementById('stat-users').textContent = stats.users;
+            if (stats.colleges !== undefined && document.getElementById('stat-colleges')) document.getElementById('stat-colleges').textContent = stats.colleges;
+            if (stats.downloads !== undefined && document.getElementById('stat-downloads')) document.getElementById('stat-downloads').textContent = stats.downloads;
+        }
+
+        // C. Top Universities
+        const collegesContainer = document.getElementById('top-colleges-container');
+        if (colleges && Array.isArray(colleges) && colleges.length > 0) {
+            renderTopUniversities(colleges);
+        } else if (collegesContainer) {
+            collegesContainer.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-xs">No universities listed yet. You can add universities directly from the Admin Panel.</div>';
+        }
+
+        // D. Top Contributors (Ranked by approved uploads)
+        const contribContainer = document.getElementById('top-contributors-container');
+        if (contributors && Array.isArray(contributors) && contributors.length > 0) {
+            renderTopContributors(contributors);
+        } else if (contribContainer) {
+            contribContainer.innerHTML = '<div class="py-8 text-center text-slate-400 text-xs">Top student contributors will appear here as study materials are uploaded and approved.</div>';
+        }
+
+        // E. Testimonials Slider
+        const testContainer = document.querySelector('.bg-white.rounded-2xl.p-6.sm\\:p-7');
+        if (testimonials && Array.isArray(testimonials) && testimonials.length > 0) {
+            testimonialsData = testimonials;
+            renderTestimonial(0);
+            setupTestimonialControls();
+        } else if (testContainer) {
+            testContainer.innerHTML = `
+                <div class="text-center py-8 text-slate-400 text-xs">
+                    <p class="font-medium text-slate-600 mb-1">No student reviews published yet.</p>
+                    <p>Student reviews and testimonials can be added via the Admin Panel.</p>
+                </div>
+            `;
+        }
+    } catch (err) {
+        console.warn('Error loading homepage dynamic data:', err);
     }
-});
+}
+
+function renderPopularSearches(searchesStr) {
+    const container = document.querySelector('.flex.flex-wrap.items-center.gap-2.pt-2');
+    if (!container) return;
+
+    const searches = searchesStr.split(',').map(s => s.trim()).filter(Boolean);
+    if (searches.length === 0) return;
+
+    container.innerHTML = `
+        <span class="font-medium text-gray-500 mr-1">Popular searches:</span>
+        ${searches.map(term => `
+            <span class="px-3 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition text-xs sm:text-sm text-gray-700" onclick="window.location.href='/btech.html?query=${encodeURIComponent(term)}'">${term}</span>
+        `).join('')}
+    `;
+}
+
+function renderTopUniversities(colleges) {
+    const container = document.getElementById('top-colleges-container');
+    if (!container) return;
+
+    const bgColors = ['bg-amber-50 text-amber-700 border-amber-100', 'bg-slate-50 text-slate-700 border-slate-100', 'bg-rose-50 text-rose-700 border-rose-100', 'bg-red-50 text-red-700 border-red-100', 'bg-cyan-50 text-cyan-800 border-cyan-100', 'bg-sky-50 text-sky-700 border-sky-100'];
+
+    container.innerHTML = colleges.slice(0, 6).map((c, i) => {
+        const style = bgColors[i % bgColors.length];
+        const countStr = c.materials_count > 0 ? `${c.materials_count} materials` : 'Explore materials';
+        return `
+            <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm flex flex-col items-center text-center hover:shadow transition cursor-pointer group" onclick="window.location.href='/btech.html?college_id=${c.id}'">
+                <div class="w-16 h-16 rounded-full ${style} border flex items-center justify-center mb-3 group-hover:scale-105 transition-transform overflow-hidden">
+                    ${c.logo_url ? `<img src="${c.logo_url}" alt="${c.name}" class="w-full h-full object-cover" />` : `
+                        <span class="text-xl font-extrabold uppercase">${c.name.split(' ').map(w => w[0]).slice(0, 3).join('')}</span>
+                    `}
+                </div>
+                <h4 class="text-sm font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition">${c.name}</h4>
+                <span class="text-xs text-gray-400 mt-1">${countStr}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderTopContributors(contributors) {
+    const container = document.getElementById('top-contributors-container');
+    if (!container) return;
+
+    const rankColors = ['bg-amber-400 text-white', 'bg-slate-300 text-gray-700', 'bg-amber-600 text-white', 'text-gray-500', 'text-gray-500'];
+
+    container.innerHTML = contributors.map((c, idx) => {
+        const rankClass = rankColors[idx] || 'text-gray-500';
+        const uploadsCount = c.approved_uploads || 0;
+        const uploadStr = uploadsCount === 1 ? '1 upload' : `${uploadsCount} uploads`;
+        const initial = (c.name || 'U').charAt(0).toUpperCase();
+
+        return `
+            <div class="flex items-center justify-between p-2 rounded-xl hover:bg-gray-50 transition">
+                <div class="flex items-center space-x-3">
+                    <span class="w-6 h-6 rounded-full ${rankClass} text-xs font-bold flex items-center justify-center">${idx + 1}</span>
+                    ${c.avatar_url ? `
+                        <img alt="${c.name}" class="w-9 h-9 rounded-full object-cover" src="${c.avatar_url}" />
+                    ` : `
+                        <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center">${initial}</div>
+                    `}
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-gray-900">${c.name}</h4>
+                        <p class="text-[11px] text-gray-400">${c.college_name || 'Engineering Student'}</p>
+                    </div>
+                </div>
+                <span class="text-xs font-semibold text-gray-600">${uploadStr}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderTestimonial(index) {
+    if (!testimonialsData || testimonialsData.length === 0) return;
+    const t = testimonialsData[index];
+    const container = document.querySelector('.bg-white.rounded-2xl.p-6.sm\\:p-7');
+    if (!container) return;
+
+    const starsHtml = '★'.repeat(Math.min(5, Math.max(1, t.rating || 5)));
+    const avatarHtml = t.avatar_url ? `
+        <img alt="${t.name}" class="w-full h-full object-cover" src="${t.avatar_url}"/>
+    ` : `
+        <div class="w-full h-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-lg">${(t.name || 'S').charAt(0)}</div>
+    `;
+
+    const dotsHtml = testimonialsData.map((_, i) => `
+        <span onclick="goToTestimonial(${i})" class="w-2 h-2 rounded-full cursor-pointer transition ${i === index ? 'bg-[#1d7bf5]' : 'bg-blue-200'}"></span>
+    `).join('');
+
+    container.innerHTML = `
+        <div class="flex items-start space-x-4">
+            <div class="w-14 h-14 rounded-full overflow-hidden bg-gray-200 shrink-0 border-2 border-white shadow">
+                ${avatarHtml}
+            </div>
+            <div class="space-y-3">
+                <blockquote class="text-sm text-gray-600 font-medium leading-relaxed">
+                    “${t.review}”
+                </blockquote>
+                <div>
+                    <h4 class="text-sm font-bold text-gray-900">${t.name}</h4>
+                    <p class="text-xs text-gray-400 font-medium">${t.college} ${t.branch ? `| ${t.branch}` : ''}</p>
+                </div>
+                <div class="flex text-amber-400 text-sm tracking-wider">
+                    ${starsHtml}
+                </div>
+            </div>
+        </div>
+        <button onclick="prevTestimonial()" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-500 hover:text-gray-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <button onclick="nextTestimonial()" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-500 hover:text-gray-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <div class="flex justify-center space-x-1.5 pt-2">
+            ${dotsHtml}
+        </div>
+    `;
+}
+
+function setupTestimonialControls() {
+    window.nextTestimonial = () => {
+        if (testimonialsData.length <= 1) return;
+        currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonialsData.length;
+        renderTestimonial(currentTestimonialIndex);
+    };
+    window.prevTestimonial = () => {
+        if (testimonialsData.length <= 1) return;
+        currentTestimonialIndex = (currentTestimonialIndex - 1 + testimonialsData.length) % testimonialsData.length;
+        renderTestimonial(currentTestimonialIndex);
+    };
+    window.goToTestimonial = (idx) => {
+        currentTestimonialIndex = idx;
+        renderTestimonial(currentTestimonialIndex);
+    };
+}

@@ -50,14 +50,24 @@
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
   <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
     <!-- Header -->
-    <div class="border-b border-gray-100 p-6 sm:p-8 bg-brand-50 flex items-center justify-between">
+    <div class="border-b border-gray-100 p-6 sm:p-8 bg-brand-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div>
-        <h1 class="text-3xl font-extrabold text-[#0f172a]">My Vault</h1>
-        <p class="text-gray-600 mt-1">Manage your saved resources, downloads, and uploads.</p>
+        <h1 class="text-3xl font-extrabold text-[#0f172a] vault-user-name">My Vault</h1>
+        <p class="text-gray-600 mt-1">Manage your saved resources, download history, and review submission moderation statuses.</p>
       </div>
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-blue-100 flex flex-col items-center">
-        <span class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">ACS Credits</span>
-        <span id="acs-credits" class="text-2xl font-extrabold text-brand-600">0</span>
+      <div class="flex gap-3 text-center">
+        <div class="bg-white rounded-xl p-3 shadow-xs border border-blue-100 min-w-[80px]">
+          <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">Approved</span>
+          <span id="stat-approved-uploads" class="text-xl font-extrabold text-emerald-600">0</span>
+        </div>
+        <div class="bg-white rounded-xl p-3 shadow-xs border border-blue-100 min-w-[80px]">
+          <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">Pending</span>
+          <span id="stat-pending-uploads" class="text-xl font-extrabold text-amber-500">0</span>
+        </div>
+        <div class="bg-white rounded-xl p-3 shadow-xs border border-blue-100 min-w-[80px]">
+          <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">Bookmarks</span>
+          <span id="stat-bookmarks-count" class="text-xl font-extrabold text-brand-600">0</span>
+        </div>
       </div>
     </div>
     

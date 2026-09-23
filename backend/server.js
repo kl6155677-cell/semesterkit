@@ -22,10 +22,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/meta', metaRoutes); // colleges, branches, etc
 app.use('/api/resources', resourceRoutes);
+app.use('/api/upload', uploadRoutes);
 app.use('/api/uploads', uploadRoutes);
 app.use('/api/my-vault', vaultRoutes);
 app.use('/api/admin', adminRoutes);
@@ -35,9 +36,13 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });
 });
 
-// Base route
+// Serve Frontend Static Files
+const frontendPath = path.join(__dirname, '../frontend');
+app.use(express.static(frontendPath));
+
+// Fallback to index.html for root or SPA paths
 app.get('/', (req, res) => {
-    res.json({ message: 'SemesterKit API Running' });
+    res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 // Error handling
@@ -47,6 +52,14 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Frontend accessible at:`);
+    console.log(`- Home:     http://localhost:${PORT}/index.html`);
+    console.log(`- B.Tech:   http://localhost:${PORT}/btech.html`);
+    console.log(`- M.Tech:   http://localhost:${PORT}/mtech.html`);
+    console.log(`- PhD:      http://localhost:${PORT}/phd.html`);
+    console.log(`- Upload:   http://localhost:${PORT}/upload.html`);
+    console.log(`- Login:    http://localhost:${PORT}/login.html`);
+    console.log(`- Register: http://localhost:${PORT}/register.html`);
 });

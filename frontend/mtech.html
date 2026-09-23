@@ -1,18 +1,21 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>M.Tech Knowledge Hub - SemesterKit.com</title>
-<!-- Tailwind CSS v3 -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>M.Tech Knowledge Hub - SemesterKit.com</title>
+  <!-- Tailwind CSS v3 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
     tailwind.config = {
       theme: {
         extend: {
@@ -33,596 +36,989 @@
       }
     }
   </script>
-<style data-purpose="custom-layout">
+  <style data-purpose="custom-layout">
     body {
       font-family: 'Inter', sans-serif;
       background-color: #f8fafc;
       color: #1e293b;
     }
+
     .hero-gradient {
       background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 50%, #f0f7ff 100%);
     }
+
     /* Custom thin scrollbar */
     ::-webkit-scrollbar {
       width: 5px;
       height: 5px;
     }
+
     ::-webkit-scrollbar-track {
       background: #f1f5f9;
     }
+
     ::-webkit-scrollbar-thumb {
       background: #cbd5e1;
       border-radius: 4px;
     }
   </style>
 </head>
+
 <body class="bg-[#f8fafc] text-slate-800 antialiased min-h-screen flex flex-col justify-between">
-<!-- BEGIN: MainHeader -->
-<header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-<div class="max-w-[1440px] mx-auto px-4 lg:px-6 h-16 flex items-center justify-between gap-4">
-<!-- Logo -->
-<div class="flex items-center gap-6 shrink-0">
-<a class="flex items-center gap-2" href="#">
-<div class="bg-[#0066cc] text-white p-1.5 rounded-lg flex items-center justify-center">
-<i class="w-6 h-6" data-lucide="graduation-cap"></i>
-</div>
-<div class="flex flex-col">
-<span class="font-extrabold text-xl text-[#0066cc] tracking-tight leading-none">SemesterKit<span class="text-[#0066cc]">.com</span></span>
-<span class="text-[9px] text-slate-500 font-medium tracking-wide">Learn  Share  Grow Together</span>
-</div>
-</a>
-</div>
-<!-- Search Bar -->
-<div class="flex-1 max-w-xl hidden md:block">
-<div class="relative">
-<span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
-<i class="w-4 h-4" data-lucide="search"></i>
-</span>
-<input class="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all" placeholder="Search notes, PYQs, papers, projects, subjects..." type="text"/>
-</div>
-</div>
-<!-- Navigation & Profile -->
-<div class="flex items-center gap-5 shrink-0 text-xs">
-<nav class="hidden lg:flex items-center gap-5 text-slate-600 font-medium">
-<a class="hover:text-[#0066cc] py-1" href="#">Home</a>
-<a class="hover:text-[#0066cc] py-1" href="#">B.Tech</a>
-<a class="text-[#0066cc] font-semibold border-b-2 border-[#0066cc] py-1" href="#">M.Tech</a>
-<a class="hover:text-[#0066cc] py-1" href="#">PhD</a>
-<a class="hover:text-[#0066cc] py-1" href="#">Universities</a>
-<a class="hover:text-[#0066cc] py-1" href="#">Subjects</a>
-<a class="hover:text-[#0066cc] py-1" href="#">Community</a>
-<div class="relative group cursor-pointer flex items-center gap-0.5 hover:text-[#0066cc]">
-<span>More</span>
-<i class="w-3.5 h-3.5" data-lucide="chevron-down"></i>
-</div>
-</nav>
-<div class="h-4 w-[1px] bg-slate-200 hidden lg:block"></div>
-<div class="flex items-center gap-3">
-<button class="flex items-center gap-1.5 text-slate-600 hover:text-[#0066cc] font-medium px-2 py-1 rounded">
-<i class="w-4 h-4 text-[#0066cc]" data-lucide="cloud-upload"></i>
-<span class="hidden sm:inline">Upload</span>
-</button>
-<button class="flex items-center gap-1 text-slate-600 hover:text-[#0066cc] font-medium px-2 py-1 rounded">
-<i class="w-4 h-4 text-slate-500" data-lucide="users"></i>
-<span class="hidden sm:inline">Community</span>
-</button>
-<button class="relative text-slate-500 hover:text-slate-700 p-1">
-<i class="w-4 h-4" data-lucide="bell"></i>
-<span class="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-</button>
-<!-- User Avatar -->
-<div class="flex items-center gap-1.5 pl-1 cursor-pointer">
-<div class="w-7 h-7 rounded-full bg-[#4f75a6] text-white flex items-center justify-center font-semibold text-xs shadow-sm">
-              M
+  <!-- BEGIN: MainHeader -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-[1440px] mx-auto px-4 lg:px-6 h-16 flex items-center justify-between gap-4">
+      <!-- Logo -->
+      <div class="flex items-center gap-6 shrink-0 cursor-pointer" onclick="window.location.href='index.html'">
+        <a class="flex items-center gap-2" href="index.html">
+          <div class="bg-[#0066cc] text-white p-1.5 rounded-lg flex items-center justify-center">
+            <i class="w-6 h-6" data-lucide="graduation-cap"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-extrabold text-xl text-[#0066cc] tracking-tight leading-none">SemesterKit<span
+                class="text-[#0066cc]">.com</span></span>
+            <span class="text-[9px] text-slate-500 font-medium tracking-wide">Learn • Share • Grow Together</span>
+          </div>
+        </a>
+      </div>
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-xl hidden md:block">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+            <i class="w-4 h-4" data-lucide="search"></i>
+          </span>
+          <input id="mtech-search-input"
+            class="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc]/20 focus:border-[#0066cc] transition-all"
+            placeholder="Search notes, PYQs, papers, projects, subjects..." type="text" />
+        </div>
+      </div>
+      <!-- Navigation & Profile -->
+      <div class="flex items-center gap-5 shrink-0 text-xs">
+        <nav class="hidden lg:flex items-center gap-5 text-slate-600 font-medium">
+          <a class="hover:text-[#0066cc] py-1" href="index.html">Home</a>
+          <a class="hover:text-[#0066cc] py-1" href="btech.html">B.Tech</a>
+          <a class="text-[#0066cc] font-semibold border-b-2 border-[#0066cc] py-1" href="mtech.html">M.Tech</a>
+          <a class="hover:text-[#0066cc] py-1" href="phd.html">PhD</a>
+          <a class="hover:text-[#0066cc] py-1" href="#">Universities</a>
+          <a class="hover:text-[#0066cc] py-1" href="#">Subjects</a>
+          <a class="hover:text-[#0066cc] py-1" href="upload.html">Upload</a>
+          <a class="hover:text-[#0066cc] py-1" href="#">Community</a>
+          <div class="relative group cursor-pointer flex items-center gap-0.5 hover:text-[#0066cc]">
+            <span>More</span>
+            <i class="w-3.5 h-3.5" data-lucide="chevron-down"></i>
+          </div>
+        </nav>
+        <div class="h-4 w-[1px] bg-slate-200 hidden lg:block"></div>
+        <div class="flex items-center gap-3">
+          <button class="flex items-center gap-1.5 text-slate-600 hover:text-[#0066cc] font-medium px-2 py-1 rounded"
+            onclick="window.location.href='upload.html'">
+            <i class="w-4 h-4 text-[#0066cc]" data-lucide="cloud-upload"></i>
+            <span class="hidden sm:inline">Upload</span>
+          </button>
+          <button class="flex items-center gap-1 text-slate-600 hover:text-[#0066cc] font-medium px-2 py-1 rounded">
+            <i class="w-4 h-4 text-slate-500" data-lucide="users"></i>
+            <span class="hidden sm:inline">Community</span>
+          </button>
+          <button class="relative text-slate-500 hover:text-slate-700 p-1">
+            <i class="w-4 h-4" data-lucide="bell"></i>
+            <span class="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+          </button>
+          <!-- Guest Auth Actions -->
+          <button class="px-4 py-1.5 text-xs font-semibold text-[#0066cc] hover:text-blue-800 transition" onclick="window.location.href='login.html'">Login</button>
+          <button class="px-4 py-1.5 bg-[#0066cc] hover:bg-blue-700 text-white text-xs font-semibold rounded-full shadow-sm transition" onclick="window.location.href='register.html'">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- END: MainHeader -->
+
+  <!-- BEGIN: BreadcrumbBar -->
+  <div class="bg-[#f8fafc] border-b border-slate-200 text-[11px] text-slate-500">
+    <div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-2 flex items-center gap-2">
+      <a class="hover:text-[#0066cc]" href="index.html">Home</a>
+      <i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
+      <a class="hover:text-[#0066cc]" href="mtech.html">M.Tech</a>
+      <i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
+      <a class="hover:text-[#0066cc]" href="#">IIT Bombay</a>
+      <i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
+      <span class="text-slate-700 font-medium">Computer Science &amp; Engineering</span>
+    </div>
+  </div>
+  <!-- END: BreadcrumbBar -->
+
+  <!-- Main Container -->
+  <div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-4 flex-1 w-full">
+    <div class="flex flex-col lg:flex-row gap-6">
+      <!-- BEGIN: SidebarFilters -->
+      <aside class="w-full lg:w-64 shrink-0 space-y-5">
+        <!-- Degree Level Switcher -->
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs">
+          <button
+            class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 border-b border-slate-100 transition-colors cursor-pointer"
+            onclick="window.location.href='btech.html'">
+            <div class="flex items-center gap-2.5">
+              <i class="w-4 h-4 text-slate-700" data-lucide="graduation-cap"></i>
+              <span>B.Tech</span>
             </div>
-<span class="font-medium text-slate-700 hidden sm:inline">Muzaffar</span>
-<i class="w-3.5 h-3.5 text-slate-400" data-lucide="chevron-down"></i>
-</div>
-</div>
-</div>
-</div>
-</header>
-<!-- END: MainHeader -->
-<!-- BEGIN: BreadcrumbBar -->
-<div class="bg-[#f8fafc] border-b border-slate-200 text-[11px] text-slate-500">
-<div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-2 flex items-center gap-2">
-<a class="hover:text-[#0066cc]" href="#">Home</a>
-<i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
-<a class="hover:text-[#0066cc]" href="#">M.Tech</a>
-<i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
-<a class="hover:text-[#0066cc]" href="#">IIT Bombay</a>
-<i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
-<span class="text-slate-700 font-medium">Computer Science &amp; Engineering</span>
-</div>
-</div>
-<!-- END: BreadcrumbBar -->
-<!-- Main Container -->
-<div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-4 flex-1 w-full">
-<div class="flex flex-col lg:flex-row gap-6">
-<!-- BEGIN: SidebarFilters -->
-<aside class="w-full lg:w-64 shrink-0 space-y-5">
-<!-- Degree Level Switcher -->
-<div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs">
-<button class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 border-b border-slate-100 transition-colors">
-<div class="flex items-center gap-2.5">
-<i class="w-4 h-4 text-slate-700" data-lucide="graduation-cap"></i>
-<span>B.Tech</span>
-</div>
-<i class="w-3.5 h-3.5 text-slate-400" data-lucide="chevron-right"></i>
-</button>
-<button class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-[#0066cc] bg-[#eef5fc] border-b border-slate-100 transition-colors">
-<div class="flex items-center gap-2.5">
-<i class="w-4 h-4 text-[#0066cc]" data-lucide="settings"></i>
-<span>M.Tech</span>
-</div>
-<i class="w-3.5 h-3.5 text-[#0066cc]" data-lucide="chevron-right"></i>
-</button>
-<button class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
-<div class="flex items-center gap-2.5">
-<i class="w-4 h-4 text-slate-700" data-lucide="file-text"></i>
-<span>PhD</span>
-</div>
-<i class="w-3.5 h-3.5 text-slate-400" data-lucide="chevron-right"></i>
-</button>
-</div>
-<!-- Filter: University -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2.5">
-<div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-<i class="w-4 h-4 text-slate-600" data-lucide="building-2"></i>
-<span>Select University</span>
-</div>
-<div class="relative">
-<i class="w-3 h-3 absolute left-2.5 top-2 text-slate-400" data-lucide="search"></i>
-<input class="w-full text-[11px] pl-7 pr-2 py-1 bg-slate-50 border border-slate-200 rounded-md focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc] outline-none" placeholder="Search university..." type="text"/>
-</div>
-<div class="space-y-1.5 max-h-44 overflow-y-auto pr-1 text-xs text-slate-600">
-<label class="flex items-center gap-2 font-semibold text-[#0066cc] cursor-pointer">
-<input checked="" class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>IIT Bombay</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>IIT Delhi</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>IIT Madras</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>IIT Kanpur</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>IIT Kharagpur</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>NIT Trichy</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>NIT Surathkal</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>NIT Warangal</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Other Universities</span>
-</label>
-</div>
-</div>
-<!-- Filter: Specialization -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2.5">
-<div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-<i class="w-4 h-4 text-slate-600" data-lucide="git-branch"></i>
-<span>Select Specialization</span>
-</div>
-<div class="relative">
-<i class="w-3 h-3 absolute left-2.5 top-2 text-slate-400" data-lucide="search"></i>
-<input class="w-full text-[11px] pl-7 pr-2 py-1 bg-slate-50 border border-slate-200 rounded-md focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc] outline-none" placeholder="Search specialization..." type="text"/>
-</div>
-<div class="space-y-1.5 max-h-44 overflow-y-auto pr-1 text-xs text-slate-600">
-<label class="flex items-center gap-2 font-semibold text-[#0066cc] cursor-pointer">
-<input checked="" class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Computer Science &amp; Engg.</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Artificial Intelligence</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Data Science</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>VLSI &amp; Embedded Systems</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Power Systems</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Structural Engineering</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Thermal Engineering</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Robotics</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Other Specializations</span>
-</label>
-</div>
-</div>
-<!-- Filter: Semester -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2">
-<div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-<i class="w-4 h-4 text-slate-600" data-lucide="calendar"></i>
-<span>Select Semester</span>
-</div>
-<div class="grid grid-cols-4 gap-1.5">
-<button class="py-1.5 bg-[#0066cc] text-white font-semibold rounded text-xs shadow-xs text-center">1</button>
-<button class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">2</button>
-<button class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">3</button>
-<button class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">4</button>
-</div>
-</div>
-<!-- Filter: Subject -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2.5">
-<div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-<i class="w-4 h-4 text-slate-600" data-lucide="book-open"></i>
-<span>Select Subject</span>
-</div>
-<div class="relative">
-<i class="w-3 h-3 absolute left-2.5 top-2 text-slate-400" data-lucide="search"></i>
-<input class="w-full text-[11px] pl-7 pr-2 py-1 bg-slate-50 border border-slate-200 rounded-md focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc] outline-none" placeholder="Search subject..." type="text"/>
-</div>
-<div class="space-y-1.5 max-h-44 overflow-y-auto pr-1 text-xs text-slate-600">
-<label class="flex items-center gap-2 font-semibold text-[#0066cc] cursor-pointer">
-<input checked="" class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Machine Learning</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Advanced Algorithms</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Deep Learning</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Distributed Systems</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Operating Systems</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Computer Networks</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Research Methodology</span>
-</label>
-<label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-<input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-<span>Other Subjects</span>
-</label>
-</div>
-</div>
-</aside>
-<!-- END: SidebarFilters -->
-<!-- Main Content Area -->
-<main class="flex-1 space-y-4">
-<!-- BEGIN: HeroBanner -->
-<section class="hero-gradient border border-blue-100/80 rounded-2xl p-5 lg:p-6 relative overflow-hidden shadow-xs">
-<!-- Ambient decorative university dome background illustration -->
-<div class="absolute right-36 bottom-0 opacity-15 pointer-events-none hidden md:block">
-<svg class="text-blue-600" fill="none" height="150" viewbox="0 0 200 140" width="220" xmlns="http://www.w3.org/2000/svg">
-<path d="M100 10L100 30M100 15C120 15 140 25 150 40M100 15C80 15 60 25 50 40M50 40H150V60H50V40ZM60 60V110M80 60V110M100 60V110M120 60V110M140 60V110M40 110H160V130H40V110Z" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
-<circle cx="100" cy="8" fill="currentColor" r="4"></circle>
-</svg>
-</div>
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-<div class="max-w-xl space-y-2">
-<h1 class="text-2xl lg:text-3xl font-extrabold text-[#0066cc] tracking-tight">
+            <i class="w-3.5 h-3.5 text-slate-400" data-lucide="chevron-right"></i>
+          </button>
+          <button
+            class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-[#0066cc] bg-[#eef5fc] border-b border-slate-100 transition-colors cursor-pointer"
+            onclick="window.location.href='mtech.html'">
+            <div class="flex items-center gap-2.5">
+              <i class="w-4 h-4 text-[#0066cc]" data-lucide="settings"></i>
+              <span>M.Tech</span>
+            </div>
+            <i class="w-3.5 h-3.5 text-[#0066cc]" data-lucide="chevron-right"></i>
+          </button>
+          <button
+            class="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
+            onclick="window.location.href='phd.html'">
+            <div class="flex items-center gap-2.5">
+              <i class="w-4 h-4 text-slate-700" data-lucide="file-text"></i>
+              <span>PhD</span>
+            </div>
+            <i class="w-3.5 h-3.5 text-slate-400" data-lucide="chevron-right"></i>
+          </button>
+        </div>
+        <!-- Filter: University -->
+        <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2.5">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+            <i class="w-4 h-4 text-slate-600" data-lucide="building-2"></i>
+            <span>Select University</span>
+          </div>
+          <div class="relative">
+            <i class="w-3 h-3 absolute left-2.5 top-2 text-slate-400" data-lucide="search"></i>
+            <input
+              class="w-full text-[11px] pl-7 pr-2 py-1 bg-slate-50 border border-slate-200 rounded-md focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc] outline-none"
+              placeholder="Search university..." type="text" />
+          </div>
+          <div class="space-y-1.5 max-h-44 overflow-y-auto pr-1 text-xs text-slate-600">
+            <label class="flex items-center gap-2 font-semibold text-[#0066cc] cursor-pointer">
+              <input checked="" class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5"
+                type="checkbox" />
+              <span>IIT Bombay</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>IIT Delhi</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>IIT Madras</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>IIT Kanpur</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>IIT Kharagpur</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>NIT Trichy</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>NIT Surathkal</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>NIT Warangal</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Other Universities</span>
+            </label>
+          </div>
+        </div>
+        <!-- Filter: Specialization -->
+        <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2.5">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+            <i class="w-4 h-4 text-slate-600" data-lucide="git-branch"></i>
+            <span>Select Specialization</span>
+          </div>
+          <div class="relative">
+            <i class="w-3 h-3 absolute left-2.5 top-2 text-slate-400" data-lucide="search"></i>
+            <input
+              class="w-full text-[11px] pl-7 pr-2 py-1 bg-slate-50 border border-slate-200 rounded-md focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc] outline-none"
+              placeholder="Search specialization..." type="text" />
+          </div>
+          <div class="space-y-1.5 max-h-44 overflow-y-auto pr-1 text-xs text-slate-600">
+            <label class="flex items-center gap-2 font-semibold text-[#0066cc] cursor-pointer">
+              <input checked="" class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5"
+                type="checkbox" />
+              <span>Computer Science &amp; Engg.</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Artificial Intelligence</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Data Science</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>VLSI &amp; Embedded Systems</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Power Systems</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Structural Engineering</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Thermal Engineering</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Robotics</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Other Specializations</span>
+            </label>
+          </div>
+        </div>
+        <!-- Filter: Semester -->
+        <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+            <i class="w-4 h-4 text-slate-600" data-lucide="calendar"></i>
+            <span>Select Semester</span>
+          </div>
+          <div class="grid grid-cols-4 gap-1.5">
+            <button
+              class="py-1.5 bg-[#0066cc] text-white font-semibold rounded text-xs shadow-xs text-center">1</button>
+            <button
+              class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">2</button>
+            <button
+              class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">3</button>
+            <button
+              class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">4</button>
+          </div>
+        </div>
+        <!-- Filter: Subject -->
+        <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2.5">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+            <i class="w-4 h-4 text-slate-600" data-lucide="book-open"></i>
+            <span>Select Subject</span>
+          </div>
+          <div class="relative">
+            <i class="w-3 h-3 absolute left-2.5 top-2 text-slate-400" data-lucide="search"></i>
+            <input
+              class="w-full text-[11px] pl-7 pr-2 py-1 bg-slate-50 border border-slate-200 rounded-md focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc] outline-none"
+              placeholder="Search subject..." type="text" />
+          </div>
+          <div class="space-y-1.5 max-h-44 overflow-y-auto pr-1 text-xs text-slate-600">
+            <label class="flex items-center gap-2 font-semibold text-[#0066cc] cursor-pointer">
+              <input checked="" class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5"
+                type="checkbox" />
+              <span>Machine Learning</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Advanced Algorithms</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Deep Learning</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Distributed Systems</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Operating Systems</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Computer Networks</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Research Methodology</span>
+            </label>
+            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
+              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
+              <span>Other Subjects</span>
+            </label>
+          </div>
+        </div>
+      </aside>
+      <!-- END: SidebarFilters -->
+
+      <!-- Main Content Area -->
+      <main class="flex-1 space-y-4">
+        <!-- BEGIN: HeroBanner -->
+        <section
+          class="hero-gradient border border-blue-100/80 rounded-2xl p-5 lg:p-6 relative overflow-hidden shadow-xs">
+          <!-- Ambient decorative university dome background illustration -->
+          <div class="absolute right-36 bottom-0 opacity-15 pointer-events-none hidden md:block">
+            <svg class="text-blue-600" fill="none" height="150" viewbox="0 0 200 140" width="220"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M100 10L100 30M100 15C120 15 140 25 150 40M100 15C80 15 60 25 50 40M50 40H150V60H50V40ZM60 60V110M80 60V110M100 60V110M120 60V110M140 60V110M40 110H160V130H40V110Z"
+                stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+              <circle cx="100" cy="8" fill="currentColor" r="4"></circle>
+            </svg>
+          </div>
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+            <div class="max-w-xl space-y-2">
+              <h1 class="text-2xl lg:text-3xl font-extrabold text-[#0066cc] tracking-tight">
                 M.Tech Knowledge Hub
               </h1>
-<h2 class="text-sm font-bold text-slate-800">
+              <h2 class="text-sm font-bold text-slate-800">
                 Advanced Learning. Research. Innovation.
               </h2>
-<p class="text-xs text-slate-500 leading-relaxed">
-                Access semester-wise notes, PYQs, research papers, projects, thesis and more for M.Tech students across IITs, NITs and other top universities.
+              <p class="text-xs text-slate-500 leading-relaxed">
+                Access semester-wise notes, PYQs, research papers, projects, thesis and more for M.Tech students across
+                IITs, NITs and other top universities.
               </p>
-</div>
-<!-- Doodle & Feature Pills Right -->
-<div class="flex items-center gap-6 self-end lg:self-center">
-<!-- Handwritten Doodle Text -->
-<div class="hidden sm:block text-center rotate-[-4deg] select-none">
-<div class="font-handwriting text-2xl font-bold text-[#004b99] leading-tight">
-                  Learn<br/>Research<br/>Build<br/>The Next
+            </div>
+            <!-- Doodle & Feature Pills Right -->
+            <div class="flex items-center gap-6 self-end lg:self-center">
+              <!-- Handwritten Doodle Text -->
+              <div class="hidden sm:block text-center rotate-[-4deg] select-none">
+                <div class="font-handwriting text-2xl font-bold text-[#004b99] leading-tight">
+                  Learn<br />Research<br />Build<br />The Next
                 </div>
-<div class="w-12 h-1 bg-[#0066cc] mx-auto mt-1 rounded-full opacity-60"></div>
-</div>
-<!-- Feature Pills Column -->
-<div class="space-y-2 shrink-0">
-<div class="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-slate-200/80 px-3 py-1.5 rounded-xl shadow-2xs">
-<div class="w-6 h-6 rounded-lg bg-blue-100 flex items-center justify-center text-[#0066cc]">
-<i class="w-3.5 h-3.5" data-lucide="bar-chart-2"></i>
-</div>
-<span class="text-[11px] font-semibold text-slate-700">Advanced<br/><span class="font-normal text-slate-500 text-[10px]">Knowledge</span></span>
-</div>
-<div class="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-slate-200/80 px-3 py-1.5 rounded-xl shadow-2xs">
-<div class="w-6 h-6 rounded-lg bg-amber-100 flex items-center justify-center text-amber-500">
-<i class="w-3.5 h-3.5" data-lucide="lightbulb"></i>
-</div>
-<span class="text-[11px] font-semibold text-slate-700">Innovative<br/><span class="font-normal text-slate-500 text-[10px]">Research</span></span>
-</div>
-<div class="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-slate-200/80 px-3 py-1.5 rounded-xl shadow-2xs">
-<div class="w-6 h-6 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600">
-<i class="w-3.5 h-3.5" data-lucide="users"></i>
-</div>
-<span class="text-[11px] font-semibold text-slate-700">Stronger<br/><span class="font-normal text-slate-500 text-[10px]">Community</span></span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- END: HeroBanner -->
-<!-- BEGIN: CategoryTiles -->
-<section class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-2.5">
-<!-- Notes -->
-<div class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-<div class="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-<i class="w-4 h-4" data-lucide="file-text"></i>
-</div>
-<span class="text-xs font-semibold text-slate-700 leading-tight">Notes</span>
-<span class="text-[11px] font-bold text-[#0066cc]">52K+</span>
-</div>
-<!-- PYQs -->
-<div class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-<div class="w-8 h-8 rounded-lg bg-red-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-<span class="text-[9px] font-black tracking-tighter uppercase">PDF</span>
-</div>
-<span class="text-xs font-semibold text-slate-700 leading-tight">PYQs</span>
-<span class="text-[11px] font-bold text-slate-600">18K+</span>
-</div>
-<!-- Books -->
-<div class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-<div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-<i class="w-4 h-4" data-lucide="book"></i>
-</div>
-<span class="text-xs font-semibold text-slate-700 leading-tight">Books</span>
-<span class="text-[11px] font-bold text-slate-600">12K+</span>
-</div>
-<!-- Research Papers -->
-<div class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-<div class="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center mb-1.5 shadow-xs">
-<i class="w-4 h-4" data-lucide="file-check"></i>
-</div>
-<span class="text-xs font-semibold text-slate-700 leading-tight">Research Papers</span>
-<span class="text-[11px] font-bold text-slate-600">25K+</span>
-</div>
-<!-- Projects & Code -->
-<div class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-<div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-<i class="w-4 h-4" data-lucide="code-2"></i>
-</div>
-<span class="text-xs font-semibold text-slate-700 leading-tight">Projects &amp; Code</span>
-<span class="text-[11px] font-bold text-slate-600">9K+</span>
-</div>
-<!-- Thesis & Dissertation -->
-<div class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-<div class="w-8 h-8 rounded-lg bg-[#1e293b] text-white flex items-center justify-center mb-1.5 shadow-xs">
-<i class="w-4 h-4" data-lucide="graduation-cap"></i>
-</div>
-<span class="text-xs font-semibold text-slate-700 leading-tight">Thesis &amp; Dissertation</span>
-<span class="text-[11px] font-bold text-slate-600">6K+</span>
-</div>
-<!-- Lab Resources -->
-<div class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-<div class="w-8 h-8 rounded-lg bg-sky-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-<i class="w-4 h-4" data-lucide="flask-conical"></i>
-</div>
-<span class="text-xs font-semibold text-slate-700 leading-tight">Lab Resources</span>
-<span class="text-[11px] font-bold text-slate-600">4K+</span>
-</div>
-<!-- Other -->
-<div class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-<div class="w-8 h-8 rounded-lg bg-slate-400 text-white flex items-center justify-center mb-1.5 shadow-xs">
-<i class="w-4 h-4" data-lucide="more-horizontal"></i>
-</div>
-<span class="text-xs font-semibold text-slate-700 leading-tight">Other</span>
-<span class="text-[11px] font-bold text-slate-600">2K+</span>
-</div>
-</section>
-<!-- END: CategoryTiles -->
-<!-- BEGIN: SectionDualTabs -->
-<section class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
-<!-- Tab 1: Coursework (Active) -->
-<div class="border-2 border-[#0066cc] bg-[#f0f7ff]/70 rounded-xl p-3 flex items-center gap-3 cursor-pointer shadow-2xs">
-<div class="w-10 h-10 rounded-lg bg-[#0066cc] text-white flex items-center justify-center shrink-0">
-<i class="w-5 h-5" data-lucide="book-open"></i>
-</div>
-<div>
-<h3 class="text-xs font-bold text-[#0066cc]">Coursework (Semester Wise)</h3>
-<p class="text-[11px] text-slate-500">Notes, PYQs, Books, Lab Manuals</p>
-</div>
-</div>
-<!-- Tab 2: Research & Projects -->
-<div class="border border-slate-200 bg-white hover:bg-slate-50 rounded-xl p-3 flex items-center gap-3 cursor-pointer transition-colors">
-<div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
-<i class="w-5 h-5" data-lucide="flask-conical"></i>
-</div>
-<div>
-<h3 class="text-xs font-bold text-slate-800">Research &amp; Projects</h3>
-<p class="text-[11px] text-slate-500">Papers, Thesis, Datasets, Code</p>
-</div>
-</div>
-</section>
-<!-- END: SectionDualTabs -->
-<!-- BEGIN: FilterSubNav -->
-<section class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-2 text-xs">
-<div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap text-slate-600 font-medium">
-<button class="text-[#0066cc] font-bold border-b-2 border-[#0066cc] pb-2 -mb-2">All Resources</button>
-<button class="hover:text-[#0066cc] pb-2 -mb-2">Notes</button>
-<button class="hover:text-[#0066cc] pb-2 -mb-2">PYQs</button>
-<button class="hover:text-[#0066cc] pb-2 -mb-2">Books</button>
-<button class="hover:text-[#0066cc] pb-2 -mb-2">Lab Manuals</button>
-<button class="hover:text-[#0066cc] pb-2 -mb-2">Research Papers</button>
-<button class="hover:text-[#0066cc] pb-2 -mb-2">Projects</button>
-<button class="hover:text-[#0066cc] pb-2 -mb-2">Thesis</button>
-<button class="hover:text-[#0066cc] pb-2 -mb-2">Other</button>
-</div>
-<!-- Sort dropdown -->
-<div class="flex items-center gap-1.5 text-slate-600 shrink-0 self-end sm:self-auto cursor-pointer">
-<span class="text-[11px] text-slate-500">Sort by:</span>
-<span class="font-semibold text-slate-800 text-[11px]">Latest</span>
-<i class="w-3.5 h-3.5 text-slate-500" data-lucide="chevron-down"></i>
-</div>
-</section>
-<!-- END: FilterSubNav -->
-<!-- BEGIN: ResourceList -->
-<section id="resources-grid" class="space-y-2.5">
-<!-- Dynamic Resource Cards Will Load Here -->
-<p class="text-sm text-gray-500 py-4 text-center" id="resources-loading-msg">Loading resources...</p>
-</section>
-<!-- END: ResourceList -->
-<!-- BEGIN: PaginationAndUploadBanner -->
-<div class="pt-4 flex flex-col md:flex-row items-center justify-between gap-4">
-<!-- Pagination Buttons -->
-<div class="flex items-center gap-1 text-xs">
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-50">
-<i class="w-4 h-4" data-lucide="chevron-left"></i>
-</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#0066cc] text-white font-semibold shadow-xs">1</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">2</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">3</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">4</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">5</button>
-<span class="px-1 text-slate-400">...</span>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">28</button>
-<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-50">
-<i class="w-4 h-4" data-lucide="chevron-right"></i>
-</button>
-</div>
-<!-- Quick Upload Card banner -->
-<div class="w-full md:w-auto flex-1 md:max-w-md bg-[#eef5fc] border border-blue-200 rounded-xl p-3 flex items-center justify-between gap-3">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-xl bg-[#0066cc]/10 text-[#0066cc] flex items-center justify-center shrink-0">
-<i class="w-5 h-5" data-lucide="cloud-upload"></i>
-</div>
-<div>
-<h5 class="text-xs font-bold text-slate-800 leading-tight">Have Study Material to Share?</h5>
-<p class="text-[10px] text-slate-500">Help M.Tech students learn and grow. Upload now!</p>
-</div>
-</div>
-<button class="px-4 py-2 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs font-semibold rounded-lg shrink-0 shadow-xs transition-colors">
+                <div class="w-12 h-1 bg-[#0066cc] mx-auto mt-1 rounded-full opacity-60"></div>
+              </div>
+              <!-- Feature Pills Column -->
+              <div class="space-y-2 shrink-0">
+                <div
+                  class="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-slate-200/80 px-3 py-1.5 rounded-xl shadow-2xs">
+                  <div class="w-6 h-6 rounded-lg bg-blue-100 flex items-center justify-center text-[#0066cc]">
+                    <i class="w-3.5 h-3.5" data-lucide="bar-chart-2"></i>
+                  </div>
+                  <span class="text-[11px] font-semibold text-slate-700">Advanced<br /><span
+                      class="font-normal text-slate-500 text-[10px]">Knowledge</span></span>
+                </div>
+                <div
+                  class="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-slate-200/80 px-3 py-1.5 rounded-xl shadow-2xs">
+                  <div class="w-6 h-6 rounded-lg bg-amber-100 flex items-center justify-center text-amber-500">
+                    <i class="w-3.5 h-3.5" data-lucide="lightbulb"></i>
+                  </div>
+                  <span class="text-[11px] font-semibold text-slate-700">Innovative<br /><span
+                      class="font-normal text-slate-500 text-[10px]">Research</span></span>
+                </div>
+                <div
+                  class="flex items-center gap-2 bg-white/90 backdrop-blur-xs border border-slate-200/80 px-3 py-1.5 rounded-xl shadow-2xs">
+                  <div class="w-6 h-6 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600">
+                    <i class="w-3.5 h-3.5" data-lucide="users"></i>
+                  </div>
+                  <span class="text-[11px] font-semibold text-slate-700">Stronger<br /><span
+                      class="font-normal text-slate-500 text-[10px]">Community</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- END: HeroBanner -->
+
+        <!-- BEGIN: CategoryTiles -->
+        <section class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-2.5">
+          <!-- Notes -->
+          <div
+            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
+            <div class="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
+              <i class="w-4 h-4" data-lucide="file-text"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-700 leading-tight">Notes</span>
+            <span class="text-[11px] font-bold text-[#0066cc]">52K+</span>
+          </div>
+          <!-- PYQs -->
+          <div
+            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
+            <div class="w-8 h-8 rounded-lg bg-red-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
+              <span class="text-[9px] font-black tracking-tighter uppercase">PDF</span>
+            </div>
+            <span class="text-xs font-semibold text-slate-700 leading-tight">PYQs</span>
+            <span class="text-[11px] font-bold text-slate-600">18K+</span>
+          </div>
+          <!-- Books -->
+          <div
+            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
+              <i class="w-4 h-4" data-lucide="book"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-700 leading-tight">Books</span>
+            <span class="text-[11px] font-bold text-slate-600">12K+</span>
+          </div>
+          <!-- Research Papers -->
+          <div
+            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
+            <div class="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center mb-1.5 shadow-xs">
+              <i class="w-4 h-4" data-lucide="file-check"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-700 leading-tight">Research Papers</span>
+            <span class="text-[11px] font-bold text-slate-600">25K+</span>
+          </div>
+          <!-- Projects & Code -->
+          <div
+            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
+            <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
+              <i class="w-4 h-4" data-lucide="code-2"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-700 leading-tight">Projects &amp; Code</span>
+            <span class="text-[11px] font-bold text-slate-600">9K+</span>
+          </div>
+          <!-- Thesis & Dissertation -->
+          <div
+            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
+            <div class="w-8 h-8 rounded-lg bg-[#1e293b] text-white flex items-center justify-center mb-1.5 shadow-xs">
+              <i class="w-4 h-4" data-lucide="graduation-cap"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-700 leading-tight">Thesis &amp; Dissertation</span>
+            <span class="text-[11px] font-bold text-slate-600">6K+</span>
+          </div>
+          <!-- Lab Resources -->
+          <div
+            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
+            <div class="w-8 h-8 rounded-lg bg-sky-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
+              <i class="w-4 h-4" data-lucide="flask-conical"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-700 leading-tight">Lab Resources</span>
+            <span class="text-[11px] font-bold text-slate-600">4K+</span>
+          </div>
+          <!-- Other -->
+          <div
+            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
+            <div class="w-8 h-8 rounded-lg bg-slate-400 text-white flex items-center justify-center mb-1.5 shadow-xs">
+              <i class="w-4 h-4" data-lucide="more-horizontal"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-700 leading-tight">Other</span>
+            <span class="text-[11px] font-bold text-slate-600">2K+</span>
+          </div>
+        </section>
+        <!-- END: CategoryTiles -->
+
+        <!-- BEGIN: SectionDualTabs -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+          <!-- Tab 1: Coursework (Active) -->
+          <div
+            class="border-2 border-[#0066cc] bg-[#f0f7ff]/70 rounded-xl p-3 flex items-center gap-3 cursor-pointer shadow-2xs">
+            <div class="w-10 h-10 rounded-lg bg-[#0066cc] text-white flex items-center justify-center shrink-0">
+              <i class="w-5 h-5" data-lucide="book-open"></i>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold text-[#0066cc]">Coursework (Semester Wise)</h3>
+              <p class="text-[11px] text-slate-500">Notes, PYQs, Books, Lab Manuals</p>
+            </div>
+          </div>
+          <!-- Tab 2: Research & Projects -->
+          <div
+            class="border border-slate-200 bg-white hover:bg-slate-50 rounded-xl p-3 flex items-center gap-3 cursor-pointer transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+              <i class="w-5 h-5" data-lucide="flask-conical"></i>
+            </div>
+            <div>
+              <h3 class="text-xs font-bold text-slate-800">Research &amp; Projects</h3>
+              <p class="text-[11px] text-slate-500">Papers, Thesis, Datasets, Code</p>
+            </div>
+          </div>
+        </section>
+        <!-- END: SectionDualTabs -->
+
+        <!-- BEGIN: FilterSubNav -->
+        <section
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-2 text-xs">
+          <div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap text-slate-600 font-medium">
+            <button class="text-[#0066cc] font-bold border-b-2 border-[#0066cc] pb-2 -mb-2">All Resources</button>
+            <button class="hover:text-[#0066cc] pb-2 -mb-2">Notes</button>
+            <button class="hover:text-[#0066cc] pb-2 -mb-2">PYQs</button>
+            <button class="hover:text-[#0066cc] pb-2 -mb-2">Books</button>
+            <button class="hover:text-[#0066cc] pb-2 -mb-2">Lab Manuals</button>
+            <button class="hover:text-[#0066cc] pb-2 -mb-2">Research Papers</button>
+            <button class="hover:text-[#0066cc] pb-2 -mb-2">Projects</button>
+            <button class="hover:text-[#0066cc] pb-2 -mb-2">Thesis</button>
+            <button class="hover:text-[#0066cc] pb-2 -mb-2">Other</button>
+          </div>
+          <!-- Sort dropdown -->
+          <div class="flex items-center gap-1.5 text-slate-600 shrink-0 self-end sm:self-auto cursor-pointer">
+            <span class="text-[11px] text-slate-500">Sort by:</span>
+            <span class="font-semibold text-slate-800 text-[11px]">Latest</span>
+            <i class="w-3.5 h-3.5 text-slate-500" data-lucide="chevron-down"></i>
+          </div>
+        </section>
+        <!-- END: FilterSubNav -->
+
+        <!-- BEGIN: ResourceList -->
+        <section id="resources-grid" class="space-y-2.5">
+          <!-- Item 1: PDF Notes -->
+          <article
+            class="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-4 hover:border-slate-300 transition-colors shadow-2xs">
+            <div class="flex items-center gap-3.5 flex-1 min-w-0">
+              <div
+                class="w-10 h-10 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                PDF
+              </div>
+              <div class="min-w-0 space-y-1">
+                <h4 class="text-xs font-bold text-slate-900 truncate">Machine Learning - Complete Notes (M.Tech Sem 1)
+                </h4>
+                <p class="text-[11px] text-slate-500 truncate">Detailed handwritten notes covering all topics with
+                  examples and case studies.</p>
+                <div class="flex items-center gap-1.5 pt-0.5">
+                  <span class="bg-emerald-50 text-emerald-700 text-[10px] px-2 py-0.5 rounded font-medium">Notes</span>
+                  <span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded font-medium">Machine
+                    Learning</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium">Sem 1</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-5 shrink-0 text-slate-500 text-[11px]">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                  <img alt="Aditya_S avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBbb-KQCzWLiW14lFMP_VSmQ_MFVMbU1UWsCgqdD3JjG45rPhEzXTsNLzKNkAImYyI_yC6h7lQNJf827jEMZ-3F_Zw6F5qjwGpZBcuo7k08_BgdT9MRYFoVkMyy0ws2PDuXcWMskn56WMyf8nUNn4QTLTpw3OSx9YbwSu9eBExT_pacGYx8BvGBo0Za0fgOl7rjZL8apOhrn9he1Y9OpP1RYjjx_xFKkJiV-BLRhfJULb7LkDsdED7" />
+                </div>
+                <div class="hidden md:block leading-tight text-left">
+                  <p class="font-semibold text-slate-800 text-[11px]">Aditya_S</p>
+                  <p class="text-[10px] text-slate-400">IIT Bombay</p>
+                </div>
+              </div>
+              <span class="hidden sm:inline text-slate-400 text-[11px]">12 Aug 2024</span>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="eye"></i>
+                <span>2.4K</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="download"></i>
+                <span>1.1K</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-600 p-1" onclick="toggleBookmark(1, this)">
+                <i class="w-4 h-4" data-lucide="bookmark"></i>
+              </button>
+            </div>
+          </article>
+          <!-- Item 2: DOC PYQ -->
+          <article
+            class="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-4 hover:border-slate-300 transition-colors shadow-2xs">
+            <div class="flex items-center gap-3.5 flex-1 min-w-0">
+              <div
+                class="w-10 h-10 rounded-lg bg-[#0066cc] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                DOC
+              </div>
+              <div class="min-w-0 space-y-1">
+                <h4 class="text-xs font-bold text-slate-900 truncate">Machine Learning PYQ (2020 - 2024)</h4>
+                <p class="text-[11px] text-slate-500 truncate">Previous year question papers with solutions.</p>
+                <div class="flex items-center gap-1.5 pt-0.5">
+                  <span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded font-medium">PYQs</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium">Sem 1</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium">IIT
+                    Bombay</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-5 shrink-0 text-slate-500 text-[11px]">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                  <img alt="Neha_P avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwl9P8SIZFtuPT4qOdtgq6zqZILpUo5W8eVqdali7ZSFewguLcSQLOi2WuCCyWX_uD_hx9Wl2fiz0QMxrwGeFjMSzVVP23fUHG7mECXsG0u0raF1vLGYhlgfMpfYn3ZSz4zMm6q5dIUz3rDiFpUk7AHMXb2bjcZ-uf_TBMwQftOdKUDxYPG69YKpvDClMn3jfIA6HliLoth5hxmfx_uyMvI2QeR8bWHTcib1LOBG4Tvg5LhgPOFfzA" />
+                </div>
+                <div class="hidden md:block leading-tight text-left">
+                  <p class="font-semibold text-slate-800 text-[11px]">Neha_P</p>
+                  <p class="text-[10px] text-slate-400">IIT Bombay</p>
+                </div>
+              </div>
+              <span class="hidden sm:inline text-slate-400 text-[11px]">5 Aug 2024</span>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="eye"></i>
+                <span>3.2K</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="download"></i>
+                <span>1.6K</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-600 p-1" onclick="toggleBookmark(2, this)">
+                <i class="w-4 h-4" data-lucide="bookmark"></i>
+              </button>
+            </div>
+          </article>
+          <!-- Item 3: Reference Book -->
+          <article
+            class="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-4 hover:border-slate-300 transition-colors shadow-2xs">
+            <div class="flex items-center gap-3.5 flex-1 min-w-0">
+              <div
+                class="w-10 h-10 rounded-lg bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <i class="w-5 h-5" data-lucide="book-open"></i>
+              </div>
+              <div class="min-w-0 space-y-1">
+                <h4 class="text-xs font-bold text-slate-900 truncate">Deep Learning - Reference Book (Goodfellow)</h4>
+                <p class="text-[11px] text-slate-500 truncate">Recommended book for deep learning. Includes key chapters
+                  and summaries.</p>
+                <div class="flex items-center gap-1.5 pt-0.5">
+                  <span class="bg-emerald-50 text-emerald-700 text-[10px] px-2 py-0.5 rounded font-medium">Books</span>
+                  <span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded font-medium">Deep
+                    Learning</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium">Reference</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-5 shrink-0 text-slate-500 text-[11px]">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                  <img alt="Rohan_K avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz8g9a1FvWa99WFBEQapiYc8BeTK5o5L72dPUWNkNRYX1w-DdMpxQRdQconOZqQC6l8-74NjQ-3gB_oPT2OhYpsU707jny1OWTSClqNqz4mdhfeWDGvg-cJNnGymt9GDMhSmXuXDJ0dS7CcrPdkONDN6vc8sg9cWuU8PnbK8xiQ1ArCjQ08dCuxKXcHgHbitFz3-SKZiWJ4mLtOaKCoBQpbp4bspXRLTPnllDRH5pisc-PW3vSMYJg" />
+                </div>
+                <div class="hidden md:block leading-tight text-left">
+                  <p class="font-semibold text-slate-800 text-[11px]">Rohan_K</p>
+                  <p class="text-[10px] text-slate-400">IIT Bombay</p>
+                </div>
+              </div>
+              <span class="hidden sm:inline text-slate-400 text-[11px]">28 Jul 2024</span>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="eye"></i>
+                <span>1.8K</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="download"></i>
+                <span>780</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-600 p-1" onclick="toggleBookmark(3, this)">
+                <i class="w-4 h-4" data-lucide="bookmark"></i>
+              </button>
+            </div>
+          </article>
+          <!-- Item 4: Research Paper -->
+          <article
+            class="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-4 hover:border-slate-300 transition-colors shadow-2xs">
+            <div class="flex items-center gap-3.5 flex-1 min-w-0">
+              <div
+                class="w-10 h-10 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <i class="w-5 h-5" data-lucide="file-check"></i>
+              </div>
+              <div class="min-w-0 space-y-1">
+                <h4 class="text-xs font-bold text-slate-900 truncate">Research Paper: Attention Mechanisms in Deep
+                  Learning</h4>
+                <p class="text-[11px] text-slate-500 truncate">Important research paper for advanced study.</p>
+                <div class="flex items-center gap-1.5 pt-0.5">
+                  <span class="bg-purple-50 text-purple-700 text-[10px] px-2 py-0.5 rounded font-medium">Research
+                    Paper</span>
+                  <span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded font-medium">Deep
+                    Learning</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium">AI</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-5 shrink-0 text-slate-500 text-[11px]">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                  <img alt="Priya_Verma avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpgToP1NEGRuSp7Y2YRzRqx3h51neZBgUP9uH7_JyGc6eeUxy9bWklMdSCJKeyLgM3oPxnZE6SNaqYgjOsV1yC8pFNqnXXXFzpBPrkrvn_2u-Bsx6tBjoHDfQAE5NreKuOige96E2yXW31ljk9_jJxtI99lB24leGUAEBPvMEmF4pvyFL2qeyhJgqAoC5t1yu_KikO-8uPDn64GERV4bo9XOJlwgbP_XucH7lqFIiorVNMzIksNRD9" />
+                </div>
+                <div class="hidden md:block leading-tight text-left">
+                  <p class="font-semibold text-slate-800 text-[11px]">Priya_Verma</p>
+                  <p class="text-[10px] text-slate-400">IIT Bombay</p>
+                </div>
+              </div>
+              <span class="hidden sm:inline text-slate-400 text-[11px]">21 Jul 2024</span>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="eye"></i>
+                <span>4.1K</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="download"></i>
+                <span>1.9K</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-600 p-1" onclick="toggleBookmark(4, this)">
+                <i class="w-4 h-4" data-lucide="bookmark"></i>
+              </button>
+            </div>
+          </article>
+          <!-- Item 5: Mini Project Code -->
+          <article
+            class="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-4 hover:border-slate-300 transition-colors shadow-2xs">
+            <div class="flex items-center gap-3.5 flex-1 min-w-0">
+              <div
+                class="w-10 h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                &lt;/&gt;
+              </div>
+              <div class="min-w-0 space-y-1">
+                <h4 class="text-xs font-bold text-slate-900 truncate">Mini Project: Image Classification using CNN (Code
+                  + Report)</h4>
+                <p class="text-[11px] text-slate-500 truncate">Complete project with source code, dataset and report.
+                </p>
+                <div class="flex items-center gap-1.5 pt-0.5">
+                  <span class="bg-amber-50 text-amber-700 text-[10px] px-2 py-0.5 rounded font-medium">Project</span>
+                  <span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded font-medium">Python</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium">Computer
+                    Vision</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-5 shrink-0 text-slate-500 text-[11px]">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                  <img alt="engineer_ayaan avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD15KMLj9Qw4bld5pifYBwWF_k_VvRamCadmcc4QTv9jJtBBO1pRwfwWR5H1QBiT-WAO_A17Pi57BA5P6VT5rP26TF1vwc_51UpJF7VugSYtRmwqiVt6Ie7aDyzUmE0RwkMVW3UAvuU5THEQd8_YPUQgFite6X8Q2LdcDfq-P0j8KB5uyrTFDZeGPhRawlo29Qathy5p3otIDMq-aFy7iGV-D1k9wTXtSZMmrHJpskGX39P--BHKCVo" />
+                </div>
+                <div class="hidden md:block leading-tight text-left">
+                  <p class="font-semibold text-slate-800 text-[11px]">engineer_ayaan</p>
+                  <p class="text-[10px] text-slate-400">IIT Bombay</p>
+                </div>
+              </div>
+              <span class="hidden sm:inline text-slate-400 text-[11px]">15 Jul 2024</span>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="eye"></i>
+                <span>2.9K</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="download"></i>
+                <span>1.4K</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-600 p-1" onclick="toggleBookmark(5, this)">
+                <i class="w-4 h-4" data-lucide="bookmark"></i>
+              </button>
+            </div>
+          </article>
+          <!-- Item 6: Thesis PPT -->
+          <article
+            class="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-4 hover:border-slate-300 transition-colors shadow-2xs">
+            <div class="flex items-center gap-3.5 flex-1 min-w-0">
+              <div
+                class="w-10 h-10 rounded-lg bg-[#556987] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                PPT
+              </div>
+              <div class="min-w-0 space-y-1">
+                <h4 class="text-xs font-bold text-slate-900 truncate">M.Tech Thesis: Deep Learning for Medical Image
+                  Analysis</h4>
+                <p class="text-[11px] text-slate-500 truncate">Complete dissertation with methodology, results and
+                  references.</p>
+                <div class="flex items-center gap-1.5 pt-0.5">
+                  <span class="bg-amber-50 text-amber-700 text-[10px] px-2 py-0.5 rounded font-medium">Thesis</span>
+                  <span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded font-medium">Medical
+                    Imaging</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium">Deep
+                    Learning</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-5 shrink-0 text-slate-500 text-[11px]">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                  <img alt="Sneha_R avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwqVy4h56GiUeZ1j41VknUQ8b3UXWBna9XDsvYsj5Te9l3B6LvJmd2wN9Fpfj4e3Djnr0yp2_nZQWS1h4O2Ia57zv_WrGr6OaQwSuldg8z3F6JHMif62-VaeQvQZF7gDfdpSkByd9EAWHXNEWX-jaOoODQmlq2oFssVc16jBUwrPJVoi7Y1_mKV1iCdBhV4PPP6FbFi5_Q_9k_zroktqwMolqSKQSjQwvfD_IMJkIOkRRFQzdXCSbb" />
+                </div>
+                <div class="hidden md:block leading-tight text-left">
+                  <p class="font-semibold text-slate-800 text-[11px]">Sneha_R</p>
+                  <p class="text-[10px] text-slate-400">IIT Bombay</p>
+                </div>
+              </div>
+              <span class="hidden sm:inline text-slate-400 text-[11px]">10 Jul 2024</span>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="eye"></i>
+                <span>1.3K</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="download"></i>
+                <span>620</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-600 p-1" onclick="toggleBookmark(6, this)">
+                <i class="w-4 h-4" data-lucide="bookmark"></i>
+              </button>
+            </div>
+          </article>
+          <!-- Item 7: Lab Manual -->
+          <article
+            class="bg-white border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-4 hover:border-slate-300 transition-colors shadow-2xs">
+            <div class="flex items-center gap-3.5 flex-1 min-w-0">
+              <div
+                class="w-10 h-10 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <i class="w-5 h-5" data-lucide="flask-conical"></i>
+              </div>
+              <div class="min-w-0 space-y-1">
+                <h4 class="text-xs font-bold text-slate-900 truncate">Lab Manual - Machine Learning Lab</h4>
+                <p class="text-[11px] text-slate-500 truncate">Experiment list, implementation steps and viva questions.
+                </p>
+                <div class="flex items-center gap-1.5 pt-0.5">
+                  <span class="bg-purple-50 text-purple-700 text-[10px] px-2 py-0.5 rounded font-medium">Lab
+                    Manual</span>
+                  <span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded font-medium">Experiments</span>
+                  <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium">Sem 1</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center gap-5 shrink-0 text-slate-500 text-[11px]">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden shrink-0">
+                  <img alt="Kartik_M avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC1rONMwfqIh-LAOAwPlMZTNwdC0vjUntTLD2-q1u8OE4XDV6qb-oEcyN_m800EmQBP2bVlBaouJsKgVaDsKg1jRxHlHDrVVuRICORHYLveFPS9C4rFMujbMguVApOb7pU6ezeell3JddwqdSNJZGitamOvDk3INd4H5H3qqAmhoKotqxWn1_AjYa8i3h_k5S-ZNrRl2iQFo1-gLxffu8PtujHqmkdSLnRGbeJxyaZkRkLhHbwccGN" />
+                </div>
+                <div class="hidden md:block leading-tight text-left">
+                  <p class="font-semibold text-slate-800 text-[11px]">Kartik_M</p>
+                  <p class="text-[10px] text-slate-400">IIT Bombay</p>
+                </div>
+              </div>
+              <span class="hidden sm:inline text-slate-400 text-[11px]">8 Jul 2024</span>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="eye"></i>
+                <span>1.1K</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="w-3.5 h-3.5" data-lucide="download"></i>
+                <span>500</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-600 p-1" onclick="toggleBookmark(7, this)">
+                <i class="w-4 h-4" data-lucide="bookmark"></i>
+              </button>
+            </div>
+          </article>
+        </section>
+        <!-- END: ResourceList -->
+
+        <!-- BEGIN: PaginationAndUploadBanner -->
+        <div class="pt-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <!-- Pagination Buttons -->
+          <div class="flex items-center gap-1 text-xs">
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-50">
+              <i class="w-4 h-4" data-lucide="chevron-left"></i>
+            </button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#0066cc] text-white font-semibold shadow-xs">1</button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">2</button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">3</button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">4</button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">5</button>
+            <span class="px-1 text-slate-400">...</span>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">28</button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-50">
+              <i class="w-4 h-4" data-lucide="chevron-right"></i>
+            </button>
+          </div>
+          <!-- Quick Upload Card banner -->
+          <div
+            class="w-full md:w-auto flex-1 md:max-w-md bg-[#eef5fc] border border-blue-200 rounded-xl p-3 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-[#0066cc]/10 text-[#0066cc] flex items-center justify-center shrink-0">
+                <i class="w-5 h-5" data-lucide="cloud-upload"></i>
+              </div>
+              <div>
+                <h5 class="text-xs font-bold text-slate-800 leading-tight">Have Study Material to Share?</h5>
+                <p class="text-[10px] text-slate-500">Help M.Tech students learn and grow. Upload now!</p>
+              </div>
+            </div>
+            <button
+              class="px-4 py-2 bg-[#0066cc] hover:bg-[#0052a3] text-white text-xs font-semibold rounded-lg shrink-0 shadow-xs transition-colors cursor-pointer"
+              onclick="window.location.href='upload.html'">
               Upload Material
             </button>
-</div>
-</div>
-<!-- END: PaginationAndUploadBanner -->
-</main>
-</div>
-</div>
-<!-- BEGIN: MainFooter -->
-<footer class="bg-[#0f172a] text-slate-300 mt-12 text-xs border-t border-slate-800">
-<div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-10">
-<div class="grid grid-cols-1 md:grid-cols-5 gap-8">
-<!-- Brand & info -->
-<div class="md:col-span-2 space-y-3">
-<div class="flex items-center gap-2">
-<div class="bg-[#0066cc] text-white p-1 rounded flex items-center justify-center">
-<i class="w-5 h-5" data-lucide="graduation-cap"></i>
-</div>
-<span class="font-bold text-lg text-white tracking-tight">SemesterKit.com</span>
-</div>
-<p class="text-slate-400 text-[11px] max-w-sm leading-relaxed">
-            For Students. By Students.<br/>
-            A student-driven platform to access and share engineering study materials from IITs, NITs and other colleges across India.
+          </div>
+        </div>
+        <!-- END: PaginationAndUploadBanner -->
+      </main>
+    </div>
+  </div>
+
+  <!-- BEGIN: MainFooter -->
+  <footer class="bg-[#0f172a] text-slate-300 mt-12 text-xs border-t border-slate-800">
+    <div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-10">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+        <!-- Brand & info -->
+        <div class="md:col-span-2 space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="bg-[#0066cc] text-white p-1 rounded flex items-center justify-center">
+              <i class="w-5 h-5" data-lucide="graduation-cap"></i>
+            </div>
+            <span class="font-bold text-lg text-white tracking-tight">SemesterKit.com</span>
+          </div>
+          <p class="text-slate-400 text-[11px] max-w-sm leading-relaxed">
+            For Students. By Students.<br />
+            A student-driven platform to access and share engineering study materials from IITs, NITs and other colleges
+            across India.
           </p>
-<p class="text-[10px] text-slate-500 pt-2">
+          <div class="pt-4 text-slate-500 text-[11px]">
             © 2026 SemesterKit.com. All rights reserved.
-          </p>
-</div>
-<!-- Quick Links -->
-<div class="space-y-2.5">
-<h4 class="text-white font-semibold text-xs tracking-wider">Quick Links</h4>
-<ul class="space-y-1.5 text-slate-400 text-[11px]">
-<li><a class="hover:text-white" href="#">Home</a></li>
-<li><a class="hover:text-white" href="#">Universities</a></li>
-<li><a class="hover:text-white" href="#">Subjects</a></li>
-<li><a class="hover:text-white" href="#">Upload</a></li>
-<li><a class="hover:text-white" href="#">Community</a></li>
-<li><a class="hover:text-white" href="#">About Us</a></li>
-</ul>
-</div>
-<!-- Resources -->
-<div class="space-y-2.5">
-<h4 class="text-white font-semibold text-xs tracking-wider">Resources</h4>
-<ul class="space-y-1.5 text-slate-400 text-[11px]">
-<li><a class="hover:text-white" href="#">Notes</a></li>
-<li><a class="hover:text-white" href="#">PYQs</a></li>
-<li><a class="hover:text-white" href="#">Books</a></li>
-<li><a class="hover:text-white" href="#">Research Papers</a></li>
-<li><a class="hover:text-white" href="#">Projects</a></li>
-<li><a class="hover:text-white" href="#">Thesis</a></li>
-</ul>
-</div>
-<!-- Help & Newsletter -->
-<div class="space-y-4">
-<div class="space-y-2.5">
-<h4 class="text-white font-semibold text-xs tracking-wider">Help</h4>
-<ul class="space-y-1.5 text-slate-400 text-[11px]">
-<li><a class="hover:text-white" href="#">Contact Us</a></li>
-<li><a class="hover:text-white" href="#">FAQs</a></li>
-<li><a class="hover:text-white" href="#">Contribute</a></li>
-<li><a class="hover:text-white" href="#">Report Issue</a></li>
-<li><a class="hover:text-white" href="#">Privacy Policy</a></li>
-<li><a class="hover:text-white" href="#">Terms of Service</a></li>
-</ul>
-</div>
-<div class="space-y-2 pt-2">
-<span class="text-white font-semibold text-[11px] block">Follow Us</span>
-<div class="flex items-center gap-3 text-slate-400">
-<a class="hover:text-white" href="#"><i class="w-4 h-4" data-lucide="twitter"></i></a>
-<a class="hover:text-white" href="#"><i class="w-4 h-4" data-lucide="instagram"></i></a>
-<a class="hover:text-white" href="#"><i class="w-4 h-4" data-lucide="youtube"></i></a>
-<a class="hover:text-white" href="#"><i class="w-4 h-4" data-lucide="linkedin"></i></a>
-</div>
-<div class="pt-2">
-<span class="text-white text-[10px] block mb-1">Subscribe for updates</span>
-<div class="relative flex items-center">
-<input class="w-full bg-slate-800 text-[11px] text-white border border-slate-700 rounded-lg pl-3 pr-8 py-1.5 focus:outline-none focus:border-[#0066cc]" placeholder="Enter your email" type="email"/>
-<button class="absolute right-1 text-white bg-[#0066cc] p-1 rounded hover:bg-[#0052a3]">
-<i class="w-3 h-3" data-lucide="send"></i>
-</button>
-</div>
-</div>
-<div class="pt-1 text-[10px] text-slate-400 flex items-center gap-1">
-<span>Learn • Share • Grow • Together</span>
-<span class="text-red-400">♥</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</footer>
-<!-- END: MainFooter -->
-<!-- Lucide Script init -->
-<script data-purpose="icon-initialization">
+          </div>
+        </div>
+        <!-- Quick Links -->
+        <div class="space-y-2.5">
+          <h4 class="text-white font-semibold text-xs tracking-wider">Quick Links</h4>
+          <ul class="space-y-1.5 text-slate-400 text-[11px]">
+            <li><a class="hover:text-white" href="index.html">Home</a></li>
+            <li><a class="hover:text-white" href="btech.html">B.Tech</a></li>
+            <li><a class="hover:text-white" href="mtech.html">M.Tech</a></li>
+            <li><a class="hover:text-white" href="phd.html">PhD</a></li>
+            <li><a class="hover:text-white" href="upload.html">Upload</a></li>
+            <li><a class="hover:text-white" href="#">Community</a></li>
+          </ul>
+        </div>
+        <!-- Resources -->
+        <div class="space-y-2.5">
+          <h4 class="text-white font-semibold text-xs tracking-wider">Resources</h4>
+          <ul class="space-y-1.5 text-slate-400 text-[11px]">
+            <li><a class="hover:text-white" href="mtech.html">Notes</a></li>
+            <li><a class="hover:text-white" href="mtech.html">PYQs</a></li>
+            <li><a class="hover:text-white" href="mtech.html">Books</a></li>
+            <li><a class="hover:text-white" href="mtech.html">Research Papers</a></li>
+            <li><a class="hover:text-white" href="mtech.html">Projects</a></li>
+            <li><a class="hover:text-white" href="mtech.html">Thesis</a></li>
+          </ul>
+        </div>
+        <!-- Help & Newsletter -->
+        <div class="space-y-4">
+          <div class="space-y-2.5">
+            <h4 class="text-white font-semibold text-xs tracking-wider">Help</h4>
+            <ul class="space-y-1.5 text-slate-400 text-[11px]">
+              <li><a class="hover:text-white" href="#">Contact Us</a></li>
+              <li><a class="hover:text-white" href="#">FAQs</a></li>
+              <li><a class="hover:text-white" href="#">Contribute</a></li>
+              <li><a class="hover:text-white" href="#">Report Issue</a></li>
+              <li><a class="hover:text-white" href="#">Privacy Policy</a></li>
+              <li><a class="hover:text-white" href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="space-y-2 pt-2">
+            <span class="text-white font-semibold text-[11px] block">Follow Us</span>
+            <div class="flex items-center gap-3 text-slate-400">
+              <a class="hover:text-white" href="#"><i class="w-4 h-4" data-lucide="twitter"></i></a>
+              <a class="hover:text-white" href="#"><i class="w-4 h-4" data-lucide="instagram"></i></a>
+              <a class="hover:text-white" href="#"><i class="w-4 h-4" data-lucide="youtube"></i></a>
+              <a class="hover:text-white" href="#"><i class="w-4 h-4" data-lucide="linkedin"></i></a>
+            </div>
+            <div class="pt-2">
+              <span class="text-white text-[10px] block mb-1">Subscribe for updates</span>
+              <div class="relative flex items-center">
+                <input
+                  class="w-full bg-slate-800 text-[11px] text-white border border-slate-700 rounded-lg pl-3 pr-8 py-1.5 focus:outline-none focus:border-[#0066cc]"
+                  placeholder="Enter your email" type="email" />
+                <button class="absolute right-1 text-white bg-[#0066cc] p-1 rounded hover:bg-[#0052a3]">
+                  <i class="w-3 h-3" data-lucide="send"></i>
+                </button>
+              </div>
+            </div>
+            <div class="pt-1 text-[10px] text-slate-400 flex items-center gap-1">
+              <span>Learn • Share • Grow • Together</span>
+              <span class="text-red-400">♥</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- END: MainFooter -->
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/mtech.js"></script>
+  <!-- Lucide Script init -->
+  <script data-purpose="icon-initialization">
     lucide.createIcons();
   </script>
-<script src="js/api.js"></script><script src="js/app.js"></script><script src="js/mtech.js"></script></body></html>
+</body>
+
+</html>

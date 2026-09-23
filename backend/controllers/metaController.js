@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-// Settings
+// 1. Settings
 exports.getSettings = async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM settings');
@@ -14,52 +14,14 @@ exports.getSettings = async (req, res) => {
     }
 };
 
-// Public Stats
-exports.getPublicStats = async (req, res) => {
-    try {
-        const [[users]] = await db.query('SELECT COUNT(*) as count FROM users WHERE role = "student"');
-        const [[resources]] = await db.query('SELECT COUNT(*) as count FROM resources WHERE status = "approved"');
-        const [[colleges]] = await db.query('SELECT COUNT(*) as count FROM colleges');
-        const [[downloads]] = await db.query('SELECT COALESCE(SUM(downloads), 0) as count FROM resources');
-        
-        res.json({
-            users: users.count,
-            resources: resources.count,
-            colleges: colleges.count,
-            downloads: downloads.count
-        });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-};
-
-// Top Contributors
-exports.getTopContributors = async (req, res) => {
-    try {
-        const [rows] = await db.query('SELECT id, name, college_id, acs_credits FROM users WHERE role = "student" ORDER BY acs_credits DESC LIMIT 5');
-        // Fetch college names for these users
-        if (rows.length > 0) {
-            const collegeIds = rows.map(u => u.college_id).filter(id => id !== null);
-            if (collegeIds.length > 0) {
-                const [colleges] = await db.query('SELECT id, name FROM colleges WHERE id IN (?)', [collegeIds]);
-                const collegeMap = {};
-                colleges.forEach(c => collegeMap[c.id] = c.name);
-                rows.forEach(u => u.college_name = collegeMap[u.college_id] || 'Unknown');
-            }
-        }
-        res.json(rows);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-};
-
 exports.updateSettings = async (req, res) => {
     try {
         const updates = req.body;
         for (const [key, value] of Object.entries(updates)) {
+            const valStr = typeof value === 'object' ? JSON.stringify(value) : String(value ?? '');
             await db.query(
                 'INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = ?',
-                [key, value, value]
+                [key, valStr, valStr]
             );
         }
         res.json({ message: 'Settings updated successfully' });
@@ -68,11 +30,160 @@ exports.updateSettings = async (req, res) => {
     }
 };
 
-// Colleges
+// 2. Public Statistics
+exports.getPublicStats = async (req, res) => {
+    try {
+        const [settingsRows] = await db.query('SELECT setting_key, setting_value FROM settings WHERE setting_key LIKE "stat%"');
+        const settings = {};
+        settingsRows.forEach(r => settings[r.setting_key] = r.setting_value);
+
+        const autoMode = settings.stats_auto_mode !== 'false';
+
+        if (!autoMode && settings.stat_resources_override) {
+            return res.json({
+                resources: settings.stat_resources_override,
+                users: settings.stat_users_override,
+                colleges: settings.stat_colleges_override,
+                downloads: settings.stat_downloads_override
+            });
+        }
+
+        const [[users]] = await db.query('SELECT COUNT(*) as count FROM users WHERE role = "student"');
+        const [[resources]] = await db.query('SELECT COUNT(*) as count FROM resources WHERE status = "approved" AND is_archived = 0');
+        const [[colleges]] = await db.query('SELECT COUNT(*) as count FROM colleges WHERE is_active = 1');
+        const [[downloads]] = await db.query('SELECT COALESCE(SUM(downloads), 0) as count FROM resources WHERE status = "approved"');
+        
+        // Helper formatter for real stats (e.g. 0, 15, 1.2K+, 2.5M+)
+        const formatCount = (num) => {
+            const n = Number(num) || 0;
+            if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0', '') + 'M+';
+            if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'K+';
+            return String(n);
+        };
+
+        res.json({
+            resources: formatCount(resources.count),
+            users: formatCount(users.count),
+            colleges: String(colleges.count),
+            downloads: formatCount(downloads.count)
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// 3. Top Contributors (Dynamic based directly on approved uploads count)
+exports.getTopContributors = async (req, res) => {
+    try {
+        const [rows] = await db.query(`
+            SELECT u.id, u.name, u.avatar_url, c.name as college_name,
+                   COUNT(r.id) as approved_uploads
+            FROM users u
+            JOIN resources r ON u.id = r.contributor_id AND r.status = 'approved' AND r.is_archived = 0
+            LEFT JOIN colleges c ON u.college_id = c.id
+            WHERE u.role = 'student' AND u.status = 'active'
+            GROUP BY u.id, u.name, u.avatar_url, c.name
+            ORDER BY approved_uploads DESC
+            LIMIT 5
+        `);
+
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// 4. Public Testimonials
+exports.getPublicTestimonials = async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM testimonials WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// 5. Public Footer Navigation
+exports.getPublicFooter = async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM footer_links WHERE is_active = 1 ORDER BY column_title ASC, display_order ASC');
+        const columns = {};
+        rows.forEach(link => {
+            if (!columns[link.column_title]) columns[link.column_title] = [];
+            columns[link.column_title].push(link);
+        });
+        res.json({ columns, links: rows });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// 6. Public Header Navigation
+exports.getPublicNavigation = async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM navigation_items WHERE is_active = 1 ORDER BY display_order ASC');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// 7. Static Page by Slug
+exports.getStaticPageBySlug = async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM static_pages WHERE slug = ? AND is_published = 1', [req.params.slug]);
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Page not found' });
+        }
+        res.json(rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// 8. Programs
+exports.getPrograms = async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM programs WHERE is_active = 1 ORDER BY display_order ASC');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// 9. Colleges
 exports.getColleges = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM colleges ORDER BY name ASC');
-        res.json(rows);
+        const { featured, type } = req.query;
+        let sql = 'SELECT * FROM colleges WHERE is_active = 1';
+        const params = [];
+        if (featured) {
+            sql += ' AND is_featured = 1';
+        }
+        if (type) {
+            sql += ' AND type = ?';
+            params.push(type);
+        }
+        sql += ' ORDER BY display_order ASC, name ASC';
+
+        const [rows] = await db.query(sql, params);
+        
+        // Also fetch materials count for each college
+        const [counts] = await db.query(`
+            SELECT college_id, COUNT(*) as count 
+            FROM resources 
+            WHERE status = 'approved' AND is_archived = 0
+            GROUP BY college_id
+        `);
+        const countMap = {};
+        counts.forEach(c => countMap[c.college_id] = c.count);
+
+        const enriched = rows.map(c => ({
+            ...c,
+            materials_count: countMap[c.id] || 0
+        }));
+
+        res.json(enriched);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -80,9 +191,12 @@ exports.getColleges = async (req, res) => {
 
 exports.addCollege = async (req, res) => {
     try {
-        const { name, type } = req.body;
-        const [result] = await db.query('INSERT INTO colleges (name, type) VALUES (?, ?)', [name, type || 'Other']);
-        res.status(201).json({ id: result.insertId, name, type });
+        const { name, type, logo_url, banner_url, description, is_featured, is_active, display_order } = req.body;
+        const [result] = await db.query(
+            'INSERT INTO colleges (name, type, logo_url, banner_url, description, is_featured, is_active, display_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [name, type || 'Other', logo_url || null, banner_url || null, description || null, is_featured || 0, is_active !== undefined ? is_active : 1, display_order || 0]
+        );
+        res.status(201).json({ id: result.insertId, message: 'College added successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -90,8 +204,19 @@ exports.addCollege = async (req, res) => {
 
 exports.updateCollege = async (req, res) => {
     try {
-        const { name, type } = req.body;
-        await db.query('UPDATE colleges SET name = ?, type = ? WHERE id = ?', [name, type, req.params.id]);
+        const { name, type, logo_url, banner_url, description, is_featured, is_active, display_order } = req.body;
+        await db.query(`
+            UPDATE colleges 
+            SET name = COALESCE(?, name),
+                type = COALESCE(?, type),
+                logo_url = COALESCE(?, logo_url),
+                banner_url = COALESCE(?, banner_url),
+                description = COALESCE(?, description),
+                is_featured = COALESCE(?, is_featured),
+                is_active = COALESCE(?, is_active),
+                display_order = COALESCE(?, display_order)
+            WHERE id = ?
+        `, [name, type, logo_url, banner_url, description, is_featured, is_active, display_order, req.params.id]);
         res.json({ message: 'College updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -107,10 +232,19 @@ exports.deleteCollege = async (req, res) => {
     }
 };
 
-// Branches
+// 10. Branches
 exports.getBranches = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM branches ORDER BY name ASC');
+        const { program } = req.query;
+        let sql = 'SELECT * FROM branches WHERE is_active = 1';
+        const params = [];
+        if (program) {
+            sql += ' AND (program = ? OR program = "All")';
+            params.push(program);
+        }
+        sql += ' ORDER BY display_order ASC, name ASC';
+
+        const [rows] = await db.query(sql, params);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -119,9 +253,12 @@ exports.getBranches = async (req, res) => {
 
 exports.addBranch = async (req, res) => {
     try {
-        const { name } = req.body;
-        const [result] = await db.query('INSERT INTO branches (name) VALUES (?)', [name]);
-        res.status(201).json({ id: result.insertId, name });
+        const { name, code, program, department, is_active, display_order } = req.body;
+        const [result] = await db.query(
+            'INSERT INTO branches (name, code, program, department, is_active, display_order) VALUES (?, ?, ?, ?, ?, ?)',
+            [name, code || null, program || 'B.Tech', department || null, is_active !== undefined ? is_active : 1, display_order || 0]
+        );
+        res.status(201).json({ id: result.insertId, message: 'Branch added successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -129,8 +266,17 @@ exports.addBranch = async (req, res) => {
 
 exports.updateBranch = async (req, res) => {
     try {
-        const { name } = req.body;
-        await db.query('UPDATE branches SET name = ? WHERE id = ?', [name, req.params.id]);
+        const { name, code, program, department, is_active, display_order } = req.body;
+        await db.query(`
+            UPDATE branches 
+            SET name = COALESCE(?, name),
+                code = COALESCE(?, code),
+                program = COALESCE(?, program),
+                department = COALESCE(?, department),
+                is_active = COALESCE(?, is_active),
+                display_order = COALESCE(?, display_order)
+            WHERE id = ?
+        `, [name, code, program, department, is_active, display_order, req.params.id]);
         res.json({ message: 'Branch updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -146,10 +292,19 @@ exports.deleteBranch = async (req, res) => {
     }
 };
 
-// Semesters
+// 11. Semesters
 exports.getSemesters = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM semesters ORDER BY id ASC');
+        const { level } = req.query;
+        let sql = 'SELECT * FROM semesters WHERE 1=1';
+        const params = [];
+        if (level) {
+            sql += ' AND level = ?';
+            params.push(level);
+        }
+        sql += ' ORDER BY display_order ASC, id ASC';
+
+        const [rows] = await db.query(sql, params);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -158,9 +313,12 @@ exports.getSemesters = async (req, res) => {
 
 exports.addSemester = async (req, res) => {
     try {
-        const { name, level } = req.body;
-        const [result] = await db.query('INSERT INTO semesters (name, level) VALUES (?, ?)', [name, level || 'B.Tech']);
-        res.status(201).json({ id: result.insertId, name, level });
+        const { name, level, display_order } = req.body;
+        const [result] = await db.query(
+            'INSERT INTO semesters (name, level, display_order) VALUES (?, ?, ?)',
+            [name, level || 'B.Tech', display_order || 0]
+        );
+        res.status(201).json({ id: result.insertId, message: 'Semester added successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -168,8 +326,14 @@ exports.addSemester = async (req, res) => {
 
 exports.updateSemester = async (req, res) => {
     try {
-        const { name, level } = req.body;
-        await db.query('UPDATE semesters SET name = ?, level = ? WHERE id = ?', [name, level, req.params.id]);
+        const { name, level, display_order } = req.body;
+        await db.query(`
+            UPDATE semesters 
+            SET name = COALESCE(?, name),
+                level = COALESCE(?, level),
+                display_order = COALESCE(?, display_order)
+            WHERE id = ?
+        `, [name, level, display_order, req.params.id]);
         res.json({ message: 'Semester updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -185,23 +349,32 @@ exports.deleteSemester = async (req, res) => {
     }
 };
 
-// Subjects
+// 12. Subjects & Research Areas
 exports.getSubjects = async (req, res) => {
-    const { branch_id, semester_id } = req.query;
     try {
-        let query = 'SELECT * FROM subjects WHERE 1=1';
-        let params = [];
+        const { branch_id, semester_id, program, is_research_area } = req.query;
+        let sql = 'SELECT s.*, b.name as branch_name, sem.name as semester_name FROM subjects s LEFT JOIN branches b ON s.branch_id = b.id LEFT JOIN semesters sem ON s.semester_id = sem.id WHERE s.is_active = 1';
+        const params = [];
+
         if (branch_id) {
-            query += ' AND branch_id = ?';
+            sql += ' AND s.branch_id = ?';
             params.push(branch_id);
         }
         if (semester_id) {
-            query += ' AND semester_id = ?';
+            sql += ' AND s.semester_id = ?';
             params.push(semester_id);
         }
-        query += ' ORDER BY name ASC';
+        if (program) {
+            sql += ' AND s.program = ?';
+            params.push(program);
+        }
+        if (is_research_area !== undefined) {
+            sql += ' AND s.is_research_area = ?';
+            params.push(is_research_area === '1' || is_research_area === 'true' ? 1 : 0);
+        }
+        sql += ' ORDER BY s.name ASC';
         
-        const [rows] = await db.query(query, params);
+        const [rows] = await db.query(sql, params);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -210,9 +383,12 @@ exports.getSubjects = async (req, res) => {
 
 exports.addSubject = async (req, res) => {
     try {
-        const { name, branch_id, semester_id } = req.body;
-        const [result] = await db.query('INSERT INTO subjects (name, branch_id, semester_id) VALUES (?, ?, ?)', [name, branch_id || null, semester_id || null]);
-        res.status(201).json({ id: result.insertId, name, branch_id, semester_id });
+        const { name, code, branch_id, semester_id, program, is_research_area, is_active } = req.body;
+        const [result] = await db.query(
+            'INSERT INTO subjects (name, code, branch_id, semester_id, program, is_research_area, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [name, code || null, branch_id || null, semester_id || null, program || 'B.Tech', is_research_area ? 1 : 0, is_active !== undefined ? is_active : 1]
+        );
+        res.status(201).json({ id: result.insertId, message: 'Subject added successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -220,8 +396,18 @@ exports.addSubject = async (req, res) => {
 
 exports.updateSubject = async (req, res) => {
     try {
-        const { name, branch_id, semester_id } = req.body;
-        await db.query('UPDATE subjects SET name = ?, branch_id = ?, semester_id = ? WHERE id = ?', [name, branch_id || null, semester_id || null, req.params.id]);
+        const { name, code, branch_id, semester_id, program, is_research_area, is_active } = req.body;
+        await db.query(`
+            UPDATE subjects 
+            SET name = COALESCE(?, name),
+                code = COALESCE(?, code),
+                branch_id = ?,
+                semester_id = ?,
+                program = COALESCE(?, program),
+                is_research_area = COALESCE(?, is_research_area),
+                is_active = COALESCE(?, is_active)
+            WHERE id = ?
+        `, [name, code, branch_id || null, semester_id || null, program, is_research_area !== undefined ? is_research_area : null, is_active !== undefined ? is_active : null, req.params.id]);
         res.json({ message: 'Subject updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -237,10 +423,19 @@ exports.deleteSubject = async (req, res) => {
     }
 };
 
-// Resource Types
+// 13. Resource Types
 exports.getResourceTypes = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM resource_types ORDER BY name ASC');
+        const { program } = req.query;
+        let sql = 'SELECT * FROM resource_types WHERE 1=1';
+        const params = [];
+        if (program) {
+            sql += ' AND (program = ? OR program = "All")';
+            params.push(program);
+        }
+        sql += ' ORDER BY display_order ASC, name ASC';
+
+        const [rows] = await db.query(sql, params);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -249,9 +444,12 @@ exports.getResourceTypes = async (req, res) => {
 
 exports.addResourceType = async (req, res) => {
     try {
-        const { name } = req.body;
-        const [result] = await db.query('INSERT INTO resource_types (name) VALUES (?)', [name]);
-        res.status(201).json({ id: result.insertId, name });
+        const { name, program, icon, display_order } = req.body;
+        const [result] = await db.query(
+            'INSERT INTO resource_types (name, program, icon, display_order) VALUES (?, ?, ?, ?)',
+            [name, program || 'All', icon || null, display_order || 0]
+        );
+        res.status(201).json({ id: result.insertId, message: 'Resource type added successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -259,8 +457,15 @@ exports.addResourceType = async (req, res) => {
 
 exports.updateResourceType = async (req, res) => {
     try {
-        const { name } = req.body;
-        await db.query('UPDATE resource_types SET name = ? WHERE id = ?', [name, req.params.id]);
+        const { name, program, icon, display_order } = req.body;
+        await db.query(`
+            UPDATE resource_types 
+            SET name = COALESCE(?, name),
+                program = COALESCE(?, program),
+                icon = COALESCE(?, icon),
+                display_order = COALESCE(?, display_order)
+            WHERE id = ?
+        `, [name, program, icon, display_order, req.params.id]);
         res.json({ message: 'Resource type updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });

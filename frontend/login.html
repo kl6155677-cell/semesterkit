@@ -101,7 +101,9 @@
       const data = await window.api.post('/auth/login', { email, password });
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-      window.location.href = '/vault.html';
+      const params = new URLSearchParams(window.location.search);
+      const redirectUrl = params.get('redirect') || '/vault.html';
+      window.location.href = redirectUrl.startsWith('/') ? redirectUrl : '/' + redirectUrl;
     } catch (err) {
       errorDiv.textContent = err.message;
       errorDiv.classList.remove('hidden');

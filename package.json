@@ -1,0 +1,25 @@
+{
+  "name": "semesterkit",
+  "version": "1.0.0",
+  "description": "SemesterKit - Dynamic Academic Resource Hub",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "init-db": "node backend/init-db.js",
+    "postinstall": "cd backend && npm install"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.11.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.3.0",
+    "multer-storage-cloudinary": "^4.0.0",
+    "mysql2": "^3.24.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

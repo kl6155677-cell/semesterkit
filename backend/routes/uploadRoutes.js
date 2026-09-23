@@ -7,27 +7,22 @@ const path = require('path');
 const uploadController = require('../controllers/uploadController');
 const { authenticateToken } = require('../middleware/authMiddleware');
 
-// Configure Cloudinary if URL is present in environment
-let storage;
-if (process.env.CLOUDINARY_URL) {
-    storage = new CloudinaryStorage({
-        cloudinary: cloudinary,
-        params: {
-            folder: 'semesterkit_uploads',
-            allowed_formats: ['jpg', 'png', 'jpeg', 'pdf', 'zip', 'docx', 'doc', 'ppt', 'pptx']
-        }
-    });
-} else {
-    // Fallback for local development
-    storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, 'uploads/');
-        },
-        filename: (req, file, cb) => {
-            cb(null, Date.now() + path.extname(file.originalname));
-        }
-    });
+// Local storage for reliability
+const fs = require('fs');
+const uploadDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
 }
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
 
 const upload = multer({
     storage: storage,

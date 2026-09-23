@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>PhD Research Hub - SemesterKit.com</title>
-<!-- Load Tailwind CSS v3 with Plugins -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Custom Tailwind Config -->
-<script>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>PhD Research Hub - SemesterKit.com</title>
+  <!-- Load Tailwind CSS v3 with Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Custom Tailwind Config -->
+  <script>
     tailwind.config = {
       theme: {
         extend: {
@@ -27,9 +27,9 @@
       }
     }
   </script>
-<!-- FontAwesome Icons for accurate visual replication -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<style data-purpose="custom-decorations">
+  <!-- FontAwesome Icons for accurate visual replication -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style data-purpose="custom-decorations">
     /* Hand-drawn style decorative doodle fonts & banner elements */
     @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
     
@@ -45,560 +45,816 @@
   </style>
 </head>
 <body class="bg-[#f8fafc] text-slate-700 min-h-screen flex flex-col antialiased">
-<!-- BEGIN: TopNavbar -->
-<header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-<div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
-<!-- Brand Logo -->
-<div class="flex items-center gap-2 shrink-0">
-<div class="text-[#1877f2] flex items-center gap-2">
-<i class="fa-solid fa-graduation-cap text-2xl"></i>
-<div>
-<span class="text-xl font-bold tracking-tight text-[#111827]">Semester<span class="text-[#1877f2]">Kit.com</span></span>
-<span class="block text-[9px] text-slate-400 font-medium -mt-1 tracking-wider uppercase">Learn  Share  Grow Together</span>
-</div>
-</div>
-</div>
-<!-- Center Search Bar -->
-<div class="flex-1 max-w-xl mx-2 hidden md:block">
-<div class="relative">
-<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-sm">
-<i class="fa-solid fa-magnifying-glass"></i>
-</span>
-<input class="w-full pl-9 pr-4 py-1.5 bg-[#f1f5f9] border border-slate-200 rounded-full text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white transition-all" placeholder="Search research papers, thesis, datasets, topics..." type="text"/>
-</div>
-</div>
-<!-- Nav Links -->
-<nav class="hidden lg:flex items-center space-x-5 text-xs font-medium text-slate-600">
-<a class="hover:text-blue-600 transition" href="#">Home</a>
-<a class="hover:text-blue-600 transition" href="#">B.Tech</a>
-<a class="hover:text-blue-600 transition" href="#">M.Tech</a>
-<a class="text-[#1877f2] font-semibold border-b-2 border-[#1877f2] pb-0.5" href="#">PhD</a>
-<a class="hover:text-blue-600 transition" href="#">Universities</a>
-<a class="hover:text-blue-600 transition" href="#">Subjects</a>
-<a class="hover:text-blue-600 transition" href="#">Community</a>
-<a class="hover:text-blue-600 transition flex items-center gap-1" href="#">More <i class="fa-solid fa-chevron-down text-[9px]"></i></a>
-</nav>
-<!-- Right Action Items -->
-<div class="flex items-center space-x-3 shrink-0">
-<button class="flex items-center gap-1.5 text-xs font-medium text-slate-700 hover:text-blue-600 px-2 py-1 transition">
-<i class="fa-solid fa-cloud-arrow-up text-blue-500 text-sm"></i>
-<span>Upload</span>
-</button>
-<button class="flex items-center gap-1.5 text-xs font-medium text-slate-700 hover:text-blue-600 px-2 py-1 transition">
-<i class="fa-solid fa-users text-slate-500 text-sm"></i>
-<span>Community</span>
-</button>
-<button class="text-slate-500 hover:text-slate-800 p-1 relative transition">
-<i class="fa-regular fa-bell text-sm"></i>
-<span class="w-2 h-2 bg-red-500 rounded-full absolute top-1 right-1"></span>
-</button>
-<!-- User Profile Pill -->
-<div class="flex items-center gap-2 pl-2 border-l border-slate-200 cursor-pointer">
-<div class="w-7 h-7 rounded-full bg-[#1877f2] text-white flex items-center justify-center font-bold text-xs">
-            M
+  <!-- BEGIN: TopNavbar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-2 shrink-0 cursor-pointer" onclick="window.location.href='index.html'">
+        <div class="text-[#1877f2] flex items-center gap-2">
+          <i class="fa-solid fa-graduation-cap text-2xl"></i>
+          <div>
+            <span class="text-xl font-bold tracking-tight text-[#111827]">Semester<span class="text-[#1877f2]">Kit.com</span></span>
+            <span class="block text-[9px] text-slate-400 font-medium -mt-1 tracking-wider uppercase">Learn &nbsp;Share &nbsp;Grow Together</span>
           </div>
-<span class="text-xs font-semibold text-slate-700 hidden sm:inline-flex items-center gap-1">
-            Muzaffar <i class="fa-solid fa-chevron-down text-[8px] text-slate-400"></i>
-</span>
-</div>
-</div>
-</div>
-</header>
-<!-- END: TopNavbar -->
-<!-- BEGIN: BreadcrumbBar -->
-<div class="bg-white border-b border-slate-100 text-[11px] text-slate-400 py-1.5 px-4 sm:px-6">
-<div class="max-w-[1440px] mx-auto flex items-center space-x-2">
-<a class="hover:text-slate-600" href="#">Home</a>
-<span>›</span>
-<a class="hover:text-slate-600" href="#">PhD</a>
-<span>›</span>
-<a class="hover:text-slate-600" href="#">IIT Delhi</a>
-<span>›</span>
-<a class="hover:text-slate-600" href="#">Computer Science</a>
-<span>›</span>
-<span class="text-slate-600 font-medium">Artificial Intelligence</span>
-</div>
-</div>
-<!-- END: BreadcrumbBar -->
-<!-- BEGIN: MainContentWrapper -->
-<div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-5 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
-<!-- BEGIN: LeftSidebar -->
-<aside class="lg:col-span-3 xl:col-span-2 space-y-4 text-xs">
-<!-- Card: PhD Category Header -->
-<div class="bg-white rounded-xl border border-slate-200 p-3 shadow-xs">
-<div class="flex items-center gap-3">
-<div class="w-9 h-9 rounded-lg bg-blue-50 text-[#1877f2] flex items-center justify-center text-lg shrink-0">
-<i class="fa-solid fa-graduation-cap"></i>
-</div>
-<div>
-<h3 class="font-bold text-slate-900 text-sm leading-tight">PhD</h3>
-<p class="text-[10px] text-slate-400">Research • Innovate • Share</p>
-</div>
-</div>
-<!-- Sidebar Sub-Nav -->
-<nav class="mt-4 space-y-1">
-<a class="flex items-center gap-2.5 px-3 py-1.5 rounded-md bg-[#1877f2] text-white font-medium shadow-xs" href="#">
-<i class="fa-solid fa-table-cells-large text-xs"></i>
-<span>Overview</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 font-medium transition" href="#">
-<i class="fa-regular fa-newspaper text-xs text-slate-400"></i>
-<span>My Research</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 font-medium transition" href="#">
-<i class="fa-solid fa-cloud-arrow-up text-xs text-slate-400"></i>
-<span>Upload Material</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 font-medium transition" href="#">
-<i class="fa-regular fa-bookmark text-xs text-slate-400"></i>
-<span>Saved Items</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-1.5 rounded-md text-slate-600 hover:bg-slate-50 font-medium transition" href="#">
-<i class="fa-regular fa-user text-xs text-slate-400"></i>
-<span>My Profile</span>
-</a>
-</nav>
-</div>
-<!-- Card: Filter & Explore -->
-<div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs space-y-3.5">
-<div class="flex items-center justify-between pb-1 border-b border-slate-100">
-<h4 class="font-bold text-slate-900 text-xs tracking-tight">Filter &amp; Explore</h4>
-</div>
-<!-- Select University -->
-<div class="space-y-1">
-<label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
-<i class="fa-solid fa-building-columns text-[10px] text-slate-400"></i> Select University
+        </div>
+      </div>
+      <!-- Center Search Bar -->
+      <div class="flex-1 max-w-xl mx-2 hidden md:block">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-sm">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+          <input id="phd-search-input" class="w-full pl-9 pr-4 py-1.5 bg-[#f1f5f9] border border-slate-200 rounded-full text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white transition-all" placeholder="Search research papers, thesis, datasets, topics..." type="text"/>
+        </div>
+      </div>
+      <!-- Nav Links -->
+      <nav class="hidden lg:flex items-center space-x-5 text-xs font-medium text-slate-600">
+        <a class="hover:text-blue-600 transition" href="index.html">Home</a>
+        <a class="hover:text-blue-600 transition" href="btech.html">B.Tech</a>
+        <a class="hover:text-blue-600 transition" href="mtech.html">M.Tech</a>
+        <a class="text-[#1877f2] font-semibold border-b-2 border-[#1877f2] pb-0.5" href="phd.html">PhD</a>
+        <a class="hover:text-blue-600 transition" href="#">Universities</a>
+        <a class="hover:text-blue-600 transition" href="#">Subjects</a>
+        <a class="hover:text-blue-600 transition" href="upload.html">Upload</a>
+        <a class="hover:text-blue-600 transition" href="#">Community</a>
+        <a class="hover:text-blue-600 transition flex items-center gap-1" href="#">More <i class="fa-solid fa-chevron-down text-[9px]"></i></a>
+      </nav>
+      <!-- Right Action Items -->
+      <div class="flex items-center space-x-3 shrink-0">
+        <button class="flex items-center gap-1.5 text-xs font-medium text-slate-700 hover:text-blue-600 px-2 py-1 transition cursor-pointer" onclick="window.location.href='upload.html'">
+          <i class="fa-solid fa-cloud-arrow-up text-blue-500 text-sm"></i>
+          <span>Upload</span>
+        </button>
+        <button class="flex items-center gap-1.5 text-xs font-medium text-slate-700 hover:text-blue-600 px-2 py-1 transition">
+          <i class="fa-solid fa-users text-slate-500 text-sm"></i>
+          <span>Community</span>
+        </button>
+        <button class="text-slate-500 hover:text-slate-800 p-1 relative transition">
+          <i class="fa-regular fa-bell text-sm"></i>
+          <span class="w-2 h-2 bg-red-500 rounded-full absolute top-1 right-1"></span>
+        </button>
+        <!-- Guest Auth Actions -->
+        <button class="px-4 py-1.5 text-xs font-semibold text-blue-600 hover:text-blue-800 transition" onclick="window.location.href='login.html'">Login</button>
+        <button class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-full shadow-sm transition" onclick="window.location.href='register.html'">Sign Up</button>
+      </div>
+    </div>
+  </header>
+  <!-- END: TopNavbar -->
+
+  <!-- BEGIN: BreadcrumbBar -->
+  <div class="bg-white border-b border-slate-100 text-[11px] text-slate-400 py-1.5 px-4 sm:px-6">
+    <div class="max-w-[1440px] mx-auto flex items-center space-x-2">
+      <a class="hover:text-slate-600" href="index.html">Home</a>
+      <span>›</span>
+      <a class="hover:text-slate-600" href="phd.html">PhD</a>
+      <span>›</span>
+      <a class="hover:text-slate-600" href="#">IIT Delhi</a>
+      <span>›</span>
+      <a class="hover:text-slate-600" href="#">Computer Science</a>
+      <span>›</span>
+      <span class="text-slate-600 font-medium">Artificial Intelligence</span>
+    </div>
+  </div>
+  <!-- END: BreadcrumbBar -->
+
+  <!-- BEGIN: MainContentWrapper -->
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-4 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- BEGIN: LeftSidebar -->
+    <aside class="lg:col-span-3 xl:col-span-2 space-y-4">
+      <!-- Degree Program Menu Card -->
+      <div class="bg-white rounded-xl border border-slate-200 p-3 shadow-2xs space-y-2">
+        <div class="flex items-center gap-2 pb-2 border-b border-slate-100">
+          <div class="w-8 h-8 rounded-lg bg-blue-50 text-[#1877f2] flex items-center justify-center">
+            <i class="fa-solid fa-graduation-cap text-base"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900 leading-tight">PhD</h4>
+            <span class="text-[10px] text-slate-400 font-medium">Research • Innovate • Share</span>
+          </div>
+        </div>
+        <nav class="space-y-0.5 text-xs font-medium">
+          <a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg bg-blue-50 text-[#1877f2] font-semibold" href="phd.html">
+            <i class="fa-solid fa-table-cells-large text-xs"></i>
+            <span>Overview</span>
+          </a>
+          <a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-50 transition" href="#">
+            <i class="fa-regular fa-folder-open text-xs"></i>
+            <span>My Research</span>
+          </a>
+          <a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-50 transition" href="upload.html">
+            <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
+            <span>Upload Material</span>
+          </a>
+          <a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-50 transition" href="#">
+            <i class="fa-regular fa-bookmark text-xs"></i>
+            <span>Saved Items</span>
+          </a>
+          <a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-50 transition" href="#">
+            <i class="fa-regular fa-user text-xs"></i>
+            <span>My Profile</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Filters Section -->
+      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-2xs space-y-3.5">
+        <div class="flex items-center justify-between pb-1 border-b border-slate-100">
+          <span class="text-xs font-bold text-slate-900">Filter &amp; Explore</span>
+        </div>
+        <!-- Select University -->
+        <div class="space-y-1">
+          <label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
+            <i class="fa-solid fa-building-columns text-[10px] text-slate-400"></i> Select University
           </label>
-<select class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-<option>IIT Delhi</option>
-<option>IIT Bombay</option>
-<option>IIT Madras</option>
-<option>IISc Bangalore</option>
-</select>
-</div>
-<!-- Select Department -->
-<div class="space-y-1">
-<label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
-<i class="fa-solid fa-code-branch text-[10px] text-slate-400"></i> Department
+          <select class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option>IIT Delhi</option>
+            <option>IIT Bombay</option>
+            <option>IIT Madras</option>
+            <option>IISc Bangalore</option>
+            <option>NIT Trichy</option>
+          </select>
+        </div>
+        <!-- Select Department -->
+        <div class="space-y-1">
+          <label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
+            <i class="fa-solid fa-diagram-project text-[10px] text-slate-400"></i> Department
           </label>
-<select class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-<option>Computer Science &amp; Engg.</option>
-<option>Electrical Engineering</option>
-<option>Mechanical Engineering</option>
-</select>
-</div>
-<!-- Select Research Area -->
-<div class="space-y-1">
-<label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
-<i class="fa-solid fa-bullseye text-[10px] text-slate-400"></i> Research Area
+          <select class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option>Computer Science &amp; Engg.</option>
+            <option>Electrical Engineering</option>
+            <option>Mechanical Engineering</option>
+            <option>Physics</option>
+          </select>
+        </div>
+        <!-- Select Research Area -->
+        <div class="space-y-1">
+          <label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
+            <i class="fa-solid fa-microscope text-[10px] text-slate-400"></i> Research Area
           </label>
-<select class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-<option>Artificial Intelligence</option>
-<option>Cybersecurity</option>
-<option>Quantum Computing</option>
-</select>
-</div>
-<!-- Select PhD Year / Stage -->
-<div class="space-y-1">
-<label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
-<i class="fa-regular fa-calendar text-[10px] text-slate-400"></i> PhD Year / Stage
+          <select class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option>Artificial Intelligence</option>
+            <option>Quantum Computing</option>
+            <option>Robotics</option>
+            <option>Bio-Informatics</option>
+          </select>
+        </div>
+        <!-- Select PhD Year / Stage -->
+        <div class="space-y-1">
+          <label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
+            <i class="fa-regular fa-calendar text-[10px] text-slate-400"></i> PhD Year / Stage
           </label>
-<select class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-<option>All Years</option>
-<option>Year 1 (Coursework)</option>
-<option>Year 2 (Proposal)</option>
-<option>Year 3+ (Dissertation)</option>
-</select>
-</div>
-<!-- Material Type Checkboxes -->
-<div class="space-y-2 pt-1">
-<label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
-<i class="fa-solid fa-list-check text-[10px] text-slate-400"></i> Material Type
+          <select class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option>All Years</option>
+            <option>Year 1 (Coursework)</option>
+            <option>Year 2 (Proposal)</option>
+            <option>Year 3+ (Dissertation)</option>
+          </select>
+        </div>
+        <!-- Material Type Checkboxes -->
+        <div class="space-y-2 pt-1">
+          <label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
+            <i class="fa-solid fa-list-check text-[10px] text-slate-400"></i> Material Type
           </label>
-<div class="space-y-1.5 pl-0.5">
-<label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-<input checked="" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-<span>Research Papers</span>
-</label>
-<label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-<span>Thesis &amp; Dissertations</span>
-</label>
-<label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-<span>Research Methodology</span>
-</label>
-<label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-<span>Lab Resources</span>
-</label>
-<label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-<span>Datasets &amp; Code</span>
-</label>
-<label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-<span>Conference Resources</span>
-</label>
-<label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-<span>Proposal Templates</span>
-</label>
-<label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-<input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-<span>Other</span>
-</label>
-</div>
-</div>
-<!-- Filter Action Buttons -->
-<div class="pt-2 flex items-center gap-2">
-<button class="w-full bg-[#1877f2] hover:bg-blue-600 text-white font-medium py-1.5 rounded-md text-xs transition">
+          <div class="space-y-1.5 pl-0.5">
+            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
+              <input checked="" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
+              <span>Research Papers</span>
+            </label>
+            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
+              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
+              <span>Thesis &amp; Dissertations</span>
+            </label>
+            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
+              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
+              <span>Research Methodology</span>
+            </label>
+            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
+              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
+              <span>Lab Resources</span>
+            </label>
+            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
+              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
+              <span>Datasets &amp; Code</span>
+            </label>
+            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
+              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
+              <span>Conference Resources</span>
+            </label>
+            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
+              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
+              <span>Proposal Templates</span>
+            </label>
+            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
+              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
+              <span>Other</span>
+            </label>
+          </div>
+        </div>
+        <!-- Filter Action Buttons -->
+        <div class="pt-2 flex items-center gap-2">
+          <button class="w-full bg-[#1877f2] hover:bg-blue-600 text-white font-medium py-1.5 rounded-md text-xs transition">
             Apply Filters
           </button>
-<button class="text-slate-500 hover:text-slate-700 text-xs px-2 py-1.5 transition">
+          <button class="text-slate-500 hover:text-slate-700 text-xs px-2 py-1.5 transition">
             Reset
           </button>
-</div>
-</div>
-<!-- Motivational Quote Widget -->
-<div class="bg-gradient-to-b from-blue-50 to-indigo-50/60 rounded-xl border border-blue-100 p-4 text-center">
-<div class="w-9 h-9 rounded-full bg-blue-100/70 text-[#1877f2] flex items-center justify-center mx-auto mb-2 text-sm">
-<i class="fa-solid fa-graduation-cap"></i>
-</div>
-<p class="font-doodle text-slate-700 text-base leading-tight font-semibold">"Research today,<br/>A better tomorrow."</p>
-</div>
-</aside>
-<!-- END: LeftSidebar -->
-<!-- BEGIN: MainContentArea -->
-<main class="lg:col-span-9 xl:col-span-10 space-y-6">
-<!-- BEGIN: HeroBanner -->
-<div class="bg-gradient-to-r from-blue-50/80 via-indigo-50/40 to-blue-100/50 rounded-2xl p-6 relative border border-blue-100 overflow-hidden shadow-xs">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-<!-- Text Content -->
-<div class="md:col-span-7 space-y-3 z-10">
-<h1 class="text-3xl font-extrabold text-[#111827] tracking-tight">PhD Research Hub</h1>
-<p class="text-xs text-slate-600 max-w-lg leading-relaxed">
+        </div>
+      </div>
+
+      <!-- Motivational Quote Widget -->
+      <div class="bg-gradient-to-b from-blue-50 to-indigo-50/60 rounded-xl border border-blue-100 p-4 text-center">
+        <div class="w-9 h-9 rounded-full bg-blue-100/70 text-[#1877f2] flex items-center justify-center mx-auto mb-2 text-sm">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <p class="font-doodle text-slate-700 text-base leading-tight font-semibold">"Research today,<br/>A better tomorrow."</p>
+      </div>
+    </aside>
+    <!-- END: LeftSidebar -->
+
+    <!-- BEGIN: MainContentArea -->
+    <main class="lg:col-span-9 xl:col-span-10 space-y-6">
+      <!-- BEGIN: HeroBanner -->
+      <div class="bg-gradient-to-r from-blue-50/80 via-indigo-50/40 to-blue-100/50 rounded-2xl p-6 relative border border-blue-100 overflow-hidden shadow-xs">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+          <!-- Text Content -->
+          <div class="md:col-span-7 space-y-3 z-10">
+            <h1 class="text-3xl font-extrabold text-[#111827] tracking-tight">PhD Research Hub</h1>
+            <p class="text-xs text-slate-600 max-w-lg leading-relaxed">
               Access and share research papers, theses, datasets, tools and more for your PhD journey. Learn from others. Contribute to the research community.
             </p>
-<!-- Numeric Metric Stats Row -->
-<div class="pt-2 flex flex-wrap items-center gap-5 sm:gap-7">
-<div class="flex items-center gap-2">
-<div class="w-7 h-7 rounded bg-blue-100/80 text-blue-600 flex items-center justify-center text-xs">
-<i class="fa-regular fa-newspaper"></i>
-</div>
-<div>
-<span class="block text-sm font-bold text-slate-900 leading-tight">25K+</span>
-<span class="block text-[10px] text-slate-500 -mt-0.5">Research Papers</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-7 h-7 rounded bg-blue-100/80 text-blue-600 flex items-center justify-center text-xs">
-<i class="fa-solid fa-book-open"></i>
-</div>
-<div>
-<span class="block text-sm font-bold text-slate-900 leading-tight">4.8K+</span>
-<span class="block text-[10px] text-slate-500 -mt-0.5">PhD Theses</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-7 h-7 rounded bg-blue-100/80 text-blue-600 flex items-center justify-center text-xs">
-<i class="fa-solid fa-code"></i>
-</div>
-<div>
-<span class="block text-sm font-bold text-slate-900 leading-tight">3.2K+</span>
-<span class="block text-[10px] text-slate-500 -mt-0.5">Datasets &amp; Code</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-7 h-7 rounded bg-blue-100/80 text-blue-600 flex items-center justify-center text-xs">
-<i class="fa-solid fa-screwdriver-wrench"></i>
-</div>
-<div>
-<span class="block text-sm font-bold text-slate-900 leading-tight">1.5K+</span>
-<span class="block text-[10px] text-slate-500 -mt-0.5">Research Tools</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Hero Graphic / Illustration Placeholder & Artwork -->
-<div class="md:col-span-5 relative flex items-center justify-center mt-4 md:mt-0">
-<!-- Hand-drawn Doodle Callout Left -->
-<div class="absolute -left-6 top-0 transform -rotate-12 hidden sm:block">
-<span class="font-doodle text-slate-700 text-lg font-bold leading-none block">
+            <!-- Numeric Metric Stats Row -->
+            <div class="pt-2 flex flex-wrap items-center gap-5 sm:gap-7">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded bg-blue-100/80 text-blue-600 flex items-center justify-center text-xs">
+                  <i class="fa-regular fa-newspaper"></i>
+                </div>
+                <div>
+                  <span class="block text-sm font-bold text-slate-900 leading-tight">25K+</span>
+                  <span class="block text-[10px] text-slate-500 -mt-0.5">Research Papers</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded bg-blue-100/80 text-blue-600 flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div>
+                  <span class="block text-sm font-bold text-slate-900 leading-tight">4.8K+</span>
+                  <span class="block text-[10px] text-slate-500 -mt-0.5">PhD Theses</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded bg-blue-100/80 text-blue-600 flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+                <div>
+                  <span class="block text-sm font-bold text-slate-900 leading-tight">3.2K+</span>
+                  <span class="block text-[10px] text-slate-500 -mt-0.5">Datasets &amp; Code</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded bg-blue-100/80 text-blue-600 flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-screwdriver-wrench"></i>
+                </div>
+                <div>
+                  <span class="block text-sm font-bold text-slate-900 leading-tight">1.5K+</span>
+                  <span class="block text-[10px] text-slate-500 -mt-0.5">Research Tools</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Hero Graphic / Illustration Placeholder & Artwork -->
+          <div class="md:col-span-5 relative flex items-center justify-center mt-4 md:mt-0">
+            <!-- Hand-drawn Doodle Callout Left -->
+            <div class="absolute -left-6 top-0 transform -rotate-12 hidden sm:block">
+              <span class="font-doodle text-slate-700 text-lg font-bold leading-none block">
                 Research<br/>Explore<br/>Innovate<br/>Share <span class="text-red-400">♥</span>
-</span>
-</div>
-<!-- Scholar Avatar & Laptop Vector Illustration Construct -->
-<div class="relative flex flex-col items-center">
-<div class="relative w-48 h-40 flex items-center justify-center">
-<!-- Floating decorative notes -->
-<div class="absolute -top-1 right-2 bg-white/90 border border-slate-200 rounded px-2 py-1 text-[9px] text-slate-600 shadow-xs hidden sm:block">
-<div class="flex items-center gap-1"><i class="fa-regular fa-file-lines text-blue-500"></i> Papers</div>
-<div class="flex items-center gap-1"><i class="fa-regular fa-lightbulb text-amber-500"></i> Ideas</div>
-<div class="flex items-center gap-1"><i class="fa-solid fa-arrow-trend-up text-emerald-500"></i> Impact</div>
-<div class="text-[8px] text-blue-600 font-semibold mt-0.5">✓ A Better Tomorrow</div>
-</div>
-<!-- Central Student Graphic representation using SVGs -->
-<div class="w-32 h-32 rounded-full bg-blue-200/50 flex items-center justify-center relative">
-<svg class="w-28 h-28 drop-shadow-sm" fill="none" viewbox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-<!-- Graduation Cap -->
-<polygon fill="#1e293b" points="60,18 95,30 60,42 25,30"></polygon>
-<rect fill="#0f172a" height="12" rx="4" width="16" x="52" y="32"></rect>
-<path d="M90,32 v18" stroke="#f59e0b" stroke-width="2"></path>
-<circle cx="90" cy="52" fill="#f59e0b" r="3"></circle>
-<!-- Head & Face -->
-<circle cx="60" cy="54" fill="#fcd34d" r="18"></circle>
-<path d="M52,48 h5 M63,48 h5" stroke="#1e293b" stroke-linecap="round" stroke-width="1.5"></path>
-<!-- Glasses -->
-<circle cx="54" cy="52" fill="none" r="4.5" stroke="#1e293b" stroke-width="1.5"></circle>
-<circle cx="66" cy="52" fill="none" r="4.5" stroke="#1e293b" stroke-width="1.5"></circle>
-<line stroke="#1e293b" stroke-width="1.5" x1="58.5" x2="61.5" y1="52" y2="52"></line>
-<path d="M56,62 q4,3 8,0" fill="none" stroke="#b45309" stroke-width="1.5"></path>
-<!-- Robe / Body -->
-<path d="M35,100 C35,76 85,76 85,100 Z" fill="#2563eb"></path>
-<polygon fill="#ffffff" points="60,76 54,92 66,92"></polygon>
-<polygon fill="#dc2626" points="60,92 56,104 64,104"></polygon>
-</svg>
-</div>
-<!-- Laptop and books -->
-<div class="absolute -bottom-1 w-32 h-6 bg-slate-700 rounded-t-sm flex items-center justify-center">
-<i class="fa-solid fa-apple-whole text-slate-400 text-[10px]"></i>
-</div>
-</div>
-<!-- Stack of books -->
-<div class="absolute bottom-0 -right-4 flex flex-col space-y-0.5">
-<div class="w-14 h-2.5 bg-blue-600 rounded-xs"></div>
-<div class="w-16 h-2.5 bg-indigo-500 rounded-xs"></div>
-<div class="w-15 h-2.5 bg-slate-800 rounded-xs"></div>
-</div>
-</div>
-<!-- Hand-drawn Doodle Callout Right -->
-<div class="absolute right-0 top-1 rotate-6 hidden sm:block">
-<span class="font-doodle text-slate-800 text-xl font-bold leading-tight block text-right">
+              </span>
+            </div>
+            <!-- Scholar Avatar & Laptop Vector Illustration Construct -->
+            <div class="relative flex flex-col items-center">
+              <div class="relative w-48 h-40 flex items-center justify-center">
+                <!-- Floating decorative notes -->
+                <div class="absolute -top-1 right-2 bg-white/90 border border-slate-200 rounded px-2 py-1 text-[9px] text-slate-600 shadow-xs hidden sm:block">
+                  <div class="flex items-center gap-1"><i class="fa-regular fa-file-lines text-blue-500"></i> Papers</div>
+                  <div class="flex items-center gap-1"><i class="fa-regular fa-lightbulb text-amber-500"></i> Ideas</div>
+                  <div class="flex items-center gap-1"><i class="fa-solid fa-arrow-trend-up text-emerald-500"></i> Impact</div>
+                  <div class="text-[8px] text-blue-600 font-semibold mt-0.5">✓ A Better Tomorrow</div>
+                </div>
+                <!-- Central Student Graphic representation using SVGs -->
+                <div class="w-32 h-32 rounded-full bg-blue-200/50 flex items-center justify-center relative">
+                  <svg class="w-28 h-28 drop-shadow-sm" fill="none" viewbox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <polygon fill="#1e293b" points="60,18 95,30 60,42 25,30"></polygon>
+                    <rect fill="#0f172a" height="12" rx="4" width="16" x="52" y="32"></rect>
+                    <path d="M90,32 v18" stroke="#f59e0b" stroke-width="2"></path>
+                    <circle cx="90" cy="52" fill="#f59e0b" r="3"></circle>
+                    <circle cx="60" cy="54" fill="#fcd34d" r="18"></circle>
+                    <path d="M52,48 h5 M63,48 h5" stroke="#1e293b" stroke-linecap="round" stroke-width="1.5"></path>
+                    <circle cx="54" cy="52" fill="none" r="4.5" stroke="#1e293b" stroke-width="1.5"></circle>
+                    <circle cx="66" cy="52" fill="none" r="4.5" stroke="#1e293b" stroke-width="1.5"></circle>
+                    <line stroke="#1e293b" stroke-width="1.5" x1="58.5" x2="61.5" y1="52" y2="52"></line>
+                    <path d="M56,62 q4,3 8,0" fill="none" stroke="#b45309" stroke-width="1.5"></path>
+                    <path d="M35,100 C35,76 85,76 85,100 Z" fill="#2563eb"></path>
+                    <polygon fill="#ffffff" points="60,76 54,92 66,92"></polygon>
+                    <polygon fill="#dc2626" points="60,92 56,104 64,104"></polygon>
+                  </svg>
+                </div>
+                <!-- Laptop and books -->
+                <div class="absolute -bottom-1 w-32 h-6 bg-slate-700 rounded-t-sm flex items-center justify-center">
+                  <i class="fa-solid fa-apple-whole text-slate-400 text-[10px]"></i>
+                </div>
+              </div>
+              <!-- Stack of books -->
+              <div class="absolute bottom-0 -right-4 flex flex-col space-y-0.5">
+                <div class="w-14 h-2.5 bg-blue-600 rounded-xs"></div>
+                <div class="w-16 h-2.5 bg-indigo-500 rounded-xs"></div>
+                <div class="w-15 h-2.5 bg-slate-800 rounded-xs"></div>
+              </div>
+            </div>
+            <!-- Hand-drawn Doodle Callout Right -->
+            <div class="absolute right-0 top-1 rotate-6 hidden sm:block">
+              <span class="font-doodle text-slate-800 text-xl font-bold leading-tight block text-right">
                 Knowledge<br/>Has No Limits
               </span>
-</div>
-</div>
-</div>
-</div>
-<!-- END: HeroBanner -->
-<!-- BEGIN: ExploreByCategory -->
-<div class="space-y-3">
-<h2 class="text-sm font-bold text-slate-900 tracking-tight">Explore by Category</h2>
-<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
-<!-- Category 1 -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-blue-400 hover:shadow-xs transition cursor-pointer">
-<div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-base mb-2">
-<i class="fa-regular fa-newspaper"></i>
-</div>
-<span class="text-xs font-semibold text-slate-800 leading-tight">Research Papers</span>
-<span class="text-[10px] text-slate-400 mt-1">12.4K+</span>
-</div>
-<!-- Category 2 -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-purple-400 hover:shadow-xs transition cursor-pointer">
-<div class="w-9 h-9 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-base mb-2">
-<i class="fa-solid fa-book-bookmark"></i>
-</div>
-<span class="text-xs font-semibold text-slate-800 leading-tight">Thesis &amp; Dissertations</span>
-<span class="text-[10px] text-slate-400 mt-1">4.8K+</span>
-</div>
-<!-- Category 3 -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-emerald-400 hover:shadow-xs transition cursor-pointer">
-<div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-base mb-2">
-<i class="fa-solid fa-gear"></i>
-</div>
-<span class="text-xs font-semibold text-slate-800 leading-tight">Research Methodology</span>
-<span class="text-[10px] text-slate-400 mt-1">3.1K+</span>
-</div>
-<!-- Category 4 -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-sky-400 hover:shadow-xs transition cursor-pointer">
-<div class="w-9 h-9 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-base mb-2">
-<i class="fa-solid fa-flask"></i>
-</div>
-<span class="text-xs font-semibold text-slate-800 leading-tight">Lab Resources</span>
-<span class="text-[10px] text-slate-400 mt-1">2.6K+</span>
-</div>
-<!-- Category 5 -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-teal-400 hover:shadow-xs transition cursor-pointer">
-<div class="w-9 h-9 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center text-base mb-2">
-<i class="fa-solid fa-code"></i>
-</div>
-<span class="text-xs font-semibold text-slate-800 leading-tight">Datasets &amp; Code</span>
-<span class="text-[10px] text-slate-400 mt-1">3.2K+</span>
-</div>
-<!-- Category 6 -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-amber-400 hover:shadow-xs transition cursor-pointer">
-<div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-base mb-2">
-<i class="fa-solid fa-award"></i>
-</div>
-<span class="text-xs font-semibold text-slate-800 leading-tight">Conference &amp; Journals</span>
-<span class="text-[10px] text-slate-400 mt-1">1.9K+</span>
-</div>
-<!-- Category 7 -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-blue-400 hover:shadow-xs transition cursor-pointer">
-<div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-base mb-2">
-<i class="fa-regular fa-file-lines"></i>
-</div>
-<span class="text-xs font-semibold text-slate-800 leading-tight">Proposal &amp; Templates</span>
-<span class="text-[10px] text-slate-400 mt-1">1.1K+</span>
-</div>
-<!-- Category 8 -->
-<div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-slate-400 hover:shadow-xs transition cursor-pointer">
-<div class="w-9 h-9 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-base mb-2">
-<i class="fa-solid fa-ellipsis"></i>
-</div>
-<span class="text-xs font-semibold text-slate-800 leading-tight">Other Resources</span>
-<span class="text-[10px] text-slate-400 mt-1">980+</span>
-</div>
-</div>
-</div>
-<!-- END: ExploreByCategory -->
-<!-- BEGIN: ContentTabsAndList -->
-<div class="space-y-3">
-<!-- Tab Navigation & Sort Controls -->
-<div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 gap-2">
-<!-- Horizontal Tabs -->
-<div class="flex items-center space-x-5 text-xs font-medium overflow-x-auto pb-px">
-<button class="text-[#1877f2] font-semibold border-b-2 border-[#1877f2] pb-2.5 whitespace-nowrap">All Resources</button>
-<button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Research Papers</button>
-<button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Thesis</button>
-<button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Datasets &amp; Code</button>
-<button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Methodology</button>
-<button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Conference</button>
-<button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Other</button>
-</div>
-<!-- Sort Dropdown -->
-<div class="flex items-center space-x-1.5 text-xs pb-2">
-<span class="text-slate-500">Sort by:</span>
-<button class="font-medium text-slate-700 flex items-center gap-1 hover:text-blue-600">
-<span>Latest</span>
-<i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
-</button>
-</div>
-</div>
-<!-- Research Items -->
-<div id="resources-grid" class="space-y-2.5">
-<!-- Dynamic Resource Cards Will Load Here -->
-<p class="text-sm text-gray-500 py-4 text-center" id="resources-loading-msg">Loading resources...</p>
-</div>
-<!-- Pagination Controls -->
-<div class="flex items-center justify-center space-x-1.5 pt-4 text-xs font-medium text-slate-600">
-<button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition">
-<i class="fa-solid fa-chevron-left text-[10px]"></i>
-</button>
-<button class="w-7 h-7 rounded bg-[#1877f2] text-white flex items-center justify-center shadow-xs">1</button>
-<button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">2</button>
-<button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">3</button>
-<button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">4</button>
-<button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">5</button>
-<span class="px-1 text-slate-400">...</span>
-<button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">42</button>
-<button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
-<i class="fa-solid fa-chevron-right text-[10px]"></i>
-</button>
-</div>
-<!-- Bottom Upload Call-to-Action Bar -->
-<div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3.5 flex items-center justify-between mt-6">
-<div class="flex items-center gap-3">
-<div class="w-9 h-9 rounded-full bg-blue-100 text-[#1877f2] flex items-center justify-center text-base shrink-0">
-<i class="fa-solid fa-cloud-arrow-up"></i>
-</div>
-<div>
-<h4 class="text-xs font-bold text-slate-900">Have Research Material to Share?</h4>
-<p class="text-[11px] text-slate-500">Upload your papers, thesis, code or any useful resource.</p>
-</div>
-</div>
-<button class="bg-[#1877f2] hover:bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition shadow-xs">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END: HeroBanner -->
+
+      <!-- BEGIN: ExploreByCategory -->
+      <div class="space-y-3">
+        <h2 class="text-sm font-bold text-slate-900 tracking-tight">Explore by Category</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+          <!-- Category 1 -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-blue-400 hover:shadow-xs transition cursor-pointer">
+            <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-base mb-2">
+              <i class="fa-regular fa-newspaper"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-800 leading-tight">Research Papers</span>
+            <span class="text-[10px] text-slate-400 mt-1">12.4K+</span>
+          </div>
+          <!-- Category 2 -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-purple-400 hover:shadow-xs transition cursor-pointer">
+            <div class="w-9 h-9 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-base mb-2">
+              <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-800 leading-tight">Thesis &amp; Dissertations</span>
+            <span class="text-[10px] text-slate-400 mt-1">4.8K+</span>
+          </div>
+          <!-- Category 3 -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-emerald-400 hover:shadow-xs transition cursor-pointer">
+            <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-base mb-2">
+              <i class="fa-solid fa-gear"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-800 leading-tight">Research Methodology</span>
+            <span class="text-[10px] text-slate-400 mt-1">3.1K+</span>
+          </div>
+          <!-- Category 4 -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-sky-400 hover:shadow-xs transition cursor-pointer">
+            <div class="w-9 h-9 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-base mb-2">
+              <i class="fa-solid fa-flask"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-800 leading-tight">Lab Resources</span>
+            <span class="text-[10px] text-slate-400 mt-1">2.6K+</span>
+          </div>
+          <!-- Category 5 -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-teal-400 hover:shadow-xs transition cursor-pointer">
+            <div class="w-9 h-9 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center text-base mb-2">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-800 leading-tight">Datasets &amp; Code</span>
+            <span class="text-[10px] text-slate-400 mt-1">3.2K+</span>
+          </div>
+          <!-- Category 6 -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-amber-400 hover:shadow-xs transition cursor-pointer">
+            <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-base mb-2">
+              <i class="fa-solid fa-award"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-800 leading-tight">Conference &amp; Journals</span>
+            <span class="text-[10px] text-slate-400 mt-1">1.9K+</span>
+          </div>
+          <!-- Category 7 -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-blue-400 hover:shadow-xs transition cursor-pointer">
+            <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-base mb-2">
+              <i class="fa-regular fa-file-lines"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-800 leading-tight">Proposal &amp; Templates</span>
+            <span class="text-[10px] text-slate-400 mt-1">1.1K+</span>
+          </div>
+          <!-- Category 8 -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center text-center shadow-2xs hover:border-slate-400 hover:shadow-xs transition cursor-pointer">
+            <div class="w-9 h-9 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-base mb-2">
+              <i class="fa-solid fa-ellipsis"></i>
+            </div>
+            <span class="text-xs font-semibold text-slate-800 leading-tight">Other Resources</span>
+            <span class="text-[10px] text-slate-400 mt-1">980+</span>
+          </div>
+        </div>
+      </div>
+      <!-- END: ExploreByCategory -->
+
+      <!-- BEGIN: ContentTabsAndList -->
+      <div class="space-y-3">
+        <!-- Tab Navigation & Sort Controls -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 gap-2">
+          <!-- Horizontal Tabs -->
+          <div class="flex items-center space-x-5 text-xs font-medium overflow-x-auto pb-px">
+            <button class="text-[#1877f2] font-semibold border-b-2 border-[#1877f2] pb-2.5 whitespace-nowrap">All Resources</button>
+            <button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Research Papers</button>
+            <button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Thesis</button>
+            <button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Datasets &amp; Code</button>
+            <button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Methodology</button>
+            <button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Conference</button>
+            <button class="text-slate-500 hover:text-slate-800 pb-2.5 whitespace-nowrap">Other</button>
+          </div>
+          <!-- Sort Dropdown -->
+          <div class="flex items-center space-x-1.5 text-xs pb-2">
+            <span class="text-slate-500">Sort by:</span>
+            <button class="font-medium text-slate-700 flex items-center gap-1 hover:text-blue-600">
+              <span>Latest</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+            </button>
+          </div>
+        </div>
+        <!-- Research Items Cards Stack -->
+        <div id="resources-grid" class="space-y-2.5">
+          <!-- Item 1: PDF Survey -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-start gap-3">
+              <!-- Type Badge -->
+              <div class="w-10 h-10 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                PDF
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-xs font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition">
+                  A Survey on Deep Learning in Computer Vision
+                </h3>
+                <p class="text-[11px] text-slate-500 leading-tight">
+                  Latest survey paper covering deep learning techniques and applications in computer vision.
+                </p>
+                <!-- Tags -->
+                <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-teal-50 text-teal-700 font-medium">Research Paper</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700 font-medium">Artificial Intelligence</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 font-medium">Computer Vision</span>
+                </div>
+              </div>
+            </div>
+            <!-- Metadata & Author Details -->
+            <div class="flex items-center justify-between sm:justify-end gap-5 shrink-0 text-xs text-slate-500 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 overflow-hidden font-semibold">
+                  <i class="fa-regular fa-user"></i>
+                </div>
+                <div>
+                  <span class="block font-semibold text-slate-800 text-[11px] leading-none">Rohan_S</span>
+                  <span class="block text-[10px] text-slate-400">IIT Delhi</span>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 whitespace-nowrap">12 Aug 2024</span>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><i class="fa-regular fa-eye"></i> 2.4K</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> 980</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-700 transition" onclick="toggleBookmark(1, this)">
+                <i class="fa-regular fa-bookmark"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Item 2: DOC Thesis -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                DOC
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-xs font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition">
+                  PhD Thesis: Graph Neural Networks for Social Network Analysis
+                </h3>
+                <p class="text-[11px] text-slate-500 leading-tight">
+                  Complete PhD thesis with methodology, experiments and results.
+                </p>
+                <!-- Tags -->
+                <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-700 font-medium">PhD Thesis</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700 font-medium">Graph Neural Networks</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-sky-50 text-sky-700 font-medium">Social Networks</span>
+                </div>
+              </div>
+            </div>
+            <!-- Metadata & Author Details -->
+            <div class="flex items-center justify-between sm:justify-end gap-5 shrink-0 text-xs text-slate-500 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 overflow-hidden font-semibold">
+                  <i class="fa-regular fa-user"></i>
+                </div>
+                <div>
+                  <span class="block font-semibold text-slate-800 text-[11px] leading-none">Priya_M</span>
+                  <span class="block text-[10px] text-slate-400">IIT Delhi</span>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 whitespace-nowrap">5 Aug 2024</span>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><i class="fa-regular fa-eye"></i> 3.1K</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> 1.2K</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-700 transition" onclick="toggleBookmark(2, this)">
+                <i class="fa-regular fa-bookmark"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Item 3: Code Repository -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                &lt;/&gt;
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-xs font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition">
+                  Python Code for Research Paper Reproduction
+                </h3>
+                <p class="text-[11px] text-slate-500 leading-tight">
+                  Source code and dataset for reproducing results from the paper.
+                </p>
+                <!-- Tags -->
+                <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700 font-medium">Code</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700 font-medium">Python</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 font-medium">Machine Learning</span>
+                </div>
+              </div>
+            </div>
+            <!-- Metadata & Author Details -->
+            <div class="flex items-center justify-between sm:justify-end gap-5 shrink-0 text-xs text-slate-500 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 overflow-hidden font-semibold">
+                  <i class="fa-regular fa-user"></i>
+                </div>
+                <div>
+                  <span class="block font-semibold text-slate-800 text-[11px] leading-none">Arjun_K</span>
+                  <span class="block text-[10px] text-slate-400">IIT Delhi</span>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 whitespace-nowrap">28 Jul 2024</span>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><i class="fa-regular fa-eye"></i> 1.8K</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> 760</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-700 transition" onclick="toggleBookmark(3, this)">
+                <i class="fa-regular fa-bookmark"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Item 4: Lab Resource Flask -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-purple-600 text-white flex items-center justify-center text-sm shrink-0 shadow-xs">
+                <i class="fa-solid fa-flask"></i>
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-xs font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition">
+                  Lab Manual: Deep Learning Experiments
+                </h3>
+                <p class="text-[11px] text-slate-500 leading-tight">
+                  Step-by-step lab experiments for deep learning models.
+                </p>
+                <!-- Tags -->
+                <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-purple-50 text-purple-700 font-medium">Lab Resource</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-sky-50 text-sky-700 font-medium">Experiments</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700 font-medium">Deep Learning</span>
+                </div>
+              </div>
+            </div>
+            <!-- Metadata & Author Details -->
+            <div class="flex items-center justify-between sm:justify-end gap-5 shrink-0 text-xs text-slate-500 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 overflow-hidden font-semibold">
+                  <i class="fa-regular fa-user"></i>
+                </div>
+                <div>
+                  <span class="block font-semibold text-slate-800 text-[11px] leading-none">Neha_T</span>
+                  <span class="block text-[10px] text-slate-400">IIT Delhi</span>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 whitespace-nowrap">21 Jul 2024</span>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><i class="fa-regular fa-eye"></i> 1.6K</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> 590</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-700 transition" onclick="toggleBookmark(4, this)">
+                <i class="fa-regular fa-bookmark"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Item 5: Methodology Guide Chart -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center text-sm shrink-0 shadow-xs">
+                <i class="fa-solid fa-chart-simple"></i>
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-xs font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition">
+                  Research Methodology: A Complete Guide
+                </h3>
+                <p class="text-[11px] text-slate-500 leading-tight">
+                  Covers literature review, research design, data analysis and writing.
+                </p>
+                <!-- Tags -->
+                <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-700 font-medium">Methodology</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700 font-medium">Research Guide</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700 font-medium">PhD Basics</span>
+                </div>
+              </div>
+            </div>
+            <!-- Metadata & Author Details -->
+            <div class="flex items-center justify-between sm:justify-end gap-5 shrink-0 text-xs text-slate-500 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 overflow-hidden font-semibold">
+                  <i class="fa-regular fa-user"></i>
+                </div>
+                <div>
+                  <span class="block font-semibold text-slate-800 text-[11px] leading-none">Vikram_P</span>
+                  <span class="block text-[10px] text-slate-400">IIT Delhi</span>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 whitespace-nowrap">15 Jul 2024</span>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><i class="fa-regular fa-eye"></i> 2.9K</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> 1.1K</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-700 transition" onclick="toggleBookmark(5, this)">
+                <i class="fa-regular fa-bookmark"></i>
+              </button>
+            </div>
+          </div>
+          <!-- Item 6: Conference Template PDF -->
+          <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                PDF
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-xs font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition">
+                  IEEE Conference Paper Template
+                </h3>
+                <p class="text-[11px] text-slate-500 leading-tight">
+                  Official template for IEEE conference paper submission.
+                </p>
+                <!-- Tags -->
+                <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-rose-50 text-rose-700 font-medium">Conference Resource</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700 font-medium">IEEE</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 font-medium">Paper Template</span>
+                </div>
+              </div>
+            </div>
+            <!-- Metadata & Author Details -->
+            <div class="flex items-center justify-between sm:justify-end gap-5 shrink-0 text-xs text-slate-500 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 overflow-hidden font-semibold">
+                  <i class="fa-regular fa-user"></i>
+                </div>
+                <div>
+                  <span class="block font-semibold text-slate-800 text-[11px] leading-none">Sneha_R</span>
+                  <span class="block text-[10px] text-slate-400">IIT Delhi</span>
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 whitespace-nowrap">10 Jul 2024</span>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><i class="fa-regular fa-eye"></i> 1.3K</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-arrow-down"></i> 640</span>
+              </div>
+              <button class="text-slate-400 hover:text-slate-700 transition" onclick="toggleBookmark(6, this)">
+                <i class="fa-regular fa-bookmark"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Pagination Controls -->
+        <div class="flex items-center justify-center space-x-1.5 pt-4 text-xs font-medium text-slate-600">
+          <button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition">
+            <i class="fa-solid fa-chevron-left text-[10px]"></i>
+          </button>
+          <button class="w-7 h-7 rounded bg-[#1877f2] text-white flex items-center justify-center shadow-xs">1</button>
+          <button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">2</button>
+          <button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">3</button>
+          <button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">4</button>
+          <button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">5</button>
+          <span class="px-1 text-slate-400">...</span>
+          <button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition">42</button>
+          <button class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+          </button>
+        </div>
+        <!-- Bottom Upload Call-to-Action Bar -->
+        <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3.5 flex items-center justify-between mt-6">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-blue-100 text-[#1877f2] flex items-center justify-center text-base shrink-0">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900">Have Research Material to Share?</h4>
+              <p class="text-[11px] text-slate-500">Upload your papers, thesis, code or any useful resource.</p>
+            </div>
+          </div>
+          <button class="bg-[#1877f2] hover:bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition shadow-xs cursor-pointer" onclick="window.location.href='upload.html'">
             Upload Now
           </button>
-</div>
-</div>
-<!-- END: ContentTabsAndList -->
-</main>
-<!-- END: MainContentArea -->
-</div>
-<!-- END: MainContentWrapper -->
-<!-- BEGIN: SiteFooter -->
-<footer class="bg-[#0b1325] text-slate-400 text-xs pt-10 pb-6 border-t border-slate-800 mt-10">
-<div class="max-w-[1440px] mx-auto px-4 sm:px-6">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-8 border-b border-slate-800">
-<!-- Column 1: Brand & Tagline -->
-<div class="lg:col-span-4 space-y-2.5">
-<div class="flex items-center gap-2 text-white">
-<i class="fa-solid fa-graduation-cap text-2xl text-blue-400"></i>
-<div>
-<span class="text-base font-bold text-white tracking-tight">Semester<span class="text-blue-400">Kit.com</span></span>
-<span class="block text-[9px] text-slate-400 font-medium -mt-0.5">For Students. By Students.</span>
-</div>
-</div>
-<p class="text-[11px] text-slate-400 max-w-sm leading-relaxed pt-1">
+        </div>
+      </div>
+      <!-- END: ContentTabsAndList -->
+    </main>
+    <!-- END: MainContentArea -->
+  </div>
+  <!-- END: MainContentWrapper -->
+
+  <!-- BEGIN: SiteFooter -->
+  <footer class="bg-[#0b1325] text-slate-400 text-xs pt-10 pb-6 border-t border-slate-800 mt-10">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-8 border-b border-slate-800">
+        <!-- Column 1: Brand & Tagline -->
+        <div class="lg:col-span-4 space-y-2.5">
+          <div class="flex items-center gap-2 text-white">
+            <i class="fa-solid fa-graduation-cap text-2xl text-blue-400"></i>
+            <div>
+              <span class="text-base font-bold text-white tracking-tight">Semester<span class="text-blue-400">Kit.com</span></span>
+              <span class="block text-[9px] text-slate-400 font-medium -mt-0.5">For Students. By Students.</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 max-w-sm leading-relaxed pt-1">
             A student-driven platform to access and share engineering study materials from NITs, IITs and other colleges across India.
           </p>
-<p class="text-[10px] text-slate-500 pt-2">
+          <p class="text-[10px] text-slate-500 pt-2">
             © 2026 SemesterKit.com. All rights reserved.
           </p>
-</div>
-<!-- Column 2: Quick Links -->
-<div class="lg:col-span-2 space-y-2">
-<h4 class="text-slate-200 font-semibold text-xs tracking-wider">Quick Links</h4>
-<ul class="space-y-1.5 text-[11px] text-slate-400">
-<li><a class="hover:text-white transition" href="#">Home</a></li>
-<li><a class="hover:text-white transition" href="#">Universities</a></li>
-<li><a class="hover:text-white transition" href="#">Subjects</a></li>
-<li><a class="hover:text-white transition" href="#">Upload</a></li>
-<li><a class="hover:text-white transition" href="#">Community</a></li>
-<li><a class="hover:text-white transition" href="#">About Us</a></li>
-</ul>
-</div>
-<!-- Column 3: Resources -->
-<div class="lg:col-span-2 space-y-2">
-<h4 class="text-slate-200 font-semibold text-xs tracking-wider">Resources</h4>
-<ul class="space-y-1.5 text-[11px] text-slate-400">
-<li><a class="hover:text-white transition" href="#">Research Papers</a></li>
-<li><a class="hover:text-white transition" href="#">Theses</a></li>
-<li><a class="hover:text-white transition" href="#">Datasets</a></li>
-<li><a class="hover:text-white transition" href="#">Lab Manuals</a></li>
-<li><a class="hover:text-white transition" href="#">Conference Papers</a></li>
-<li><a class="hover:text-white transition" href="#">Tools &amp; Software</a></li>
-</ul>
-</div>
-<!-- Column 4: Help -->
-<div class="lg:col-span-2 space-y-2">
-<h4 class="text-slate-200 font-semibold text-xs tracking-wider">Help</h4>
-<ul class="space-y-1.5 text-[11px] text-slate-400">
-<li><a class="hover:text-white transition" href="#">Contact Us</a></li>
-<li><a class="hover:text-white transition" href="#">FAQs</a></li>
-<li><a class="hover:text-white transition" href="#">Contribute</a></li>
-<li><a class="hover:text-white transition" href="#">Report Issue</a></li>
-<li><a class="hover:text-white transition" href="#">Privacy Policy</a></li>
-<li><a class="hover:text-white transition" href="#">Terms of Service</a></li>
-</ul>
-</div>
-<!-- Column 5: Follow & Subscribe -->
-<div class="lg:col-span-2 space-y-3">
-<h4 class="text-slate-200 font-semibold text-xs tracking-wider">Follow Us</h4>
-<div class="flex items-center space-x-3 text-slate-300 text-sm">
-<a class="hover:text-white transition" href="#"><i class="fa-brands fa-twitter"></i></a>
-<a class="hover:text-white transition" href="#"><i class="fa-brands fa-instagram"></i></a>
-<a class="hover:text-white transition" href="#"><i class="fa-brands fa-youtube"></i></a>
-<a class="hover:text-white transition" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-</div>
-<div class="space-y-1.5 pt-1">
-<span class="block text-[11px] text-slate-300 font-medium">Subscribe for updates</span>
-<div class="flex items-center">
-<input class="bg-[#162035] border border-slate-700 text-xs px-2.5 py-1.5 rounded-l text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 w-full" placeholder="Enter your email" type="email"/>
-<button class="bg-[#1877f2] hover:bg-blue-600 text-white px-3 py-1.5 rounded-r text-xs transition">
-<i class="fa-regular fa-paper-plane"></i>
-</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Tagline -->
-<div class="pt-4 flex items-center justify-end text-[10px] text-slate-500">
-<span>Learn • Share • Grow • Together <i class="fa-regular fa-heart text-blue-400"></i></span>
-</div>
-</div>
-</footer>
-<!-- END: SiteFooter -->
-<script src="js/api.js"></script><script src="js/app.js"></script><script src="js/phd.js"></script></body></html>
+        </div>
+        <!-- Column 2: Quick Links -->
+        <div class="lg:col-span-2 space-y-2">
+          <h4 class="text-slate-200 font-semibold text-xs tracking-wider">Quick Links</h4>
+          <ul class="space-y-1.5 text-[11px] text-slate-400">
+            <li><a class="hover:text-white transition" href="index.html">Home</a></li>
+            <li><a class="hover:text-white transition" href="btech.html">B.Tech</a></li>
+            <li><a class="hover:text-white transition" href="mtech.html">M.Tech</a></li>
+            <li><a class="hover:text-white transition" href="phd.html">PhD</a></li>
+            <li><a class="hover:text-white transition" href="upload.html">Upload</a></li>
+            <li><a class="hover:text-white transition" href="#">Community</a></li>
+          </ul>
+        </div>
+        <!-- Column 3: Resources -->
+        <div class="lg:col-span-2 space-y-2">
+          <h4 class="text-slate-200 font-semibold text-xs tracking-wider">Resources</h4>
+          <ul class="space-y-1.5 text-[11px] text-slate-400">
+            <li><a class="hover:text-white transition" href="phd.html">Research Papers</a></li>
+            <li><a class="hover:text-white transition" href="phd.html">Theses</a></li>
+            <li><a class="hover:text-white transition" href="phd.html">Datasets</a></li>
+            <li><a class="hover:text-white transition" href="phd.html">Lab Manuals</a></li>
+            <li><a class="hover:text-white transition" href="phd.html">Conference Papers</a></li>
+            <li><a class="hover:text-white transition" href="phd.html">Tools &amp; Software</a></li>
+          </ul>
+        </div>
+        <!-- Column 4: Help -->
+        <div class="lg:col-span-2 space-y-2">
+          <h4 class="text-slate-200 font-semibold text-xs tracking-wider">Help</h4>
+          <ul class="space-y-1.5 text-[11px] text-slate-400">
+            <li><a class="hover:text-white transition" href="#">Contact Us</a></li>
+            <li><a class="hover:text-white transition" href="#">FAQs</a></li>
+            <li><a class="hover:text-white transition" href="#">Contribute</a></li>
+            <li><a class="hover:text-white transition" href="#">Report Issue</a></li>
+            <li><a class="hover:text-white transition" href="#">Privacy Policy</a></li>
+            <li><a class="hover:text-white transition" href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <!-- Column 5: Follow & Subscribe -->
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-slate-200 font-semibold text-xs tracking-wider">Follow Us</h4>
+          <div class="flex items-center space-x-3 text-slate-300 text-sm">
+            <a class="hover:text-white transition" href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a class="hover:text-white transition" href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a class="hover:text-white transition" href="#"><i class="fa-brands fa-youtube"></i></a>
+            <a class="hover:text-white transition" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+          <div class="space-y-1.5 pt-1">
+            <span class="block text-[11px] text-slate-300 font-medium">Subscribe for updates</span>
+            <div class="flex items-center">
+              <input class="bg-[#162035] border border-slate-700 text-xs px-2.5 py-1.5 rounded-l text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 w-full" placeholder="Enter your email" type="email"/>
+              <button class="bg-[#1877f2] hover:bg-blue-600 text-white px-3 py-1.5 rounded-r text-xs transition">
+                <i class="fa-regular fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom Tagline -->
+      <div class="pt-4 flex items-center justify-end text-[10px] text-slate-500">
+        <span>Learn • Share • Grow • Together <i class="fa-regular fa-heart text-blue-400"></i></span>
+      </div>
+    </div>
+  </footer>
+  <!-- END: SiteFooter -->
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/phd.js"></script>
+</body>
+</html>

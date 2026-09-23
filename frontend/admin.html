@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Admin Dashboard - SemesterKit.com</title>
+    <title>Admin Dashboard & CMS - SemesterKit.com</title>
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -27,177 +27,580 @@
     <style>
         .tab-pane { display: none; }
         .tab-pane.active { display: block; }
-        .tab-link.active { background-color: #1d7bf5; color: white; }
+        .tab-link.active { background-color: #1d7bf5; color: white; font-weight: 700; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-[#f8faff] text-[#1e293b] font-sans antialiased min-h-screen flex flex-col">
+
+<!-- BEGIN: MainHeader -->
 <header class="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <div class="flex items-center space-x-2.5">
             <div class="text-[#1d7bf5]">
                 <svg class="w-9 h-9" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
             </div>
-            <a class="text-2xl font-extrabold text-[#111827] tracking-tight" href="/">SemesterKit<span class="text-[#1d7bf5]">.com</span></a>
+            <a class="text-2xl font-extrabold text-[#111827] tracking-tight" href="index.html">SemesterKit<span class="text-[#1d7bf5]">.com</span></a>
+            <span class="ml-2 px-2.5 py-0.5 bg-slate-900 text-white rounded text-[11px] font-bold uppercase tracking-wider">Admin CMS</span>
         </div>
         <div class="flex items-center space-x-4">
-            <button class="px-5 py-2 text-sm font-semibold text-red-500 hover:text-red-700 transition" type="button" onclick="localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href='/';">Logout</button>
+            <a href="index.html" class="text-xs font-semibold text-gray-600 hover:text-blue-600 transition flex items-center gap-1">
+                <span>← View Website</span>
+            </a>
+            <button class="px-4 py-2 text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition" type="button" onclick="logoutAdmin()">Logout</button>
         </div>
     </div>
 </header>
+<!-- END: MainHeader -->
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
-        <div class="border-b border-gray-100 p-6 sm:p-8 bg-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-                <h1 class="text-3xl font-extrabold">Admin Dashboard</h1>
-                <p class="text-slate-400 mt-1">Review pending uploads and manage platform data.</p>
+    
+    <!-- Admin Top Stats Banner -->
+    <div class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-sm mb-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30 mb-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Production Admin Control Center
             </div>
-            <!-- Quick Stats in Header -->
-            <div class="flex gap-4 text-center">
-                <div class="bg-slate-800 rounded px-4 py-2">
-                    <div id="admin-stat-pending" class="text-xl font-bold text-emerald-400">0</div>
-                    <div class="text-[10px] text-slate-400 uppercase tracking-wide">Pending</div>
-                </div>
-                <div class="bg-slate-800 rounded px-4 py-2">
-                    <div id="admin-stat-resources" class="text-xl font-bold text-brand-400">0</div>
-                    <div class="text-[10px] text-slate-400 uppercase tracking-wide">Approved</div>
-                </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold">Website CMS & Moderation</h1>
+            <p class="text-slate-400 text-sm mt-1">Manage all academic resources, pending student uploads, website copy, media and settings.</p>
+        </div>
+        <!-- Quick Counter Pills -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center w-full md:w-auto">
+            <div class="bg-slate-800/90 rounded-xl p-3 border border-slate-700/60 min-w-[90px]">
+                <div id="admin-stat-pending" class="text-xl font-extrabold text-amber-400">0</div>
+                <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-0.5">Pending</div>
+            </div>
+            <div class="bg-slate-800/90 rounded-xl p-3 border border-slate-700/60 min-w-[90px]">
+                <div id="admin-stat-resources" class="text-xl font-extrabold text-emerald-400">0</div>
+                <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-0.5">Approved</div>
+            </div>
+            <div class="bg-slate-800/90 rounded-xl p-3 border border-slate-700/60 min-w-[90px]">
+                <div id="admin-stat-users" class="text-xl font-extrabold text-blue-400">0</div>
+                <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-0.5">Students</div>
+            </div>
+            <div class="bg-slate-800/90 rounded-xl p-3 border border-slate-700/60 min-w-[90px]">
+                <div id="admin-stat-downloads" class="text-xl font-extrabold text-purple-400">0</div>
+                <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-0.5">Downloads</div>
             </div>
         </div>
     </div>
 
-    <div class="flex flex-col md:flex-row gap-6">
-        <!-- Sidebar Navigation -->
-        <aside class="w-full md:w-64 flex-shrink-0">
-            <nav class="space-y-1 bg-white p-3 rounded-xl border border-slate-200">
-                <button class="tab-link active w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-pending">Pending Resources</button>
-                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-settings">Site Settings & Hero</button>
+    <!-- Main Admin Layout: Sidebar Tabs + Content Area -->
+    <div class="flex flex-col lg:flex-row gap-6">
+        
+        <!-- Left Navigation Sidebar -->
+        <aside class="w-full lg:w-64 flex-shrink-0">
+            <nav class="space-y-1 bg-white p-3 rounded-2xl border border-slate-200 shadow-sm text-xs">
+                
+                <div class="px-3 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Moderation & Resources</div>
+                <button class="tab-link active w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition flex items-center justify-between" data-target="tab-pending">
+                    <span>⏳ Pending Queue</span>
+                    <span id="badge-pending-count" class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full font-bold text-[10px]">0</span>
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-all-resources">
+                    📚 Resource Inventory
+                </button>
+
                 <div class="h-px bg-slate-100 my-2"></div>
-                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-colleges">Manage Colleges</button>
-                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-branches">Manage Branches</button>
-                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-semesters">Manage Semesters</button>
-                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-subjects">Manage Subjects</button>
-                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-4 py-2.5 rounded-lg font-medium text-sm transition" data-target="tab-resource-types">Resource Types</button>
+                <div class="px-3 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Website CMS</div>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-hero-cms">
+                    🎨 Hero & Homepage CMS
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-stats-cms">
+                    📊 Statistics Manager
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-testimonials">
+                    💬 Testimonials Manager
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-static-pages">
+                    📄 Static Pages (About/FAQ)
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-footer-manager">
+                    🦶 Footer & Social Links
+                </button>
+
+                <div class="h-px bg-slate-100 my-2"></div>
+                <div class="px-3 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Academic Structure</div>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-colleges">
+                    🏛 Colleges & Universities
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-branches">
+                    🌿 Branches & Departments
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-semesters">
+                    📅 Semesters & Stages
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-subjects">
+                    📖 Subjects & Research Areas
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-resource-types">
+                    📑 Material Types
+                </button>
+
+                <div class="h-px bg-slate-100 my-2"></div>
+                <div class="px-3 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Platform & Assets</div>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-media-library">
+                    🖼 Media Library
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-users">
+                    👥 Users & Contributors
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-analytics">
+                    📈 Analytics & Reports
+                </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-settings-seo">
+                    ⚙ Settings & SEO
+                </button>
             </nav>
         </aside>
 
         <!-- Main Content Area -->
-        <div class="flex-grow bg-white border border-slate-200 rounded-xl p-6 min-h-[500px] shadow-sm">
+        <div class="flex-grow bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 min-h-[600px] shadow-sm overflow-hidden">
             
-            <!-- Tab: Pending Resources -->
-            <div id="tab-pending" class="tab-pane active">
-                <h2 class="text-xl font-bold text-gray-900 mb-4 border-b pb-2">Pending Moderation Queue</h2>
-                <div id="admin-pending-content" class="grid grid-cols-1 gap-4">
-                    <p class="text-gray-500 text-sm">Loading pending resources...</p>
+            <!-- 1. TAB: Pending Moderation Queue -->
+            <div id="tab-pending" class="tab-pane active space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Student Upload Moderation Queue</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Student submissions must be reviewed and approved here before becoming publicly accessible.</p>
+                    </div>
+                    <button onclick="loadPendingResources()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5 self-start sm:self-auto">
+                        <span>↻ Refresh Queue</span>
+                    </button>
+                </div>
+                <div id="admin-pending-content" class="space-y-4">
+                    <p class="text-gray-500 text-sm">Loading pending queue...</p>
                 </div>
             </div>
 
-            <!-- Tab: Settings & Hero -->
-            <div id="tab-settings" class="tab-pane">
-                <h2 class="text-xl font-bold text-gray-900 mb-4 border-b pb-2">Site Settings & Hero Image</h2>
-                <div class="max-w-xl space-y-6">
+            <!-- 2. TAB: All Resources Inventory -->
+            <div id="tab-all-resources" class="tab-pane space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b pb-4">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Hero Title</label>
-                        <input type="text" id="setting-hero-title" class="w-full rounded border-gray-300 p-2 text-sm" placeholder="e.g. Everything You Need..." />
+                        <h2 class="text-xl font-extrabold text-gray-900">All Academic Resources</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Manage, feature, unpublish, or delete published and archived resources.</p>
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Hero Subtitle</label>
-                        <input type="text" id="setting-hero-subtitle" class="w-full rounded border-gray-300 p-2 text-sm" placeholder="e.g. For Your Engineering Journey" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Hero Image</label>
-                        <div class="flex gap-4 items-center">
-                            <img id="hero-preview" src="" alt="Hero Preview" class="w-32 h-32 object-cover bg-gray-100 rounded border hidden" />
-                            <div class="flex-1">
-                                <input type="file" id="hero-image-upload" class="w-full text-sm mb-2" accept="image/*" />
-                                <button onclick="uploadHeroImage()" class="px-4 py-2 bg-slate-800 text-white text-sm rounded font-medium hover:bg-slate-700">Upload to Cloudinary</button>
-                            </div>
-                        </div>
-                        <input type="hidden" id="setting-hero-image-url" />
-                    </div>
-                    <button onclick="saveSettings()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold rounded shadow transition">Save Settings</button>
                 </div>
-            </div>
-
-            <!-- Tab: Colleges -->
-            <div id="tab-colleges" class="tab-pane">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h2 class="text-xl font-bold text-gray-900">Manage Colleges</h2>
-                    <button onclick="openModal('college')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add College</button>
+                <!-- Filters Bar -->
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                    <input type="text" id="inventory-search" placeholder="Search title, tags, subject..." class="text-xs rounded-lg border-gray-300 p-2" oninput="debounce(loadAllResources, 400)()" />
+                    <select id="inventory-status" class="text-xs rounded-lg border-gray-300 p-2" onchange="loadAllResources()">
+                        <option value="">All Statuses</option>
+                        <option value="approved" selected>Approved</option>
+                        <option value="pending">Pending</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                    <select id="inventory-program" class="text-xs rounded-lg border-gray-300 p-2" onchange="loadAllResources()">
+                        <option value="">All Programs</option>
+                        <option value="B.Tech">B.Tech</option>
+                        <option value="M.Tech">M.Tech</option>
+                        <option value="PhD">PhD</option>
+                    </select>
+                    <select id="inventory-featured" class="text-xs rounded-lg border-gray-300 p-2" onchange="loadAllResources()">
+                        <option value="">All</option>
+                        <option value="1">★ Featured Only</option>
+                    </select>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-600">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
-                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3">Type</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                <!-- Table -->
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr>
+                                <th class="px-4 py-3">ID</th>
+                                <th class="px-4 py-3">Title</th>
+                                <th class="px-4 py-3">Program / College</th>
+                                <th class="px-4 py-3">Contributor</th>
+                                <th class="px-4 py-3">Status</th>
+                                <th class="px-4 py-3">Metrics</th>
+                                <th class="px-4 py-3 text-right">Actions</th>
+                            </tr>
                         </thead>
-                        <tbody id="table-colleges">
-                            <!-- Populated via JS -->
-                        </tbody>
+                        <tbody id="table-all-resources"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Tab: Branches -->
-            <div id="tab-branches" class="tab-pane">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h2 class="text-xl font-bold text-gray-900">Manage Branches</h2>
-                    <button onclick="openModal('branch')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add Branch</button>
+            <!-- 3. TAB: Hero & Homepage CMS -->
+            <div id="tab-hero-cms" class="tab-pane space-y-6">
+                <div class="border-b pb-4">
+                    <h2 class="text-xl font-extrabold text-gray-900">Hero & Homepage Content Manager</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Control headings, tags, doodle accents, degree cards, and CTA section without code changes.</p>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-600">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
-                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm border-b pb-1">Hero Section Copy</h3>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Tag Pill Text</label>
+                            <input type="text" id="setting-hero-badge" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Hero Main Title (HTML supported)</label>
+                            <textarea id="setting-hero-title" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" rows="2"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Hero Subtitle</label>
+                            <textarea id="setting-hero-subtitle" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" rows="3"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Hero Doodle Handwritten Note</label>
+                            <input type="text" id="setting-hero-doodle-text" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Popular Searches Pills (comma-separated)</label>
+                            <input type="text" id="setting-popular-searches" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm border-b pb-1">Degree Cards & CTA Banner</h3>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">B.Tech Card Subtitle</label>
+                            <input type="text" id="setting-btech-card-desc" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">M.Tech Card Subtitle</label>
+                            <input type="text" id="setting-mtech-card-desc" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">PhD Card Subtitle</label>
+                            <input type="text" id="setting-phd-card-desc" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">CTA Banner Title</label>
+                            <input type="text" id="setting-cta-title" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">CTA Banner Description</label>
+                            <input type="text" id="setting-cta-description" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">CTA Button Text & Link</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="setting-cta-button-text" placeholder="Upload Now" class="rounded-lg border-gray-300 p-2.5 text-xs" />
+                                <input type="text" id="setting-cta-button-url" placeholder="upload.html" class="rounded-lg border-gray-300 p-2.5 text-xs" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-4 border-t flex justify-end">
+                    <button onclick="saveHeroCmsSettings()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow transition">Save Homepage CMS Changes</button>
+                </div>
+            </div>
+
+            <!-- 4. TAB: Statistics Manager -->
+            <div id="tab-stats-cms" class="tab-pane space-y-6">
+                <div class="border-b pb-4">
+                    <h2 class="text-xl font-extrabold text-gray-900">Homepage Statistics Manager</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Toggle automatic calculation from the database or set manual display values.</p>
+                </div>
+                <div class="max-w-xl space-y-5">
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-blue-900 block">Automatic Database Counts</span>
+                            <span class="text-[11px] text-blue-700">Compute statistics dynamically from actual approved materials, users, and downloads.</span>
+                        </div>
+                        <input type="checkbox" id="setting-stats-auto-mode" class="rounded text-brand-600 focus:ring-0 w-4 h-4" />
+                    </div>
+
+                    <div class="space-y-4 pt-2">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase">Manual Override Display Values</h4>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Study Materials Display</label>
+                            <input type="text" id="setting-stat-resources-override" placeholder="e.g. 50K+" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Students Contributing Display</label>
+                            <input type="text" id="setting-stat-users-override" placeholder="e.g. 15K+" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Colleges Covered Display</label>
+                            <input type="text" id="setting-stat-colleges-override" placeholder="e.g. 200+" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Downloads Display</label>
+                            <input type="text" id="setting-stat-downloads-override" placeholder="e.g. 1M+" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                    </div>
+                    <button onclick="saveStatsSettings()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow transition">Save Statistics Configuration</button>
+                </div>
+            </div>
+
+            <!-- 5. TAB: Testimonials Manager -->
+            <div id="tab-testimonials" class="tab-pane space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Testimonials Manager</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Manage student reviews displayed on the homepage slider.</p>
+                    </div>
+                    <button onclick="openTestimonialModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">+ Add Testimonial</button>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr><th class="px-4 py-3">Student</th><th class="px-4 py-3">College / Branch</th><th class="px-4 py-3">Review</th><th class="px-4 py-3">Rating</th><th class="px-4 py-3">Status</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-testimonials"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 6. TAB: Static Pages Manager -->
+            <div id="tab-static-pages" class="tab-pane space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Static Pages CMS</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Edit content for About Us, Contact, FAQs, Privacy Policy, Terms, etc.</p>
+                    </div>
+                    <button onclick="openStaticPageModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">+ Create New Page</button>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr><th class="px-4 py-3">Slug / URL</th><th class="px-4 py-3">Title</th><th class="px-4 py-3">Status</th><th class="px-4 py-3">Updated</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-static-pages"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 7. TAB: Footer & Social Manager -->
+            <div id="tab-footer-manager" class="tab-pane space-y-6">
+                <div class="border-b pb-4">
+                    <h2 class="text-xl font-extrabold text-gray-900">Footer & Social Media Manager</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Manage footer navigation columns, link URLs, and official social media handles.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-slate-800 text-xs uppercase border-b pb-1">Footer Branding & Social Links</h4>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">About Description</label>
+                            <textarea id="setting-footer-description" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" rows="3"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Copyright Notice</label>
+                            <input type="text" id="setting-footer-copyright" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Twitter / X URL</label>
+                            <input type="text" id="setting-social-twitter" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Instagram URL</label>
+                            <input type="text" id="setting-social-instagram" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">LinkedIn URL</label>
+                            <input type="text" id="setting-social-linkedin" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                        </div>
+                        <button onclick="saveFooterSettings()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow transition">Save Footer Copy</button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b pb-1">
+                            <h4 class="font-bold text-slate-800 text-xs uppercase">Footer Link Items</h4>
+                            <button onclick="openFooterLinkModal()" class="px-3 py-1 bg-emerald-600 text-white text-[11px] font-bold rounded-lg hover:bg-emerald-700">+ Add Link</button>
+                        </div>
+                        <div class="overflow-x-auto max-h-96 custom-scrollbar">
+                            <table class="w-full text-xs text-left text-gray-600">
+                                <thead class="text-[10px] text-gray-700 uppercase bg-slate-50 border-b">
+                                    <tr><th class="px-3 py-2">Column</th><th class="px-3 py-2">Label</th><th class="px-3 py-2">URL</th><th class="px-3 py-2 text-right">Action</th></tr>
+                                </thead>
+                                <tbody id="table-footer-links"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. TAB: Colleges & Universities -->
+            <div id="tab-colleges" class="tab-pane space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Manage Colleges & Universities</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Control institution listings, featured cards on homepage, and logos.</p>
+                    </div>
+                    <button onclick="openCollegeModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">+ Add College</button>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3">Type</th><th class="px-4 py-3">Featured</th><th class="px-4 py-3">Materials</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-colleges"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 9. TAB: Branches & Departments -->
+            <div id="tab-branches" class="tab-pane space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Manage Branches & Departments</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Define engineering branches across B.Tech, M.Tech, and PhD.</p>
+                    </div>
+                    <button onclick="openBranchModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">+ Add Branch</button>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Branch Name</th><th class="px-4 py-3">Code</th><th class="px-4 py-3">Program</th><th class="px-4 py-3 text-right">Actions</th></tr>
                         </thead>
                         <tbody id="table-branches"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Tab: Semesters -->
-            <div id="tab-semesters" class="tab-pane">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h2 class="text-xl font-bold text-gray-900">Manage Semesters</h2>
-                    <button onclick="openModal('semester')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add Semester</button>
+            <!-- 10. TAB: Semesters & Stages -->
+            <div id="tab-semesters" class="tab-pane space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Manage Semesters & Academic Stages</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Control semesters (1–8 for B.Tech, 1–4 for M.Tech, PhD stages).</p>
+                    </div>
+                    <button onclick="openSemesterModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">+ Add Semester</button>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-600">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
-                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3">Level</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Semester / Stage Name</th><th class="px-4 py-3">Program Level</th><th class="px-4 py-3 text-right">Actions</th></tr>
                         </thead>
                         <tbody id="table-semesters"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Tab: Subjects -->
-            <div id="tab-subjects" class="tab-pane">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h2 class="text-xl font-bold text-gray-900">Manage Subjects</h2>
-                    <button onclick="openModal('subject')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add Subject</button>
+            <!-- 11. TAB: Subjects & Research Areas -->
+            <div id="tab-subjects" class="tab-pane space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Manage Subjects & Research Areas</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Configure subjects associated with branches, semesters, or doctoral research areas.</p>
+                    </div>
+                    <button onclick="openSubjectModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">+ Add Subject</button>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-600">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
-                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3">Branch ID</th><th class="px-4 py-3">Semester ID</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Subject Name</th><th class="px-4 py-3">Code</th><th class="px-4 py-3">Program</th><th class="px-4 py-3">Branch / Semester</th><th class="px-4 py-3 text-right">Actions</th></tr>
                         </thead>
                         <tbody id="table-subjects"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Tab: Resource Types -->
-            <div id="tab-resource-types" class="tab-pane">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h2 class="text-xl font-bold text-gray-900">Manage Resource Types</h2>
-                    <button onclick="openModal('res_type')" class="px-3 py-1.5 bg-emerald-500 text-white text-sm font-bold rounded hover:bg-emerald-600">+ Add Type</button>
+            <!-- 12. TAB: Material Types -->
+            <div id="tab-resource-types" class="tab-pane space-y-6">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Manage Material Types</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Configure material categories (Notes, PYQs, Books, Lab Manuals, Research Papers, Thesis, etc.).</p>
+                    </div>
+                    <button onclick="openResourceTypeModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">+ Add Type</button>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-600">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
-                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Name</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr><th class="px-4 py-3">ID</th><th class="px-4 py-3">Type Name</th><th class="px-4 py-3">Program Level</th><th class="px-4 py-3 text-right">Actions</th></tr>
                         </thead>
                         <tbody id="table-resource-types"></tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- 13. TAB: Media Library -->
+            <div id="tab-media-library" class="tab-pane space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">Media Library</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">Upload, manage, and copy URLs for logos, banners, hero graphics, and category icons.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="file" id="media-upload-input" class="hidden" accept="image/*" onchange="handleMediaUpload(this)" />
+                        <button onclick="document.getElementById('media-upload-input').click()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow transition flex items-center gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            Upload Media
+                        </button>
+                    </div>
+                </div>
+                <div id="media-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
+                    <p class="text-gray-400 text-xs col-span-full">Loading media items...</p>
+                </div>
+            </div>
+
+            <!-- 14. TAB: Users Management -->
+            <div id="tab-users" class="tab-pane space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b pb-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-900">User Management</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">View registered students, contributors, manage roles, and suspend/activate accounts.</p>
+                    </div>
+                    <input type="text" id="users-search" placeholder="Search student name or email..." class="text-xs rounded-lg border-gray-300 p-2 sm:w-64" oninput="debounce(loadUsers, 400)()" />
+                </div>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-xs text-left text-gray-600">
+                        <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                            <tr><th class="px-4 py-3">User</th><th class="px-4 py-3">College</th><th class="px-4 py-3">Role</th><th class="px-4 py-3">Approved Uploads</th><th class="px-4 py-3">Status</th><th class="px-4 py-3 text-right">Actions</th></tr>
+                        </thead>
+                        <tbody id="table-users"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 15. TAB: Analytics & Reports -->
+            <div id="tab-analytics" class="tab-pane space-y-6">
+                <div class="border-b pb-4">
+                    <h2 class="text-xl font-extrabold text-gray-900">Platform Analytics & Insights</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Top performing study materials, popular institutions, and top student contributors.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3">
+                        <h4 class="font-bold text-slate-800 text-xs uppercase">🔥 Most Downloaded Materials</h4>
+                        <div id="analytics-top-downloaded" class="space-y-2 text-xs"></div>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3">
+                        <h4 class="font-bold text-slate-800 text-xs uppercase">👁 Most Viewed Materials</h4>
+                        <div id="analytics-top-viewed" class="space-y-2 text-xs"></div>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3">
+                        <h4 class="font-bold text-slate-800 text-xs uppercase">🏛 Popular Colleges</h4>
+                        <div id="analytics-top-colleges" class="space-y-2 text-xs"></div>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3">
+                        <h4 class="font-bold text-slate-800 text-xs uppercase">🏆 Top Contributors Leaderboard</h4>
+                        <div id="analytics-top-contributors" class="space-y-2 text-xs"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16. TAB: Settings & SEO -->
+            <div id="tab-settings-seo" class="tab-pane space-y-6">
+                <div class="border-b pb-4">
+                    <h2 class="text-xl font-extrabold text-gray-900">Platform Configuration & SEO</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Configure platform upload constraints, file format restrictions, and search engine metadata.</p>
+                </div>
+                <div class="max-w-xl space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Max Upload File Size (MB)</label>
+                        <input type="number" id="setting-max-upload-size-mb" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Allowed File Extensions (comma-separated)</label>
+                        <input type="text" id="setting-allowed-file-types" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Global SEO Title</label>
+                        <input type="text" id="setting-seo-meta-title" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Global SEO Meta Description</label>
+                        <textarea id="setting-seo-meta-description" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" rows="3"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">SEO Keywords</label>
+                        <input type="text" id="setting-seo-meta-keywords" class="w-full rounded-lg border-gray-300 p-2.5 text-xs" />
+                    </div>
+                    <button onclick="savePlatformSettings()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow transition">Save Platform Settings</button>
                 </div>
             </div>
 
@@ -205,25 +608,36 @@
     </div>
 </main>
 
-<!-- Generic Modal for CRUD -->
-<div id="crud-modal" class="fixed inset-0 bg-slate-900/50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl shadow-lg w-full max-w-md overflow-hidden">
-        <div class="border-b border-gray-100 p-4 bg-gray-50 flex justify-between items-center">
-            <h3 id="modal-title" class="font-bold text-gray-900">Add Item</h3>
-            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">&times;</button>
+<!-- Universal Generic CRUD Modal -->
+<div id="crud-modal" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden border border-gray-100">
+        <div class="border-b border-gray-100 p-4 bg-slate-50 flex justify-between items-center">
+            <h3 id="modal-title" class="font-extrabold text-gray-900 text-sm">Add Item</h3>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-lg leading-none">&times;</button>
         </div>
-        <div class="p-5 space-y-4" id="modal-body">
-            <!-- Dynamic fields -->
+        <div class="p-5 space-y-4 max-h-[75vh] overflow-y-auto custom-scrollbar" id="modal-body"></div>
+        <div class="border-t border-gray-100 p-4 bg-slate-50 flex justify-end gap-2">
+            <button onclick="closeModal()" class="px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-200 rounded-xl transition">Cancel</button>
+            <button onclick="saveModalData()" class="px-5 py-2 text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow transition">Save</button>
         </div>
-        <div class="border-t border-gray-100 p-4 bg-gray-50 flex justify-end gap-2">
-            <button onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded">Cancel</button>
-            <button onclick="saveCrudItem()" class="px-4 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded">Save</button>
+    </div>
+</div>
+
+<!-- Rejection Reason Modal -->
+<div id="reject-modal" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-gray-100 p-6 space-y-4">
+        <h3 class="font-extrabold text-gray-900 text-base">Reject Material Submission</h3>
+        <p class="text-xs text-gray-500">Please provide a reason for rejection so the student understands what to improve.</p>
+        <textarea id="reject-reason-input" class="w-full text-xs border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-red-500" rows="3" placeholder="e.g. Incomplete notes, corrupt PDF, or duplicate submission..."></textarea>
+        <input type="hidden" id="reject-resource-id" />
+        <div class="flex justify-end gap-2 pt-2">
+            <button onclick="document.getElementById('reject-modal').classList.add('hidden')" class="px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-xl">Cancel</button>
+            <button onclick="confirmRejection()" class="px-5 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl shadow">Confirm Rejection</button>
         </div>
     </div>
 </div>
 
 <script src="js/api.js"></script>
-<script src="js/app.js"></script>
 <script src="js/admin.js"></script>
 </body>
 </html>

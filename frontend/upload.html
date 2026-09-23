@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>SemesterKit.com - Upload Material</title>
-<!-- Tailwind CSS v3 with Plugins -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Configuration -->
-<script>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SemesterKit.com - Upload Material</title>
+  <!-- Strict Authentication Guard -->
+  <script>
+    if (!localStorage.getItem('token')) {
+      window.location.replace('/login.html?redirect=upload.html');
+    }
+  </script>
+  <!-- Tailwind CSS v3 with Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind Configuration -->
+  <script>
     tailwind.config = {
       theme: {
         extend: {
@@ -30,12 +36,11 @@
       }
     }
   </script>
-<!-- External Font for Doodles -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap" rel="stylesheet"/>
-<style data-purpose="custom-rules">
-    /* Subtle custom borders and form styling matching the mock exactly */
+  <!-- External Font for Doodles -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;display=swap" rel="stylesheet"/>
+  <style data-purpose="custom-rules">
     .border-soft {
       border-color: #e5e9f0;
     }
@@ -49,710 +54,725 @@
   </style>
 </head>
 <body class="bg-[#f3f6fa] text-[#1e293b] font-sans antialiased text-sm">
-<!-- BEGIN: TopNavbar -->
-<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
-<div class="max-w-[1440px] mx-auto px-4 h-16 flex items-center justify-between gap-4">
-<!-- Brand Logo -->
-<div class="flex items-center gap-3 shrink-0">
-<a class="flex items-center gap-2" href="#">
-<!-- Graduation Cap Icon -->
-<div class="text-[#1a73e8]">
-<svg class="w-8 h-8 fill-current" viewbox="0 0 24 24">
-<path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"></path>
-</svg>
-</div>
-<div>
-<div class="font-bold text-xl leading-none text-[#1a73e8] tracking-tight">SemesterKit<span class="text-[#1a73e8]">.com</span></div>
-<div class="text-[10px] text-gray-500 font-medium tracking-wide mt-0.5">Learn Share Grow Together</div>
-</div>
-</a>
-</div>
-<!-- Search Bar -->
-<div class="flex-1 max-w-xl mx-2">
-<div class="relative">
-<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-<input class="w-full pl-9 pr-4 py-1.5 text-xs bg-[#f8fafc] border border-gray-300 rounded-full focus:outline-none focus:border-blue-500 focus:bg-white text-gray-700 placeholder-gray-400 transition-all" placeholder="Search for notes, PYQs, books, subjects, universities..." type="text"/>
-</div>
-</div>
-<!-- Navigation Links -->
-<nav class="hidden xl:flex items-center gap-5 text-[13px] font-medium text-gray-600">
-<a class="hover:text-blue-600 transition-colors" href="#">Home</a>
-<a class="hover:text-blue-600 transition-colors" href="#">B.Tech</a>
-<a class="hover:text-blue-600 transition-colors" href="#">M.Tech</a>
-<a class="hover:text-blue-600 transition-colors" href="#">PhD</a>
-<a class="hover:text-blue-600 transition-colors" href="#">Universities</a>
-<a class="hover:text-blue-600 transition-colors" href="#">Subjects</a>
-<a class="hover:text-blue-600 transition-colors" href="#">Community</a>
-<div class="relative group cursor-pointer flex items-center gap-1 hover:text-blue-600">
-<span>More</span>
-<svg class="w-3.5 h-3.5 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-</nav>
-<!-- User Actions & Profile -->
-<div class="flex items-center gap-4 shrink-0">
-<a class="flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700" href="#">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+  <!-- BEGIN: TopNavbar -->
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-[1440px] mx-auto px-4 h-16 flex items-center justify-between gap-4">
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 shrink-0 cursor-pointer" onclick="window.location.href='index.html'">
+        <a class="flex items-center gap-2" href="index.html">
+          <div class="text-[#1a73e8]">
+            <svg class="w-8 h-8 fill-current" viewbox="0 0 24 24">
+              <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="font-bold text-xl leading-none text-[#1a73e8] tracking-tight">SemesterKit<span class="text-[#1a73e8]">.com</span></div>
+            <div class="text-[10px] text-gray-500 font-medium tracking-wide mt-0.5">Learn Share Grow Together</div>
+          </div>
+        </a>
+      </div>
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-xl mx-2">
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </div>
+          <input id="upload-search-input" class="w-full pl-9 pr-4 py-1.5 text-xs bg-[#f8fafc] border border-gray-300 rounded-full focus:outline-none focus:border-blue-500 focus:bg-white text-gray-700 placeholder-gray-400 transition-all" placeholder="Search for notes, PYQs, books, subjects, universities..." type="text"/>
+        </div>
+      </div>
+      <!-- Navigation Links -->
+      <nav class="hidden xl:flex items-center gap-5 text-[13px] font-medium text-gray-600">
+        <a class="hover:text-blue-600 transition-colors" href="index.html">Home</a>
+        <a class="hover:text-blue-600 transition-colors" href="btech.html">B.Tech</a>
+        <a class="hover:text-blue-600 transition-colors" href="mtech.html">M.Tech</a>
+        <a class="hover:text-blue-600 transition-colors" href="phd.html">PhD</a>
+        <a class="hover:text-blue-600 transition-colors" href="#">Universities</a>
+        <a class="hover:text-blue-600 transition-colors" href="#">Subjects</a>
+        <a class="hover:text-blue-600 transition-colors" href="#">Community</a>
+        <div class="relative group cursor-pointer flex items-center gap-1 hover:text-blue-600">
+          <span>More</span>
+          <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </div>
+      </nav>
+      <!-- User Actions & Profile -->
+      <div class="flex items-center gap-4 shrink-0">
+        <a class="flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700" href="upload.html">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
           Upload
         </a>
-<a class="flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-gray-900" href="#">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+        <a class="flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-gray-900" href="#">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
           Community
         </a>
-<!-- Notification Bell with Red Dot -->
-<button class="relative text-gray-500 hover:text-gray-700 p-1">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="absolute top-1 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
-</button>
-<!-- User Profile Avatar and Name -->
-<div class="flex items-center gap-2 pl-2 border-l border-gray-200 cursor-pointer">
-<img alt="Muzaffar" class="w-7 h-7 rounded-full object-cover border border-gray-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvbdk4Hfejj-oEi_swaKqUqy7dp0on_IV4ngbPeAAfz46OOyDGn8UnPOdeOonX0HAcXRtLGtDbujJX-qbTBpipwbW1oV8_RM1T2Gx8nt_ArkFKE12GQBMjjq2n56PZW-AHPTW9CgKmQyKThObPUZhF5dc_C6N2JrG0J16who_BBLT3M7o7Qq3Rusbgd2MBjL7S6-MKarGhmn2fxT4co1ncpsvSSduS3vD4rGrruBBK4Tz-KTT4MjtU"/>
-<span class="text-xs font-semibold text-gray-700">Muzaffar</span>
-<svg class="w-3.5 h-3.5 text-gray-400 stroke-current" fill="none" viewbox="0 0 24 24">
-<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</div>
-</div>
-</div>
-</header>
-<!-- END: TopNavbar -->
-<!-- BEGIN: BreadcrumbNavigation -->
-<div class="max-w-[1440px] mx-auto px-6 py-2.5">
-<nav class="flex items-center text-xs text-gray-400 gap-2">
-<a class="hover:text-blue-600 transition-colors" href="#">Home</a>
-<span>&gt;</span>
-<a class="hover:text-blue-600 transition-colors" href="#">Upload</a>
-<span>&gt;</span>
-<span class="text-gray-600 font-medium">New Material</span>
-</nav>
-</div>
-<!-- END: BreadcrumbNavigation -->
-<!-- BEGIN: MainContentContainer -->
-<main class="max-w-[1440px] mx-auto px-4 pb-12">
-<div class="grid grid-cols-12 gap-5 items-start">
-<!-- BEGIN: LeftSidebar -->
-<aside class="col-span-12 lg:col-span-2 space-y-6">
-<!-- Upload Action Button -->
-<button class="w-full bg-[#1a73e8] hover:bg-[#1557b0] text-white font-medium py-2.5 px-4 rounded-lg shadow-sm flex items-center justify-center gap-2 text-sm transition-all shadow-blue-200">
-<svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
+        <!-- Notification Bell with Red Dot -->
+        <button class="relative text-gray-500 hover:text-gray-700 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+          <span class="absolute top-1 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+        </button>
+        <!-- Guest Auth Actions -->
+        <button class="px-4 py-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 transition" onclick="window.location.href='login.html'">Login</button>
+        <button class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-full shadow-sm transition" onclick="window.location.href='register.html'">Sign Up</button>
+      </div>
+    </div>
+  </header>
+  <!-- END: TopNavbar -->
+
+  <!-- BEGIN: BreadcrumbNavigation -->
+  <div class="max-w-[1440px] mx-auto px-6 py-2.5">
+    <nav class="flex items-center text-xs text-gray-400 gap-2">
+      <a class="hover:text-blue-600 transition-colors" href="index.html">Home</a>
+      <span>&gt;</span>
+      <a class="hover:text-blue-600 transition-colors" href="upload.html">Upload</a>
+      <span>&gt;</span>
+      <span class="text-gray-600 font-medium">New Material</span>
+    </nav>
+  </div>
+  <!-- END: BreadcrumbNavigation -->
+
+  <!-- BEGIN: MainContentContainer -->
+  <main class="max-w-[1440px] mx-auto px-4 pb-12">
+    <div class="grid grid-cols-12 gap-5 items-start">
+      <!-- BEGIN: LeftSidebar -->
+      <aside class="col-span-12 lg:col-span-2 space-y-6">
+        <!-- Upload Action Button -->
+        <button class="w-full bg-[#1a73e8] hover:bg-[#1557b0] text-white font-medium py-2.5 px-4 rounded-lg shadow-sm flex items-center justify-center gap-2 text-sm transition-all shadow-blue-200 cursor-pointer" onclick="document.getElementById('upload-file-input').click()">
+          <svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
           Upload Material
         </button>
-<!-- Main User Navigation -->
-<nav class="space-y-1 text-[13px]">
-<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+        <!-- Main User Navigation -->
+        <nav class="space-y-1 text-[13px]">
+          <a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
             Dashboard
           </a>
-<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+          <a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
             My Uploads
           </a>
-<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+          <a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
             My Bookmarks
           </a>
-<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+          <a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
             My Contributions
           </a>
-<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+          <a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
             My Profile
           </a>
-<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+          <a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100/70 rounded-md transition-colors font-medium" href="#">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
             Settings
           </a>
-</nav>
-<!-- Browse Section -->
-<div class="pt-2">
-<div class="text-[11px] font-bold text-gray-900 tracking-wider mb-2 uppercase">Browse</div>
-<nav class="space-y-1 text-[13px]">
-<a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </nav>
+        <!-- Browse Section -->
+        <div class="pt-2">
+          <div class="text-[11px] font-bold text-gray-900 tracking-wider mb-2 uppercase">Browse</div>
+          <nav class="space-y-1 text-[13px]">
+            <a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
               Universities
             </a>
-<a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
               Branches
             </a>
-<a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
               Subjects
             </a>
-<a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
               Trending
             </a>
-<a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
               Requests
             </a>
-</nav>
-</div>
-<!-- Community Section -->
-<div class="pt-2">
-<div class="text-[11px] font-bold text-gray-900 tracking-wider mb-2 uppercase">Community</div>
-<nav class="space-y-1 text-[13px]">
-<a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </nav>
+        </div>
+        <!-- Community Section -->
+        <div class="pt-2">
+          <div class="text-[11px] font-bold text-gray-900 tracking-wider mb-2 uppercase">Community</div>
+          <nav class="space-y-1 text-[13px]">
+            <a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
               Discussions
             </a>
-<a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
               Study Partners
             </a>
-<a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
-<svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            <a class="flex items-center gap-3 px-3 py-1.5 text-gray-600 hover:bg-gray-100/70 rounded-md" href="#">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
               Leaderboard
             </a>
-</nav>
-</div>
-<!-- Left Bottom Motivation Card -->
-<div class="pt-4 text-center">
-<div class="flex justify-center -space-x-2 overflow-hidden mb-2">
-<img alt="Student 1" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvlTS5WLbZvVY_gZRTDk3DGl7508Ry2gEAySvMloqprZgt7shBuDECQ9mW04DY6ty1w60Ij3KSBI-2ODVs_940jzS85GMVE01hJMKMZee2WJ8JSgvK_ZX7iAOsINhScieTONTTc3o_tl0iLAO-q3NAxR4wkR7KAayhXba6fabWH4_FTfDM4EcYPymwxIjB1RWoE8ETiX9kI2cU3ojnDk3iTKTLilp7In3x6_FVqB4aT_so3I4ByvFS"/>
-<img alt="Student 2" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6_5b_izG0AyNBehpm6UObunkANdCcSJ87-8-MJYRgsn0WgIUt4W9LBaxGgDdI0EVM8z1Af1AkuXh3BcKMc9V5fsZFCQ2ZalVBR_v0rRvVQvZt1u0n1MxyKQ6o2c4XRXNHfAZmt-lGdHv3kIWuXQFk_0dNLF865TnXP_rdmzLL9GHjzjj6r9JuDPV-XZYWlCzbpAjxHUa6vt2zA-JZOIKwO5oCTVjZo-TkFyoRTtf-Siq33XqKa6nO"/>
-<img alt="Student 3" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0zLXsNtFHSRHr4Rnxzuwnii6ULpcG8G8KCn2vigUId6xqhBCdXb0B4l4-xyYtetVIn5nlbO6-WNEQRlHsX1KCcarbJ7iBoRWje4SKDHYyDaLv2h7SJACP1elgy5fblRuEa9mZCm1mnsqzj0n65U0U8I52ppXXJa4mYIN7CK5T-XbUcPBGIw4NS0LvigyXN5wouE2ajPsuACGaDr1TS-EB1aUnF-n6jdOzcUkWEa0yp6_yPlMz7VZA"/>
-</div>
-<p class="text-xs font-bold text-gray-800 leading-tight">Share Knowledge</p>
-<p class="text-[11px] font-semibold text-gray-700">Help Fellow Engineers</p>
-<p class="text-[11px] text-gray-600 font-medium">Make a Difference! <span class="text-red-500">❤️</span></p>
-</div>
-</aside>
-<!-- END: LeftSidebar -->
-<!-- BEGIN: CenterMainContent -->
-<section class="col-span-12 lg:col-span-7 space-y-5">
-<!-- Hero Banner Card -->
-<div class="relative bg-gradient-to-r from-blue-50/70 via-indigo-50/40 to-blue-50/60 rounded-xl p-5 border border-blue-100 overflow-hidden">
-<div class="relative z-10 max-w-sm">
-<h1 class="text-xl font-extrabold text-[#1a73e8] tracking-tight">
+          </nav>
+        </div>
+        <!-- Left Bottom Motivation Card -->
+        <div class="pt-4 text-center">
+          <div class="flex justify-center -space-x-2 overflow-hidden mb-2">
+            <img alt="Student 1" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvlTS5WLbZvVY_gZRTDk3DGl7508Ry2gEAySvMloqprZgt7shBuDECQ9mW04DY6ty1w60Ij3KSBI-2ODVs_940jzS85GMVE01hJMKMZee2WJ8JSgvK_ZX7iAOsINhScieTONTTc3o_tl0iLAO-q3NAxR4wkR7KAayhXba6fabWH4_FTfDM4EcYPymwxIjB1RWoE8ETiX9kI2cU3ojnDk3iTKTLilp7In3x6_FVqB4aT_so3I4ByvFS"/>
+            <img alt="Student 2" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6_5b_izG0AyNBehpm6UObunkANdCcSJ87-8-MJYRgsn0WgIUt4W9LBaxGgDdI0EVM8z1Af1AkuXh3BcKMc9V5fsZFCQ2ZalVBR_v0rRvVQvZt1u0n1MxyKQ6o2c4XRXNHfAZmt-lGdHv3kIWuXQFk_0dNLF865TnXP_rdmzLL9GHjzjj6r9JuDPV-XZYWlCzbpAjxHUa6vt2zA-JZOIKwO5oCTVjZo-TkFyoRTtf-Siq33XqKa6nO"/>
+            <img alt="Student 3" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0zLXsNtFHSRHr4Rnxzuwnii6ULpcG8G8KCn2vigUId6xqhBCdXb0B4l4-xyYtetVIn5nlbO6-WNEQRlHsX1KCcarbJ7iBoRWje4SKDHYyDaLv2h7SJACP1elgy5fblRuEa9mZCm1mnsqzj0n65U0U8I52ppXXJa4mYIN7CK5T-XbUcPBGIw4NS0LvigyXN5wouE2ajPsuACGaDr1TS-EB1aUnF-n6jdOzcUkWEa0yp6_yPlMz7VZA"/>
+          </div>
+          <p class="text-xs font-bold text-gray-800 leading-tight">Share Knowledge</p>
+          <p class="text-[11px] font-semibold text-gray-700">Help Fellow Engineers</p>
+          <p class="text-[11px] text-gray-600 font-medium">Make a Difference! <span class="text-red-500">❤️</span></p>
+        </div>
+      </aside>
+      <!-- END: LeftSidebar -->
+
+      <!-- BEGIN: CenterMainContent -->
+      <section class="col-span-12 lg:col-span-7 space-y-5">
+        <!-- Hero Banner Card -->
+        <div class="relative bg-gradient-to-r from-blue-50/70 via-indigo-50/40 to-blue-50/60 rounded-xl p-5 border border-blue-100 overflow-hidden">
+          <div class="relative z-10 max-w-sm">
+            <h1 class="text-xl font-extrabold text-[#1a73e8] tracking-tight">
               Upload &amp; Share
             </h1>
-<h2 class="text-xl font-bold text-[#1a73e8] leading-tight mb-2">
+            <h2 class="text-xl font-bold text-[#1a73e8] leading-tight mb-2">
               Make Knowledge Accessible!
             </h2>
-<p class="text-xs text-gray-500 font-normal">
+            <p class="text-xs text-gray-500 font-normal">
               Share your notes, PYQs, books, lab manuals and help thousands of engineering students.
             </p>
-</div>
-<!-- Decorative Badges & Doodles on Right -->
-<div class="absolute right-4 top-3 h-full flex flex-col items-end pointer-events-none">
-<!-- Floating Pill Tags -->
-<div class="flex flex-wrap gap-2 justify-end items-center max-w-[240px] pt-1">
-<span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-blue-600 shadow-sm border border-blue-100">
-<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Notes
+          </div>
+          <!-- Decorative Badges & Doodles on Right -->
+          <div class="absolute right-4 top-3 h-full flex flex-col items-end pointer-events-none">
+            <!-- Floating Pill Tags -->
+            <div class="flex flex-wrap gap-2 justify-end items-center max-w-[240px] pt-1">
+              <span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-blue-600 shadow-sm border border-blue-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Notes
               </span>
-<span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-green-600 shadow-sm border border-green-100">
-<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Books
+              <span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-green-600 shadow-sm border border-green-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Books
               </span>
-<span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-purple-600 shadow-sm border border-purple-100">
-<span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> Lab Manuals
+              <span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-purple-600 shadow-sm border border-purple-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> Lab Manuals
               </span>
-<span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-red-600 shadow-sm border border-red-100">
-<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> PYQs
+              <span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-red-600 shadow-sm border border-red-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> PYQs
               </span>
-<span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-amber-600 shadow-sm border border-amber-100">
-<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Assignments
+              <span class="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded-full text-[10px] font-medium text-amber-600 shadow-sm border border-amber-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Assignments
               </span>
-</div>
-<!-- Handwritten Doodled Slogan -->
-<div class="mt-4 rotate-[-8deg] mr-2 text-right">
-<span class="font-doodle text-xl text-slate-800 font-bold tracking-wide block">Students</span>
-<span class="font-doodle text-lg text-slate-800 font-bold tracking-wide block -mt-1">Help</span>
-<span class="font-doodle text-lg text-slate-800 font-bold tracking-wide -mt-1 flex items-center justify-end gap-1">
+            </div>
+            <!-- Handwritten Doodled Slogan -->
+            <div class="mt-4 rotate-[-8deg] mr-2 text-right">
+              <span class="font-doodle text-xl text-slate-800 font-bold tracking-wide block">Students</span>
+              <span class="font-doodle text-lg text-slate-800 font-bold tracking-wide block -mt-1">Help</span>
+              <span class="font-doodle text-lg text-slate-800 font-bold tracking-wide -mt-1 flex items-center justify-end gap-1">
                 Students <span class="text-red-500 text-sm">❤️</span>
-</span>
-</div>
-</div>
-</div>
-<!-- Form Box -->
-<div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-<!-- Card Title -->
-<div class="flex items-center gap-2.5 pb-4 mb-5 border-b border-gray-100">
-<svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<h3 class="text-base font-bold text-gray-800 tracking-tight">Upload New Material</h3>
-</div>
-<form class="space-y-4">
-<!-- Row 1: University & Branch -->
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1">
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Box -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <!-- Card Title -->
+          <div class="flex items-center gap-2.5 pb-4 mb-5 border-b border-gray-100">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+              <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+            <h3 class="text-base font-bold text-gray-800 tracking-tight">Upload New Material</h3>
+          </div>
+          <form id="upload-form" class="space-y-4">
+            <input type="hidden" id="upload-resource-type-id" name="resource_type_id" value="1" />
+            <!-- Row 1: University & Branch -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">
                   University <span class="text-red-500">*</span>
-</label>
-<div class="relative">
-<select id="upload-college" name="college_id" required class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
-<option value="" disabled selected>Loading...</option>
-</select>
-<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-<svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-</div>
-</div>
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1">
+                </label>
+                <div class="relative">
+                  <select id="upload-college" name="college_id" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required>
+                    <option selected value="1">NIT Trichy</option>
+                    <option value="2">IIT Madras</option>
+                    <option value="3">IIT Bombay</option>
+                    <option value="4">BITS Pilani</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">
                   Branch <span class="text-red-500">*</span>
-</label>
-<div class="relative">
-<select id="upload-branch" name="branch_id" required class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
-<option value="" disabled selected>Loading...</option>
-</select>
-<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-<svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-</div>
-</div>
-</div>
-<!-- Row 2: Semester & Subject -->
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1">
+                </label>
+                <div class="relative">
+                  <select id="upload-branch" name="branch_id" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required>
+                    <option selected value="1">Computer Science and Engineering</option>
+                    <option value="2">Electronics &amp; Communication</option>
+                    <option value="3">Mechanical Engineering</option>
+                    <option value="4">Civil Engineering</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Row 2: Semester & Subject -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">
                   Semester <span class="text-red-500">*</span>
-</label>
-<div class="relative">
-<select id="upload-semester" name="semester_id" required class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
-<option value="" disabled selected>Loading...</option>
-</select>
-<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-<svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-</div>
-</div>
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1">
+                </label>
+                <div class="relative">
+                  <select id="upload-semester" name="semester_id" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required>
+                    <option selected value="3">3rd Semester</option>
+                    <option value="1">1st Semester</option>
+                    <option value="2">2nd Semester</option>
+                    <option value="4">4th Semester</option>
+                    <option value="5">5th Semester</option>
+                    <option value="6">6th Semester</option>
+                    <option value="7">7th Semester</option>
+                    <option value="8">8th Semester</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-gray-700 mb-1">
                   Subject <span class="text-red-500">*</span>
-</label>
-<div class="relative">
-<select id="upload-subject" name="subject_id" required class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
-<option value="" disabled selected>Loading...</option>
-</select>
-<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-<svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-</div>
-</div>
-</div>
-<!-- Material Type Selector -->
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1.5">
+                </label>
+                <div class="relative">
+                  <select id="upload-subject" name="subject_id" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required>
+                    <option selected value="1">Data Structures</option>
+                    <option value="2">Digital Logic &amp; Microprocessors</option>
+                    <option value="3">Discrete Mathematics</option>
+                    <option value="4">Algorithms</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                    <svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Material Type Selector -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1.5">
                 Material Type <span class="text-red-500">*</span>
-</label>
-<div class="flex flex-wrap items-center gap-2">
-<!-- Notes (Selected) -->
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-blue-600 bg-blue-50 text-blue-700 text-xs font-medium transition-all shadow-sm" type="button">
-<svg class="w-3.5 h-3.5 fill-blue-600" viewbox="0 0 24 24">
-<path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path>
-</svg>
+              </label>
+              <div id="material-types-container" class="flex flex-wrap items-center gap-2">
+                <!-- Notes (Selected) -->
+                <button class="type-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-blue-600 bg-blue-50 text-blue-700 text-xs font-medium transition-all shadow-sm cursor-pointer" type="button" data-id="1">
+                  <svg class="w-3.5 h-3.5 fill-blue-600" viewbox="0 0 24 24">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path>
+                  </svg>
                   Notes
                 </button>
-<!-- PYQs -->
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all" type="button">
-<span class="w-3.5 h-3.5 bg-red-600 text-white font-bold rounded flex items-center justify-center text-[7px]">PDF</span>
+                <!-- PYQs -->
+                <button class="type-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all cursor-pointer" type="button" data-id="2">
+                  <span class="w-3.5 h-3.5 bg-red-600 text-white font-bold rounded flex items-center justify-center text-[7px]">PDF</span>
                   PYQs
                 </button>
-<!-- Books -->
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all" type="button">
-<svg class="w-3.5 h-3.5 text-green-600 fill-current" viewbox="0 0 24 24">
-<path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"></path>
-</svg>
+                <!-- Books -->
+                <button class="type-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all cursor-pointer" type="button" data-id="3">
+                  <svg class="w-3.5 h-3.5 text-green-600 fill-current" viewbox="0 0 24 24">
+                    <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"></path>
+                  </svg>
                   Books
                 </button>
-<!-- Lab Manual -->
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all" type="button">
-<svg class="w-3.5 h-3.5 text-purple-600 fill-current" viewbox="0 0 24 24">
-<path d="M20.5 19.5l-4.5-9V4h1V2H7v2h1v6.5l-4.5 9c-.6 1.2.2 2.5 1.5 2.5h14c1.3 0 2.1-1.3 1.5-2.5zM6.5 19l3.5-7V4h4v8l3.5 7h-11z"></path>
-</svg>
+                <!-- Lab Manual -->
+                <button class="type-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all cursor-pointer" type="button" data-id="4">
+                  <svg class="w-3.5 h-3.5 text-purple-600 fill-current" viewbox="0 0 24 24">
+                    <path d="M20.5 19.5l-4.5-9V4h1V2H7v2h1v6.5l-4.5 9c-.6 1.2.2 2.5 1.5 2.5h14c1.3 0 2.1-1.3 1.5-2.5zM6.5 19l3.5-7V4h4v8l3.5 7h-11z"></path>
+                  </svg>
                   Lab Manual
                 </button>
-<!-- Assignments -->
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all" type="button">
-<svg class="w-3.5 h-3.5 text-amber-500 fill-current" viewbox="0 0 24 24">
-<path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path>
-</svg>
+                <!-- Assignments -->
+                <button class="type-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all cursor-pointer" type="button" data-id="5">
+                  <svg class="w-3.5 h-3.5 text-amber-500 fill-current" viewbox="0 0 24 24">
+                    <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path>
+                  </svg>
                   Assignments
                 </button>
-<!-- Other -->
-<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all" type="button">
-<svg class="w-3.5 h-3.5 text-gray-500 fill-current" viewbox="0 0 24 24">
-<path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
-</svg>
+                <!-- Other -->
+                <button class="type-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium transition-all cursor-pointer" type="button" data-id="6">
+                  <svg class="w-3.5 h-3.5 text-gray-500 fill-current" viewbox="0 0 24 24">
+                    <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
+                  </svg>
                   Other
                 </button>
-</div>
-</div>
-<!-- Title Input -->
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1">
+              </div>
+            </div>
+            <!-- Title Input -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">
                 Title <span class="text-red-500">*</span>
-</label>
-<input id="upload-title" name="title" required class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="text" placeholder="Data Structures Complete Handwritten Notes"/>
-</div>
-<!-- Description Textarea -->
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1">
+              </label>
+              <input id="upload-title" name="title" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="text" value="Data Structures Complete Handwritten Notes" required/>
+            </div>
+            <!-- Description Textarea -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">
                 Description
               </label>
-<textarea id="upload-description" name="description" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 resize-none" rows="3" placeholder="These are my handwritten notes..."></textarea>
-<div class="flex justify-end mt-1">
-<span class="text-[11px] text-gray-400">0/500</span>
-</div>
-</div>
-<!-- Upload File Zone -->
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1">
+              <textarea id="upload-description" name="description" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 resize-none" rows="3">These are my handwritten notes for Data Structures (CS - 3rd Sem). Covers all important topics with examples and diagrams. Useful for end semester exams.</textarea>
+              <div class="flex justify-end mt-1">
+                <span class="text-[11px] text-gray-400">120/500</span>
+              </div>
+            </div>
+            <!-- Upload File Zone -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">
                 Upload File <span class="text-red-500">*</span>
-</label>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
-<input type="file" name="file" id="upload-file-input" required class="hidden" accept=".pdf,.doc,.docx,.zip,.ppt,.pptx,.jpg,.jpeg,.png">
-<input type="hidden" name="resource_type_id" id="upload-resource-type-id" required>
-<!-- Dropzone Box -->
-<div id="upload-dropzone" onclick="document.getElementById('upload-file-input').click()" class="border-2 border-dashed border-blue-200 bg-blue-50/20 rounded-lg p-4 text-center cursor-pointer hover:bg-blue-50/50 transition-colors">
-<div class="flex justify-center mb-1">
-<svg class="w-6 h-6 text-blue-500 stroke-[1.8]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-</div>
-<p class="text-xs text-gray-700 font-medium">
+              </label>
+              <input type="file" id="upload-file-input" name="file" class="hidden" accept=".pdf,.doc,.docx,.zip" />
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
+                <!-- Dropzone Box -->
+                <div id="upload-dropzone" class="border-2 border-dashed border-blue-200 bg-blue-50/20 rounded-lg p-4 text-center cursor-pointer hover:bg-blue-50/50 transition-colors" onclick="document.getElementById('upload-file-input').click()">
+                  <div class="flex justify-center mb-1">
+                    <svg class="w-6 h-6 text-blue-500 stroke-[1.8]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                      <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </div>
+                  <p class="text-xs text-gray-700 font-medium">
                     Drag &amp; drop your file here
                   </p>
-<p class="text-[11px] text-blue-600 font-semibold cursor-pointer">
+                  <p class="text-[11px] text-blue-600 font-semibold cursor-pointer">
                     or click to browse
                   </p>
-<p class="text-[10px] text-gray-400 mt-1">
+                  <p class="text-[10px] text-gray-400 mt-1">
                     Supports PDF, DOC, DOCX, ZIP (Max 50MB)
                   </p>
-</div>
-<!-- Uploaded File Preview Card -->
-<div class="border border-gray-200 bg-gray-50/40 rounded-lg p-3 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="w-9 h-11 bg-red-500 rounded flex flex-col items-center justify-center text-white shrink-0 shadow-sm">
-<span class="text-[8px] font-bold tracking-wider">PDF</span>
-<svg class="w-4 h-4 mt-0.5 fill-white" viewbox="0 0 24 24">
-<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 14H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path>
-</svg>
-</div>
-<div>
-<h4 class="text-xs font-semibold text-gray-800 leading-tight">DS_Notes_Complete.pdf</h4>
-<p class="text-[11px] text-gray-400 mt-0.5 font-normal">4.2 MB</p>
-</div>
-</div>
-<button class="text-gray-400 hover:text-gray-600 p-1" type="button">
-<svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-</button>
-</div>
-</div>
-</div>
-<!-- Add Tags Input Container -->
-<div>
-<label class="block text-xs font-semibold text-gray-700 mb-1">
+                </div>
+                <!-- Uploaded File Preview Card -->
+                <div id="upload-preview-card" class="border border-gray-200 bg-gray-50/40 rounded-lg p-3 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div id="preview-badge" class="w-9 h-11 bg-red-500 rounded flex flex-col items-center justify-center text-white shrink-0 shadow-sm">
+                      <span id="preview-type" class="text-[8px] font-bold tracking-wider">PDF</span>
+                      <svg class="w-4 h-4 mt-0.5 fill-white" viewbox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm2 14H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 id="preview-filename" class="text-xs font-semibold text-gray-800 leading-tight">DS_Notes_Complete.pdf</h4>
+                      <p id="preview-filesize" class="text-[11px] text-gray-400 mt-0.5 font-normal">4.2 MB</p>
+                    </div>
+                  </div>
+                  <button id="preview-remove-btn" class="text-gray-400 hover:text-gray-600 p-1" type="button" onclick="document.getElementById('upload-file-input').value=''; document.getElementById('preview-filename').textContent='No file chosen';">
+                    <svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                      <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Add Tags Input Container -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">
                 Add Tags (optional)
               </label>
-<div class="w-full flex flex-wrap items-center gap-1.5 p-2 bg-white border border-gray-300 rounded-md focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500">
-<!-- Tag: important -->
-<span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
+              <div id="tags-box" class="w-full flex flex-wrap items-center gap-1.5 p-2 bg-white border border-gray-300 rounded-md focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500">
+                <!-- Tag: important -->
+                <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
                   important
-                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button">×</button>
-</span>
-<!-- Tag: handwritten -->
-<span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
+                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button" onclick="this.parentElement.remove()">×</button>
+                </span>
+                <!-- Tag: handwritten -->
+                <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
                   handwritten
-                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button">×</button>
-</span>
-<!-- Tag: exam -->
-<span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
+                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button" onclick="this.parentElement.remove()">×</button>
+                </span>
+                <!-- Tag: exam -->
+                <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
                   exam
-                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button">×</button>
-</span>
-<!-- Tag: unit-wise -->
-<span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
+                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button" onclick="this.parentElement.remove()">×</button>
+                </span>
+                <!-- Tag: unit-wise -->
+                <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
                   unit-wise
-                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button">×</button>
-</span>
-<input class="flex-1 min-w-[120px] text-xs border-0 p-0 text-gray-700 placeholder-gray-400 focus:ring-0 focus:outline-none bg-transparent" placeholder="Type and press enter..." type="text"/>
-</div>
-</div>
-<!-- Confirmation Checkbox -->
-<div class="pt-1">
-<label class="flex items-center gap-2 cursor-pointer select-none">
-<input checked="" class="w-4 h-4 rounded text-blue-600 border-gray-300 focus:ring-blue-500" type="checkbox"/>
-<span class="text-xs text-gray-600 font-normal">
+                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button" onclick="this.parentElement.remove()">×</button>
+                </span>
+                <input id="tag-input" class="flex-1 min-w-[120px] text-xs border-0 p-0 text-gray-700 placeholder-gray-400 focus:ring-0 focus:outline-none bg-transparent" placeholder="Type and press enter..." type="text"/>
+              </div>
+            </div>
+            <!-- Confirmation Checkbox -->
+            <div class="pt-1">
+              <label class="flex items-center gap-2 cursor-pointer select-none">
+                <input checked="" class="w-4 h-4 rounded text-blue-600 border-gray-300 focus:ring-blue-500" type="checkbox"/>
+                <span class="text-xs text-gray-600 font-normal">
                   I confirm that this material is my own work or I have permission to share it.
                 </span>
-</label>
-</div>
-<!-- Action Buttons -->
-<div class="flex items-center justify-between pt-3 border-t border-gray-100">
-<button class="px-5 py-2 rounded-md border border-gray-300 bg-white text-gray-700 text-xs font-semibold hover:bg-gray-50 transition-colors" type="button">
+              </label>
+            </div>
+            <!-- Action Buttons -->
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+              <button class="px-5 py-2 rounded-md border border-gray-300 bg-white text-gray-700 text-xs font-semibold hover:bg-gray-50 transition-colors" type="button" onclick="window.history.back()">
                 Cancel
               </button>
-<button class="flex items-center gap-2 px-5 py-2 rounded-md bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs font-semibold shadow-sm transition-all" type="submit">
-<svg class="w-4 h-4 stroke-[2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
+              <button class="flex items-center gap-2 px-5 py-2 rounded-md bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs font-semibold shadow-sm transition-all cursor-pointer" type="submit">
+                <svg class="w-4 h-4 stroke-[2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                  <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
                 Upload Material
               </button>
-</div>
-</form>
-</div>
-</section>
-<!-- END: CenterMainContent -->
-<!-- BEGIN: RightSidebar -->
-<aside class="col-span-12 lg:col-span-3 space-y-4">
-<!-- Top Banner: Be a Contributor -->
-<div class="bg-gradient-to-r from-[#dcfce7]/70 to-[#bbf7d0]/60 border border-green-200 rounded-xl p-3.5 flex items-center justify-between cursor-pointer hover:bg-green-100/60 transition-colors shadow-sm">
-<div class="flex items-center gap-3">
-<div class="w-9 h-9 bg-green-500 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm">
-<!-- Trophy Icon -->
-<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
-<path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.86-.41 3.29-1.95 3.61-3.96C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"></path>
-</svg>
-</div>
-<div>
-<h4 class="text-xs font-bold text-gray-900 leading-tight">Be a Contributor!</h4>
-<p class="text-[11px] text-gray-600 font-normal leading-tight mt-0.5">
+            </div>
+          </form>
+        </div>
+      </section>
+      <!-- END: CenterMainContent -->
+
+      <!-- BEGIN: RightSidebar -->
+      <aside class="col-span-12 lg:col-span-3 space-y-4">
+        <!-- Top Banner: Be a Contributor -->
+        <div class="bg-gradient-to-r from-[#dcfce7]/70 to-[#bbf7d0]/60 border border-green-200 rounded-xl p-3.5 flex items-center justify-between cursor-pointer hover:bg-green-100/60 transition-colors shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-green-500 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm">
+              <svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+                <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V19H7v2h10v-2h-4v-3.1c1.86-.41 3.29-1.95 3.61-3.96C19.08 11.63 21 9.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-gray-900 leading-tight">Be a Contributor!</h4>
+              <p class="text-[11px] text-gray-600 font-normal leading-tight mt-0.5">
                 Your uploads help thousands of students. Get recognition on our leaderboard!
               </p>
-</div>
-</div>
-<svg class="w-4 h-4 text-gray-400 stroke-2 shrink-0 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
-</div>
-<!-- Upload Guidelines Card -->
-<div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
-<div class="flex items-center gap-2 mb-3">
-<div class="w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold leading-none">
+            </div>
+          </div>
+          <svg class="w-4 h-4 text-gray-400 stroke-2 shrink-0 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <!-- Upload Guidelines Card -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold leading-none">
               i
             </div>
-<h4 class="text-xs font-bold text-gray-800">Upload Guidelines</h4>
-</div>
-<ul class="space-y-2.5 text-xs text-gray-600">
-<li class="flex items-start gap-2">
-<svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-<span>Upload original and relevant content</span>
-</li>
-<li class="flex items-start gap-2">
-<svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-<span>Choose correct university, branch, semester and subject</span>
-</li>
-<li class="flex items-start gap-2">
-<svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-<span>Use clear and descriptive titles</span>
-</li>
-<li class="flex items-start gap-2">
-<svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-<span>Add tags to improve discoverability</span>
-</li>
-<li class="flex items-start gap-2">
-<svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-<span>Ensure the file is readable and not password protected</span>
-</li>
-<li class="flex items-start gap-2">
-<svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
-</svg>
-<span>Do not upload copyrighted material (e.g. paid books)</span>
-</li>
-</ul>
-</div>
-<!-- Accepted File Formats Card -->
-<div class="bg-amber-50/50 rounded-xl border border-amber-200/80 p-3.5 flex items-start gap-3">
-<div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
-<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24">
-<path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path>
-</svg>
-</div>
-<div>
-<h4 class="text-xs font-bold text-gray-900 leading-tight">Accepted File Formats</h4>
-<p class="text-xs text-gray-700 font-medium mt-1">PDF, DOC, DOCX, ZIP</p>
-<p class="text-[11px] text-gray-500 font-normal">Maximum file size: 50MB</p>
-</div>
-</div>
-<!-- Content Policy Card -->
-<div class="bg-red-50/40 rounded-xl border border-red-200/80 p-3.5 flex items-start gap-3">
-<div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-red-600 shrink-0">
-<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24">
-<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"></path>
-</svg>
-</div>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-red-900 leading-tight">Content Policy</h4>
-<ul class="mt-1.5 space-y-1 text-[11px] text-gray-600 list-disc list-inside">
-<li>No copyrighted books or publisher content</li>
-<li>No irrelevant or misleading content</li>
-<li>No offensive or harmful material</li>
-<li>Violations may lead to account suspension</li>
-</ul>
-</div>
-</div>
-<!-- Need Help Card -->
-<div class="bg-blue-50/40 rounded-xl border border-blue-100 p-3.5 flex items-start gap-3">
-<div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white shrink-0 text-xs font-bold">
+            <h4 class="text-xs font-bold text-gray-800">Upload Guidelines</h4>
+          </div>
+          <ul class="space-y-2.5 text-xs text-gray-600">
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+              </svg>
+              <span>Upload original and relevant content</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+              </svg>
+              <span>Choose correct university, branch, semester and subject</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+              </svg>
+              <span>Use clear and descriptive titles</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+              </svg>
+              <span>Add tags to improve discoverability</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+              </svg>
+              <span>Ensure the file is readable and not password protected</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+              </svg>
+              <span>Do not upload copyrighted material (e.g. paid books)</span>
+            </li>
+          </ul>
+        </div>
+        <!-- Accepted File Formats Card -->
+        <div class="bg-amber-50/50 rounded-xl border border-amber-200/80 p-3.5 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700 shrink-0">
+            <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24">
+              <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path>
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-gray-900 leading-tight">Accepted File Formats</h4>
+            <p class="text-xs text-gray-700 font-medium mt-1">PDF, DOC, DOCX, ZIP</p>
+            <p class="text-[11px] text-gray-500 font-normal">Maximum file size: 50MB</p>
+          </div>
+        </div>
+        <!-- Content Policy Card -->
+        <div class="bg-red-50/40 rounded-xl border border-red-200/80 p-3.5 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-red-600 shrink-0">
+            <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"></path>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h4 class="text-xs font-bold text-red-900 leading-tight">Content Policy</h4>
+            <ul class="mt-1.5 space-y-1 text-[11px] text-gray-600 list-disc list-inside">
+              <li>No copyrighted books or publisher content</li>
+              <li>No irrelevant or misleading content</li>
+              <li>No offensive or harmful material</li>
+              <li>Violations may lead to account suspension</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Need Help Card -->
+        <div class="bg-blue-50/40 rounded-xl border border-blue-100 p-3.5 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white shrink-0 text-xs font-bold">
             ?
           </div>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-gray-900 leading-tight">Need Help?</h4>
-<p class="text-[11px] text-gray-500 font-normal mt-0.5 leading-tight">
+          <div class="flex-1">
+            <h4 class="text-xs font-bold text-gray-900 leading-tight">Need Help?</h4>
+            <p class="text-[11px] text-gray-500 font-normal mt-0.5 leading-tight">
               Check our FAQs or contact support if you face any issue while uploading.
             </p>
-<div class="mt-2.5">
-<a class="inline-block px-3 py-1 bg-white border border-gray-300 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50 shadow-2xs" href="#">
+            <div class="mt-2.5">
+              <a class="inline-block px-3 py-1 bg-white border border-gray-300 rounded text-xs font-semibold text-gray-700 hover:bg-gray-50 shadow-2xs" href="#">
                 View FAQs
               </a>
-</div>
-</div>
-</div>
-</aside>
-<!-- END: RightSidebar -->
-</div>
-</main>
-<!-- END: MainContentContainer -->
-<!-- BEGIN: GlobalFooter -->
-<footer class="bg-[#0b121e] text-gray-400 text-xs pt-10 pb-6 border-t border-gray-800">
-<div class="max-w-[1440px] mx-auto px-6">
-<div class="grid grid-cols-1 md:grid-cols-5 gap-8 pb-8 border-b border-gray-800">
-<!-- Brand Info Column -->
-<div class="md:col-span-2 space-y-3 pr-4">
-<div class="flex items-center gap-2">
-<div class="text-white">
-<svg class="w-7 h-7 fill-current" viewbox="0 0 24 24">
-<path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"></path>
-</svg>
-</div>
-<div>
-<div class="font-bold text-base leading-none text-white tracking-tight">SemesterKit.com</div>
-<div class="text-[10px] text-gray-400 font-medium">For Students. By Students.</div>
-</div>
-</div>
-<p class="text-xs text-gray-400 leading-relaxed max-w-sm">
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- END: RightSidebar -->
+    </div>
+  </main>
+  <!-- END: MainContentContainer -->
+
+  <!-- BEGIN: GlobalFooter -->
+  <footer class="bg-[#0b121e] text-gray-400 text-xs pt-10 pb-6 border-t border-gray-800">
+    <div class="max-w-[1440px] mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 pb-8 border-b border-gray-800">
+        <!-- Brand Info Column -->
+        <div class="md:col-span-2 space-y-3 pr-4">
+          <div class="flex items-center gap-2">
+            <div class="text-white">
+              <svg class="w-7 h-7 fill-current" viewbox="0 0 24 24">
+                <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="font-bold text-base leading-none text-white tracking-tight">SemesterKit.com</div>
+              <div class="text-[10px] text-gray-400 font-medium">For Students. By Students.</div>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400 leading-relaxed max-w-sm">
             A student-driven platform to access and share engineering study materials from NITs, IITs and other colleges across India.
           </p>
-<div class="text-[11px] text-gray-500 pt-1">
+          <div class="text-[11px] text-gray-500 pt-1">
             © 2026 SemesterKit.com. All rights reserved.
           </div>
-</div>
-<!-- Quick Links Column -->
-<div>
-<h5 class="text-white font-semibold text-xs mb-3">Quick Links</h5>
-<ul class="space-y-1.5 text-xs">
-<li><a class="hover:text-white transition-colors" href="#">Home</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Universities</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Subjects</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Upload</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Community</a></li>
-<li><a class="hover:text-white transition-colors" href="#">About Us</a></li>
-</ul>
-</div>
-<!-- Resources Column -->
-<div>
-<h5 class="text-white font-semibold text-xs mb-3">Resources</h5>
-<ul class="space-y-1.5 text-xs">
-<li><a class="hover:text-white transition-colors" href="#">Notes</a></li>
-<li><a class="hover:text-white transition-colors" href="#">PYQs</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Books</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Lab Manuals</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Previous Papers</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Syllabus</a></li>
-</ul>
-</div>
-<!-- Help & Newsletter Column -->
-<div class="space-y-4">
-<div>
-<h5 class="text-white font-semibold text-xs mb-3">Help</h5>
-<ul class="space-y-1.5 text-xs">
-<li><a class="hover:text-white transition-colors" href="#">Contact Us</a></li>
-<li><a class="hover:text-white transition-colors" href="#">FAQs</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Contribute</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Report Issue</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Terms of Service</a></li>
-</ul>
-</div>
-</div>
-</div>
-<!-- Footer Bottom Socials and Tagline -->
-<div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-<!-- Social Icons & Subscribe -->
-<div class="flex flex-col sm:flex-row items-center gap-6 w-full justify-between">
-<div class="flex items-center gap-4">
-<span class="text-gray-400 text-xs">Follow Us</span>
-<div class="flex items-center gap-3">
-<!-- Twitter -->
-<a class="text-gray-400 hover:text-white transition-colors" href="#">
-<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
-</a>
-<!-- Instagram -->
-<a class="text-gray-400 hover:text-white transition-colors" href="#">
-<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
-</a>
-<!-- YouTube -->
-<a class="text-gray-400 hover:text-white transition-colors" href="#">
-<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
-</a>
-<!-- LinkedIn -->
-<a class="text-gray-400 hover:text-white transition-colors" href="#">
-<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-</a>
-</div>
-</div>
-<!-- Email Subscribe Box -->
-<div class="flex items-center gap-2">
-<span class="text-xs text-gray-400">Subscribe for updates</span>
-<div class="flex items-center">
-<input class="bg-gray-800 text-xs px-3 py-1.5 rounded-l-md border-0 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500 w-48" placeholder="Enter your email" type="email"/>
-<button class="bg-[#1a73e8] hover:bg-[#1557b0] text-white px-3 py-1.5 rounded-r-md flex items-center justify-center">
-<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24">
-<path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-</svg>
-</button>
-</div>
-</div>
-<!-- Motto -->
-<div class="text-[11px] text-gray-400 flex items-center gap-1.5">
-<span>Learn</span> • <span>Share</span> • <span>Grow</span> • <span>Together</span>
-<span class="text-red-500">♡</span>
-</div>
-</div>
-</div>
-</div>
-</footer>
-<!-- END: GlobalFooter -->
-<script src="js/api.js"></script><script src="js/app.js"></script><script src="js/upload.js"></script></body></html>
+        </div>
+        <!-- Quick Links Column -->
+        <div>
+          <h5 class="text-white font-semibold text-xs mb-3">Quick Links</h5>
+          <ul class="space-y-1.5 text-xs">
+            <li><a class="hover:text-white transition-colors" href="index.html">Home</a></li>
+            <li><a class="hover:text-white transition-colors" href="btech.html">B.Tech</a></li>
+            <li><a class="hover:text-white transition-colors" href="mtech.html">M.Tech</a></li>
+            <li><a class="hover:text-white transition-colors" href="phd.html">PhD</a></li>
+            <li><a class="hover:text-white transition-colors" href="upload.html">Upload</a></li>
+            <li><a class="hover:text-white transition-colors" href="#">Community</a></li>
+          </ul>
+        </div>
+        <!-- Resources Column -->
+        <div>
+          <h5 class="text-white font-semibold text-xs mb-3">Resources</h5>
+          <ul class="space-y-1.5 text-xs">
+            <li><a class="hover:text-white transition-colors" href="btech.html">Notes</a></li>
+            <li><a class="hover:text-white transition-colors" href="btech.html">PYQs</a></li>
+            <li><a class="hover:text-white transition-colors" href="btech.html">Books</a></li>
+            <li><a class="hover:text-white transition-colors" href="btech.html">Lab Manuals</a></li>
+            <li><a class="hover:text-white transition-colors" href="btech.html">Previous Papers</a></li>
+            <li><a class="hover:text-white transition-colors" href="btech.html">Syllabus</a></li>
+          </ul>
+        </div>
+        <!-- Help Column -->
+        <div class="space-y-4">
+          <div>
+            <h5 class="text-white font-semibold text-xs mb-3">Help</h5>
+            <ul class="space-y-1.5 text-xs">
+              <li><a class="hover:text-white transition-colors" href="#">Contact Us</a></li>
+              <li><a class="hover:text-white transition-colors" href="#">FAQs</a></li>
+              <li><a class="hover:text-white transition-colors" href="#">Contribute</a></li>
+              <li><a class="hover:text-white transition-colors" href="#">Report Issue</a></li>
+              <li><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+              <li><a class="hover:text-white transition-colors" href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Footer Bottom Socials and Tagline -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+        <div class="flex flex-col sm:flex-row items-center gap-6 w-full justify-between">
+          <div class="flex items-center gap-4">
+            <span class="text-gray-400 text-xs">Follow Us</span>
+            <div class="flex items-center gap-3">
+              <a class="text-gray-400 hover:text-white transition-colors" href="#">
+                <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+              </a>
+              <a class="text-gray-400 hover:text-white transition-colors" href="#">
+                <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+              </a>
+              <a class="text-gray-400 hover:text-white transition-colors" href="#">
+                <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+              </a>
+              <a class="text-gray-400 hover:text-white transition-colors" href="#">
+                <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+              </a>
+            </div>
+          </div>
+          <!-- Email Subscribe Box -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-gray-400">Subscribe for updates</span>
+            <div class="flex items-center">
+              <input class="bg-gray-800 text-xs px-3 py-1.5 rounded-l-md border-0 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500 w-48" placeholder="Enter your email" type="email"/>
+              <button class="bg-[#1a73e8] hover:bg-[#1557b0] text-white px-3 py-1.5 rounded-r-md flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24">
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- Motto -->
+          <div class="text-[11px] text-gray-400 flex items-center gap-1.5">
+            <span>Learn</span> • <span>Share</span> • <span>Grow</span> • <span>Together</span>
+            <span class="text-red-500">♡</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- END: GlobalFooter -->
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/upload.js"></script>
+</body>
+</html>
