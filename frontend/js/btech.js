@@ -22,13 +22,11 @@ async function initBTechPage() {
     if (params.get('semester_id')) currentFilters.semester_id = params.get('semester_id');
     if (params.get('type_id')) currentFilters.resource_type_id = params.get('type_id');
 
-    // Populate dynamic sidebar filters
-    await loadSidebarFilters();
-
     // Setup filter listeners
     setupFilterEvents();
 
-    // Load resources from API
+    // Load filters and resources in parallel for instantaneous load
+    loadSidebarFilters();
     await loadResources();
 }
 

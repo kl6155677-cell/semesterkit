@@ -20,8 +20,8 @@ async function initMTechPage() {
     if (params.get('branch_id')) currentFilters.branch_id = params.get('branch_id');
     if (params.get('type_id')) currentFilters.resource_type_id = params.get('type_id');
 
-    await loadSidebarFilters();
     setupFilterEvents();
+    loadSidebarFilters();
     await loadResources();
 }
 

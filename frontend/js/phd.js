@@ -18,8 +18,8 @@ async function initPhDPage() {
     if (params.get('college_id')) currentFilters.college_id = params.get('college_id');
     if (params.get('type_id')) currentFilters.resource_type_id = params.get('type_id');
 
-    await loadSidebarFilters();
     setupFilterEvents();
+    loadSidebarFilters();
     await loadResources();
 }
 
