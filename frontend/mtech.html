@@ -102,11 +102,6 @@
           <a class="hover:text-[#0066cc] py-1" href="#">Universities</a>
           <a class="hover:text-[#0066cc] py-1" href="#">Subjects</a>
           <a class="hover:text-[#0066cc] py-1" href="upload.html">Upload</a>
-          <a class="hover:text-[#0066cc] py-1" href="#">Community</a>
-          <div class="relative group cursor-pointer flex items-center gap-0.5 hover:text-[#0066cc]">
-            <span>More</span>
-            <i class="w-3.5 h-3.5" data-lucide="chevron-down"></i>
-          </div>
         </nav>
         <div class="h-4 w-[1px] bg-slate-200 hidden lg:block"></div>
         <div class="flex items-center gap-3">
@@ -181,125 +176,58 @@
             <i class="w-3.5 h-3.5 text-slate-400" data-lucide="chevron-right"></i>
           </button>
         </div>
-        <!-- Filter: University -->
-        <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2.5">
-          <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-            <i class="w-4 h-4 text-slate-600" data-lucide="building-2"></i>
-            <span>Select University</span>
-          </div>
+        <!-- Filter: Unit / University -->
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs space-y-1.5">
+          <label class="block text-xs font-bold text-slate-800">Unit</label>
           <div class="relative">
-            <i class="w-3 h-3 absolute left-2.5 top-2 text-slate-400" data-lucide="search"></i>
-            <input
-              class="w-full text-[11px] pl-7 pr-2 py-1 bg-slate-50 border border-slate-200 rounded-md focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc] outline-none"
-              placeholder="Search university..." type="text" />
-          </div>
-          <div class="space-y-1.5 max-h-44 overflow-y-auto pr-1 text-xs text-slate-600">
-            <label class="flex items-center gap-2 font-semibold text-[#0066cc] cursor-pointer">
-              <input checked="" class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5"
-                type="checkbox" />
-              <span>IIT Bombay</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>IIT Delhi</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>IIT Madras</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>IIT Kanpur</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>IIT Kharagpur</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>NIT Trichy</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>NIT Surathkal</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>NIT Warangal</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>Other Universities</span>
-            </label>
+            <select id="filter-college-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] appearance-none cursor-pointer">
+              <option value="">Select Unit</option>
+              <option value="IIT Bombay">IIT Bombay</option>
+              <option value="IIT Delhi">IIT Delhi</option>
+              <option value="IIT Madras">IIT Madras</option>
+              <option value="IIT Kanpur">IIT Kanpur</option>
+              <option value="IIT Kharagpur">IIT Kharagpur</option>
+              <option value="NIT Trichy">NIT Trichy</option>
+              <option value="NIT Surathkal">NIT Surathkal</option>
+              <option value="NIT Warangal">NIT Warangal</option>
+              <option value="Other">Other Universities</option>
+            </select>
+            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </div>
         </div>
-        <!-- Filter: Specialization -->
-        <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2.5">
-          <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-            <i class="w-4 h-4 text-slate-600" data-lucide="git-branch"></i>
-            <span>Select Specialization</span>
-          </div>
+
+        <!-- Filter: Branch / Specialization -->
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs space-y-1.5">
+          <label class="block text-xs font-bold text-slate-800">Branch</label>
           <div class="relative">
-            <i class="w-3 h-3 absolute left-2.5 top-2 text-slate-400" data-lucide="search"></i>
-            <input
-              class="w-full text-[11px] pl-7 pr-2 py-1 bg-slate-50 border border-slate-200 rounded-md focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc] outline-none"
-              placeholder="Search specialization..." type="text" />
-          </div>
-          <div class="space-y-1.5 max-h-44 overflow-y-auto pr-1 text-xs text-slate-600">
-            <label class="flex items-center gap-2 font-semibold text-[#0066cc] cursor-pointer">
-              <input checked="" class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5"
-                type="checkbox" />
-              <span>Computer Science &amp; Engg.</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>Artificial Intelligence</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>Data Science</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>VLSI &amp; Embedded Systems</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>Power Systems</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>Structural Engineering</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>Thermal Engineering</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>Robotics</span>
-            </label>
-            <label class="flex items-center gap-2 hover:text-slate-900 cursor-pointer">
-              <input class="rounded border-slate-300 text-[#0066cc] focus:ring-0 w-3.5 h-3.5" type="checkbox" />
-              <span>Other Specializations</span>
-            </label>
+            <select id="filter-branch-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] appearance-none cursor-pointer">
+              <option value="">Select Branch</option>
+              <option value="Computer Science & Engg.">Computer Science &amp; Engg.</option>
+              <option value="Artificial Intelligence">Artificial Intelligence</option>
+              <option value="Data Science">Data Science</option>
+              <option value="VLSI & Embedded Systems">VLSI &amp; Embedded Systems</option>
+              <option value="Power Systems">Power Systems</option>
+              <option value="Structural Engineering">Structural Engineering</option>
+              <option value="Thermal Engineering">Thermal Engineering</option>
+              <option value="Robotics">Robotics</option>
+              <option value="Other">Other Specializations</option>
+            </select>
+            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </div>
         </div>
+
         <!-- Filter: Semester -->
-        <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-xs space-y-2">
-          <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-            <i class="w-4 h-4 text-slate-600" data-lucide="calendar"></i>
-            <span>Select Semester</span>
-          </div>
-          <div class="grid grid-cols-4 gap-1.5">
-            <button
-              class="py-1.5 bg-[#0066cc] text-white font-semibold rounded text-xs shadow-xs text-center">1</button>
-            <button
-              class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">2</button>
-            <button
-              class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">3</button>
-            <button
-              class="py-1.5 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 rounded text-xs text-center">4</button>
+        <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs space-y-1.5">
+          <label class="block text-xs font-bold text-slate-800">Semester</label>
+          <div class="relative">
+            <select id="filter-semester-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] appearance-none cursor-pointer">
+              <option value="">Select Semester</option>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+            </select>
+            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </div>
         </div>
         <!-- Filter: Subject -->
@@ -421,83 +349,6 @@
           </div>
         </section>
         <!-- END: HeroBanner -->
-
-        <!-- BEGIN: CategoryTiles -->
-        <section class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-2.5">
-          <!-- Notes -->
-          <div
-            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-            <div class="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-              <i class="w-4 h-4" data-lucide="file-text"></i>
-            </div>
-            <span class="text-xs font-semibold text-slate-700 leading-tight">Notes</span>
-            <span class="text-[11px] font-bold text-[#0066cc]">52K+</span>
-          </div>
-          <!-- PYQs -->
-          <div
-            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-            <div class="w-8 h-8 rounded-lg bg-red-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-              <span class="text-[9px] font-black tracking-tighter uppercase">PDF</span>
-            </div>
-            <span class="text-xs font-semibold text-slate-700 leading-tight">PYQs</span>
-            <span class="text-[11px] font-bold text-slate-600">18K+</span>
-          </div>
-          <!-- Books -->
-          <div
-            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-            <div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-              <i class="w-4 h-4" data-lucide="book"></i>
-            </div>
-            <span class="text-xs font-semibold text-slate-700 leading-tight">Books</span>
-            <span class="text-[11px] font-bold text-slate-600">12K+</span>
-          </div>
-          <!-- Research Papers -->
-          <div
-            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-            <div class="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center mb-1.5 shadow-xs">
-              <i class="w-4 h-4" data-lucide="file-check"></i>
-            </div>
-            <span class="text-xs font-semibold text-slate-700 leading-tight">Research Papers</span>
-            <span class="text-[11px] font-bold text-slate-600">25K+</span>
-          </div>
-          <!-- Projects & Code -->
-          <div
-            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-            <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-              <i class="w-4 h-4" data-lucide="code-2"></i>
-            </div>
-            <span class="text-xs font-semibold text-slate-700 leading-tight">Projects &amp; Code</span>
-            <span class="text-[11px] font-bold text-slate-600">9K+</span>
-          </div>
-          <!-- Thesis & Dissertation -->
-          <div
-            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-            <div class="w-8 h-8 rounded-lg bg-[#1e293b] text-white flex items-center justify-center mb-1.5 shadow-xs">
-              <i class="w-4 h-4" data-lucide="graduation-cap"></i>
-            </div>
-            <span class="text-xs font-semibold text-slate-700 leading-tight">Thesis &amp; Dissertation</span>
-            <span class="text-[11px] font-bold text-slate-600">6K+</span>
-          </div>
-          <!-- Lab Resources -->
-          <div
-            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-            <div class="w-8 h-8 rounded-lg bg-sky-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
-              <i class="w-4 h-4" data-lucide="flask-conical"></i>
-            </div>
-            <span class="text-xs font-semibold text-slate-700 leading-tight">Lab Resources</span>
-            <span class="text-[11px] font-bold text-slate-600">4K+</span>
-          </div>
-          <!-- Other -->
-          <div
-            class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all">
-            <div class="w-8 h-8 rounded-lg bg-slate-400 text-white flex items-center justify-center mb-1.5 shadow-xs">
-              <i class="w-4 h-4" data-lucide="more-horizontal"></i>
-            </div>
-            <span class="text-xs font-semibold text-slate-700 leading-tight">Other</span>
-            <span class="text-[11px] font-bold text-slate-600">2K+</span>
-          </div>
-        </section>
-        <!-- END: CategoryTiles -->
 
         <!-- BEGIN: SectionDualTabs -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
