@@ -1,12 +1,14 @@
 document.addEventListener('DOMContentLoaded', async () => {
     // Check auth
     if (!localStorage.getItem('token')) {
-        window.location.href = '/login.html';
+        window.location.href = '/login.html?redirect=vault.html';
         return;
     }
 
     await loadVaultUserHeader();
-    loadTab('bookmarks');
+    const params = new URLSearchParams(window.location.search);
+    const initialTab = params.get('tab') || 'bookmarks';
+    switchTab(initialTab);
 });
 
 let currentTab = 'bookmarks';

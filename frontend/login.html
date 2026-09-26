@@ -114,7 +114,10 @@
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       const params = new URLSearchParams(window.location.search);
-      const redirectUrl = params.get('redirect') || '/vault.html';
+      let redirectUrl = params.get('redirect');
+      if (!redirectUrl) {
+        redirectUrl = data.user.role === 'admin' ? '/admin.html' : '/vault.html';
+      }
       window.location.href = redirectUrl.startsWith('/') ? redirectUrl : '/' + redirectUrl;
     } catch (err) {
       errorDiv.textContent = err.message;

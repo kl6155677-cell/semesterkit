@@ -1,16 +1,33 @@
 document.addEventListener('DOMContentLoaded', async () => {
     // Check admin authentication
     const token = localStorage.getItem('token');
-    const userStr = localStorage.getItem('user');
+    let userStr = localStorage.getItem('user');
     let user = null;
     try {
         if (userStr) user = JSON.parse(userStr);
     } catch (e) {}
 
-    if (!token || !user || user.role !== 'admin') {
-        alert('Access Denied: Admins only.');
-        window.location.href = '/login.html';
+    if (!token) {
+        window.location.href = '/login.html?redirect=admin.html';
         return;
+    }
+
+    if (!user || user.role !== 'admin') {
+        try {
+            const me = await window.api.get('/auth/me');
+            if (me && me.role === 'admin') {
+                user = me;
+                localStorage.setItem('user', JSON.stringify(me));
+            } else {
+                alert('Access Denied: Admins only.');
+                window.location.href = '/login.html?redirect=admin.html';
+                return;
+            }
+        } catch (err) {
+            alert('Access Denied: Admins only.');
+            window.location.href = '/login.html?redirect=admin.html';
+            return;
+        }
     }
 
     initTabs();
