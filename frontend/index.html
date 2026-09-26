@@ -37,19 +37,38 @@
       }
     }
   </script>
+  <style>
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+      width: 100% !important;
+      margin: 0;
+      padding: 0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 </head>
 <body class="bg-[#f8faff] text-[#1e293b] font-sans antialiased min-h-screen">
   <!-- BEGIN: MainHeader -->
   <header class="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
       <!-- Logo -->
-      <div class="flex items-center space-x-2.5">
+      <div class="flex items-center space-x-2 shrink-0 cursor-pointer" onclick="window.location.href='index.html'">
         <div class="text-[#1d7bf5]">
-          <svg class="w-9 h-9" fill="currentColor" viewbox="0 0 24 24">
+          <svg class="w-7 h-7 sm:w-9 sm:h-9" fill="currentColor" viewbox="0 0 24 24">
             <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path>
           </svg>
         </div>
-        <a class="text-2xl font-extrabold text-[#111827] tracking-tight" href="index.html">SemesterKit<span class="text-[#1d7bf5]">.com</span></a>
+        <a class="text-xl sm:text-2xl font-extrabold text-[#111827] tracking-tight" href="index.html">SemesterKit<span class="text-[#1d7bf5]">.com</span></a>
       </div>
       <!-- Navigation Links -->
       <nav class="hidden md:flex items-center space-x-8 text-[15px] font-medium text-gray-600">
@@ -60,91 +79,88 @@
         <a class="hover:text-[#1d7bf5] transition" href="upload.html">Upload</a>
       </nav>
       <!-- Right Action Buttons -->
-      <div class="flex items-center space-x-4">
-        <button aria-label="Search" class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition" type="button" onclick="document.querySelector('#main-search-input')?.focus()">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </button>
-        <button class="px-5 py-2 text-sm font-semibold text-[#1d7bf5] hover:text-[#1565d8] transition" type="button" onclick="window.location.href='login.html'">Login</button>
-        <button class="px-6 py-2.5 bg-[#1d7bf5] hover:bg-[#1565d8] text-white text-sm font-semibold rounded-full shadow-sm transition" type="button" onclick="window.location.href='register.html'">Sign Up</button>
+      <div class="auth-actions-container flex items-center gap-1.5 sm:gap-4 shrink-0">
+        <button class="px-3 sm:px-4 py-1.5 text-xs font-semibold text-[#1d7bf5] hover:text-[#1565d8] transition" type="button" onclick="window.location.href='login.html'">Login</button>
+        <button class="px-3 sm:px-4 py-1.5 bg-[#1d7bf5] hover:bg-[#1565d8] text-white text-xs font-semibold rounded-full shadow-sm transition" type="button" onclick="window.location.href='register.html'">Sign Up</button>
       </div>
     </div>
   </header>
   <!-- END: MainHeader -->
 
   <!-- BEGIN: HeroSection -->
-  <section class="relative pt-12 pb-16 overflow-hidden">
+  <section class="relative pt-8 sm:pt-12 pb-12 sm:pb-16 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
         <!-- Hero Left Content -->
-        <div class="lg:col-span-7 space-y-6">
+        <div class="lg:col-span-7 space-y-5 sm:space-y-6">
           <!-- Tag Pill -->
-          <div class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold text-[#1d7bf5] bg-[#eef5ff] border border-blue-100">
+          <div class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold text-[#1d7bf5] bg-[#eef5ff] border border-blue-100">
             Learn • Share • Grow Together
           </div>
           <!-- Main Heading -->
-          <h1 id="hero-title" class="text-4xl sm:text-5xl font-extrabold text-[#0f172a] leading-tight tracking-tight">
+          <h1 id="hero-title" class="text-3xl sm:text-5xl font-extrabold text-[#0f172a] leading-tight tracking-tight">
             Everything You Need<br/>
             <span class="text-[#1d7bf5]">For Your Engineering Journey</span>
           </h1>
           <!-- Description -->
-          <p id="hero-subtitle" class="text-base sm:text-lg text-gray-600 max-w-xl leading-relaxed">
+          <p id="hero-subtitle" class="text-sm sm:text-lg text-gray-600 max-w-xl leading-relaxed">
             Get semester-wise notes, PYQs, books, lab manuals and more for NITs, IIITs, and other engineering colleges. Upload and help fellow students too!
           </p>
           <!-- Search Box -->
-          <div class="pt-2">
-            <div class="relative flex items-center bg-white rounded-full p-1.5 shadow-md border border-gray-200 focus-within:border-blue-400 max-w-2xl">
-              <div class="pl-4 text-gray-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div class="pt-1 sm:pt-2">
+            <div class="relative flex items-center bg-white rounded-full p-1 sm:p-1.5 shadow-md border border-gray-200 focus-within:border-blue-400 max-w-2xl">
+              <div class="pl-3 sm:pl-4 text-gray-400">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
               </div>
-              <input id="main-search-input" class="w-full px-3 py-2 text-sm md:text-base text-gray-700 placeholder-gray-400 bg-transparent border-none focus:outline-none focus:ring-0" placeholder="Search for college, branch, subject, or material..." type="text"/>
-              <button class="px-7 py-3 bg-[#1d7bf5] hover:bg-[#1565d8] text-white text-sm font-semibold rounded-full shadow transition shrink-0" type="button" onclick="const q = document.getElementById('main-search-input').value; window.location.href = 'btech.html?query=' + encodeURIComponent(q);">Search</button>
+              <input id="main-search-input" class="w-full px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-base text-gray-700 placeholder-gray-400 bg-transparent border-none focus:outline-none focus:ring-0" placeholder="Search college, branch, subject, or material..." type="text"/>
+              <button class="px-4 sm:px-7 py-2 sm:py-3 bg-[#1d7bf5] hover:bg-[#1565d8] text-white text-xs sm:text-sm font-semibold rounded-full shadow transition shrink-0" type="button" onclick="const q = document.getElementById('main-search-input').value; window.location.href = 'btech.html?query=' + encodeURIComponent(q);">Search</button>
             </div>
           </div>
           <!-- Popular Searches Pills -->
-          <div class="flex flex-wrap items-center gap-2 pt-2 text-xs sm:text-sm text-gray-500">
-            <span class="font-medium text-gray-500 mr-1">Popular searches:</span>
-            <span class="px-3 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition" onclick="window.location.href='btech.html?query=Data%20Structures'">Data Structures</span>
-            <span class="px-3 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition" onclick="window.location.href='btech.html?query=Operating%20System'">Operating System</span>
-            <span class="px-3 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition" onclick="window.location.href='btech.html?query=DBMS'">DBMS</span>
-            <span class="px-3 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition" onclick="window.location.href='btech.html?query=Digital%20Electronics'">Digital Electronics</span>
-            <span class="px-3 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition" onclick="window.location.href='btech.html?query=Thermodynamics'">Thermodynamics</span>
+          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-1 text-xs text-gray-500">
+            <span class="font-medium text-gray-500 mr-1 hidden sm:inline">Popular searches:</span>
+            <span class="px-2.5 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition text-[11px] sm:text-xs" onclick="window.location.href='btech.html?query=Data%20Structures'">Data Structures</span>
+            <span class="px-2.5 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition text-[11px] sm:text-xs" onclick="window.location.href='btech.html?query=Operating%20System'">Operating System</span>
+            <span class="px-2.5 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition text-[11px] sm:text-xs" onclick="window.location.href='btech.html?query=DBMS'">DBMS</span>
+            <span class="px-2.5 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition text-[11px] sm:text-xs" onclick="window.location.href='btech.html?query=Digital%20Electronics'">Digital Electronics</span>
+            <span class="px-2.5 py-1 bg-white hover:bg-gray-50 rounded-full border border-gray-200 cursor-pointer transition text-[11px] sm:text-xs hidden sm:inline-block" onclick="window.location.href='btech.html?query=Thermodynamics'">Thermodynamics</span>
           </div>
         </div>
         <!-- Hero Right Illustration Area -->
-        <div class="lg:col-span-5 relative flex justify-center items-center" id="hero-image-container">
+        <div class="lg:col-span-5 relative flex justify-center items-center overflow-hidden sm:overflow-visible py-4 sm:py-6" id="hero-image-container">
           <!-- Backdrop glow circle -->
-          <div class="absolute w-80 h-80 bg-blue-100/60 rounded-full filter blur-2xl -z-10"></div>
+          <div class="absolute w-72 h-72 sm:w-80 sm:h-80 bg-blue-100/60 rounded-full filter blur-2xl -z-10"></div>
           <!-- Doodle Tag top left -->
-          <div class="absolute -top-6 left-6 text-center transform -rotate-6 select-none">
-            <p class="font-handwriting text-2xl font-bold text-[#1e3a8a] leading-tight">Students<br/>Help<br/>Students <span class="text-rose-500">❤️</span></p>
+          <div class="absolute -top-4 sm:-top-6 left-2 sm:left-6 text-center transform -rotate-6 select-none">
+            <p class="font-handwriting text-xl sm:text-2xl font-bold text-[#1e3a8a] leading-tight">Students<br/>Help<br/>Students <span class="text-rose-500">❤️</span></p>
             <!-- Dotted curved line -->
-            <svg class="w-20 h-10 text-blue-400 mx-auto" fill="none" viewbox="0 0 100 50">
+            <svg class="w-16 sm:w-20 h-8 sm:h-10 text-blue-400 mx-auto" fill="none" viewbox="0 0 100 50">
               <path d="M10 10 C 40 40, 70 10, 90 45" stroke="currentColor" stroke-dasharray="4,4" stroke-linecap="round" stroke-width="2"></path>
             </svg>
           </div>
           <!-- Floating Badges -->
-          <div class="absolute top-4 right-10 bg-white shadow-lg border border-gray-100 rounded-lg px-3 py-1.5 flex items-center space-x-1.5 z-20">
-            <span class="text-blue-500">📑</span>
-            <span class="text-xs font-bold text-gray-800">Notes</span>
+          <div class="absolute top-4 right-6 sm:right-10 bg-white shadow-lg border border-gray-100 rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 flex items-center space-x-1.5 z-20">
+            <span class="text-blue-500 text-xs">📑</span>
+            <span class="text-[10px] sm:text-xs font-bold text-gray-800">Notes</span>
           </div>
-          <div class="absolute top-16 -right-2 bg-white shadow-lg border border-gray-100 rounded-lg px-3 py-1.5 flex items-center space-x-1.5 z-20">
-            <span class="text-emerald-500 font-bold text-xs">PYQ</span>
-            <span class="text-xs font-bold text-gray-800">PYQs</span>
+          <div class="absolute top-16 right-0 sm:-right-2 bg-white shadow-lg border border-gray-100 rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 flex items-center space-x-1.5 z-20">
+            <span class="text-emerald-500 font-bold text-[10px] sm:text-xs">PYQ</span>
+            <span class="text-[10px] sm:text-xs font-bold text-gray-800">PYQs</span>
           </div>
-          <div class="absolute top-20 left-4 bg-white shadow-lg border border-gray-100 rounded-lg px-3 py-1.5 flex items-center space-x-1.5 z-20">
-            <span class="text-blue-600">📖</span>
-            <span class="text-xs font-bold text-gray-800">Books</span>
+          <div class="absolute top-20 left-2 sm:left-4 bg-white shadow-lg border border-gray-100 rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 flex items-center space-x-1.5 z-20">
+            <span class="text-blue-600 text-xs">📖</span>
+            <span class="text-[10px] sm:text-xs font-bold text-gray-800">Books</span>
           </div>
-          <div class="absolute bottom-28 -right-4 bg-white shadow-lg border border-gray-100 rounded-lg px-3 py-1.5 flex items-center space-x-1.5 z-20">
-            <span class="text-indigo-500">🔬</span>
-            <span class="text-xs font-bold text-gray-800">Lab Manuals</span>
+          <div class="absolute bottom-24 sm:bottom-28 right-0 sm:-right-4 bg-white shadow-lg border border-gray-100 rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 flex items-center space-x-1.5 z-20">
+            <span class="text-indigo-500 text-xs">🔬</span>
+            <span class="text-[10px] sm:text-xs font-bold text-gray-800">Lab Manuals</span>
           </div>
-          <div class="absolute -bottom-2 right-12 bg-white shadow-lg border border-gray-100 rounded-lg px-3.5 py-1.5 flex items-center space-x-1.5 z-20">
-            <span class="text-blue-600">📚</span>
-            <span class="text-xs font-bold text-gray-800">Study Material</span>
+          <div class="absolute bottom-0 sm:-bottom-2 right-6 sm:right-12 bg-white shadow-lg border border-gray-100 rounded-lg px-2.5 sm:px-3.5 py-1 sm:py-1.5 flex items-center space-x-1.5 z-20">
+            <span class="text-blue-600 text-xs">📚</span>
+            <span class="text-[10px] sm:text-xs font-bold text-gray-800">Study Material</span>
           </div>
           <!-- Student Illustration SVG Graphic -->
-          <div class="relative w-80 sm:w-96">
+          <div class="relative w-72 sm:w-96 max-w-full">
             <svg class="w-full h-auto drop-shadow-xl" fill="none" viewbox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
               <circle cx="200" cy="220" fill="#e0f2fe" opacity="0.6" r="160"></circle>
               <ellipse cx="230" cy="330" fill="#1e3a8a" rx="90" ry="80"></ellipse>
@@ -173,11 +189,11 @@
   <!-- END: HeroSection -->
 
   <!-- BEGIN: CategoryTiles -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-    <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-2.5">
+  <section class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2">
+    <div class="grid grid-cols-4 md:grid-cols-8 gap-2 sm:gap-2.5">
       <!-- Notes -->
       <div
-        class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all" onclick="window.location.href='btech.html?type=Notes'">
+        class="bg-white border border-slate-200/90 rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all min-w-0" onclick="window.location.href='btech.html?type=Notes'">
         <div class="w-8 h-8 rounded-lg bg-blue-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
           <i class="w-4 h-4" data-lucide="file-text"></i>
         </div>
@@ -186,66 +202,66 @@
       </div>
       <!-- PYQs -->
       <div
-        class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all" onclick="window.location.href='btech.html?type=PYQ'">
+        class="bg-white border border-slate-200/90 rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all min-w-0" onclick="window.location.href='btech.html?type=PYQ'">
         <div class="w-8 h-8 rounded-lg bg-red-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
           <span class="text-[9px] font-black tracking-tighter uppercase">PDF</span>
         </div>
-        <span class="text-xs font-semibold text-slate-700 leading-tight">PYQs</span>
-        <span class="text-[11px] font-bold text-slate-600">18K+</span>
+        <span class="text-[10px] sm:text-xs font-semibold text-slate-700 leading-tight truncate w-full">PYQs</span>
+        <span class="text-[10px] sm:text-[11px] font-bold text-slate-600">18K+</span>
       </div>
       <!-- Books -->
       <div
-        class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all" onclick="window.location.href='btech.html?type=Books'">
+        class="bg-white border border-slate-200/90 rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all min-w-0" onclick="window.location.href='btech.html?type=Books'">
         <div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
           <i class="w-4 h-4" data-lucide="book"></i>
         </div>
-        <span class="text-xs font-semibold text-slate-700 leading-tight">Books</span>
-        <span class="text-[11px] font-bold text-slate-600">12K+</span>
+        <span class="text-[10px] sm:text-xs font-semibold text-slate-700 leading-tight truncate w-full">Books</span>
+        <span class="text-[10px] sm:text-[11px] font-bold text-slate-600">12K+</span>
       </div>
       <!-- Research Papers -->
       <div
-        class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all" onclick="window.location.href='mtech.html'">
+        class="bg-white border border-slate-200/90 rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all min-w-0" onclick="window.location.href='mtech.html'">
         <div class="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center mb-1.5 shadow-xs">
           <i class="w-4 h-4" data-lucide="file-check"></i>
         </div>
-        <span class="text-xs font-semibold text-slate-700 leading-tight">Research Papers</span>
-        <span class="text-[11px] font-bold text-slate-600">25K+</span>
+        <span class="text-[10px] sm:text-xs font-semibold text-slate-700 leading-tight truncate w-full">Research Papers</span>
+        <span class="text-[10px] sm:text-[11px] font-bold text-slate-600">25K+</span>
       </div>
       <!-- Projects & Code -->
       <div
-        class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all" onclick="window.location.href='mtech.html'">
+        class="bg-white border border-slate-200/90 rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all min-w-0" onclick="window.location.href='mtech.html'">
         <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
           <i class="w-4 h-4" data-lucide="code-2"></i>
         </div>
-        <span class="text-xs font-semibold text-slate-700 leading-tight">Projects &amp; Code</span>
-        <span class="text-[11px] font-bold text-slate-600">9K+</span>
+        <span class="text-[10px] sm:text-xs font-semibold text-slate-700 leading-tight truncate w-full">Projects &amp; Code</span>
+        <span class="text-[10px] sm:text-[11px] font-bold text-slate-600">9K+</span>
       </div>
       <!-- Thesis & Dissertation -->
       <div
-        class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all" onclick="window.location.href='phd.html'">
+        class="bg-white border border-slate-200/90 rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all min-w-0" onclick="window.location.href='phd.html'">
         <div class="w-8 h-8 rounded-lg bg-[#1e293b] text-white flex items-center justify-center mb-1.5 shadow-xs">
           <i class="w-4 h-4" data-lucide="graduation-cap"></i>
         </div>
-        <span class="text-xs font-semibold text-slate-700 leading-tight">Thesis &amp; Dissertation</span>
-        <span class="text-[11px] font-bold text-slate-600">6K+</span>
+        <span class="text-[10px] sm:text-xs font-semibold text-slate-700 leading-tight truncate w-full">Thesis</span>
+        <span class="text-[10px] sm:text-[11px] font-bold text-slate-600">6K+</span>
       </div>
       <!-- Lab Resources -->
       <div
-        class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all" onclick="window.location.href='btech.html?type=Lab%20Manuals'">
+        class="bg-white border border-slate-200/90 rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all min-w-0" onclick="window.location.href='btech.html?type=Lab%20Manuals'">
         <div class="w-8 h-8 rounded-lg bg-sky-500 text-white flex items-center justify-center mb-1.5 shadow-xs">
           <i class="w-4 h-4" data-lucide="flask-conical"></i>
         </div>
-        <span class="text-xs font-semibold text-slate-700 leading-tight">Lab Resources</span>
-        <span class="text-[11px] font-bold text-slate-600">4K+</span>
+        <span class="text-[10px] sm:text-xs font-semibold text-slate-700 leading-tight truncate w-full">Lab Manuals</span>
+        <span class="text-[10px] sm:text-[11px] font-bold text-slate-600">4K+</span>
       </div>
       <!-- Other -->
       <div
-        class="bg-white border border-slate-200/90 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all" onclick="window.location.href='btech.html'">
+        class="bg-white border border-slate-200/90 rounded-xl p-2 sm:p-2.5 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-sm cursor-pointer transition-all min-w-0" onclick="window.location.href='btech.html'">
         <div class="w-8 h-8 rounded-lg bg-slate-400 text-white flex items-center justify-center mb-1.5 shadow-xs">
           <i class="w-4 h-4" data-lucide="more-horizontal"></i>
         </div>
-        <span class="text-xs font-semibold text-slate-700 leading-tight">Other</span>
-        <span class="text-[11px] font-bold text-slate-600">2K+</span>
+        <span class="text-[10px] sm:text-xs font-semibold text-slate-700 leading-tight truncate w-full">Other</span>
+        <span class="text-[10px] sm:text-[11px] font-bold text-slate-600">2K+</span>
       </div>
     </div>
   </section>

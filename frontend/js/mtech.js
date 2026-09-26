@@ -155,7 +155,7 @@ function renderResources(resources, container) {
 
     resources.forEach(res => {
         const card = document.createElement('div');
-        card.className = 'bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3';
+        card.className = 'bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-slate-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0';
         
         let typeBadgeColor = 'bg-blue-600';
         let typeLabel = (res.file_type || 'DOC').toUpperCase();
@@ -166,15 +166,15 @@ function renderResources(resources, container) {
         const firstLetter = (res.contributor_name || 'U').charAt(0).toUpperCase();
 
         card.innerHTML = `
-            <div class="flex items-start gap-3">
+            <div class="flex items-start gap-3 min-w-0 flex-1">
                 <div class="w-10 h-10 rounded-lg ${typeBadgeColor} text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs uppercase">
                     ${typeLabel}
                 </div>
-                <div class="space-y-1">
-                    <h3 class="text-xs font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition" onclick="window.location.href='/resource.html?id=${res.id}'">
+                <div class="space-y-1 min-w-0 flex-1">
+                    <h3 class="text-xs font-bold text-slate-900 hover:text-blue-600 cursor-pointer transition break-words" onclick="window.location.href='/resource.html?id=${res.id}'">
                         ${res.title}
                     </h3>
-                    <p class="text-[11px] text-slate-500 leading-tight line-clamp-1">
+                    <p class="text-[11px] text-slate-500 leading-tight line-clamp-1 break-words">
                         ${res.description || 'No description provided.'}
                     </p>
                     <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
@@ -184,7 +184,7 @@ function renderResources(resources, container) {
                     </div>
                 </div>
             </div>
-            <div class="flex items-center justify-between sm:justify-end gap-5 shrink-0 text-xs text-slate-500 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+            <div class="flex flex-wrap items-center justify-between sm:justify-end gap-2 sm:gap-5 shrink-0 text-xs text-slate-500 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
                 <div class="flex items-center gap-2">
                     <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 overflow-hidden font-bold">
                         ${firstLetter}

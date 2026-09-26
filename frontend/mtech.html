@@ -37,6 +37,17 @@
     }
   </script>
   <style data-purpose="custom-layout">
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+      width: 100% !important;
+      margin: 0;
+      padding: 0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: #f8fafc;
@@ -67,7 +78,7 @@
 <body class="bg-[#f8fafc] text-slate-800 antialiased min-h-screen flex flex-col justify-between">
   <!-- BEGIN: MainHeader -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-    <div class="max-w-[1440px] mx-auto px-4 lg:px-6 h-16 flex items-center justify-between gap-4">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-4 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
       <!-- Logo -->
       <div class="flex items-center gap-6 shrink-0 cursor-pointer" onclick="window.location.href='index.html'">
         <a class="flex items-center gap-2" href="index.html">
@@ -93,8 +104,8 @@
         </div>
       </div>
       <!-- Navigation & Profile -->
-      <div class="flex items-center gap-5 shrink-0 text-xs">
-        <nav class="hidden lg:flex items-center gap-5 text-slate-600 font-medium">
+      <div class="auth-actions-container flex items-center gap-1.5 sm:gap-3 shrink-0 text-xs">
+        <nav class="hidden lg:flex items-center gap-5 text-slate-600 font-medium mr-2">
           <a class="hover:text-[#0066cc] py-1" href="index.html">Home</a>
           <a class="hover:text-[#0066cc] py-1" href="btech.html">B.Tech</a>
           <a class="text-[#0066cc] font-semibold border-b-2 border-[#0066cc] py-1" href="mtech.html">M.Tech</a>
@@ -103,25 +114,23 @@
           <a class="hover:text-[#0066cc] py-1" href="#">Subjects</a>
           <a class="hover:text-[#0066cc] py-1" href="upload.html">Upload</a>
         </nav>
-        <div class="h-4 w-[1px] bg-slate-200 hidden lg:block"></div>
-        <div class="flex items-center gap-3">
-          <button class="flex items-center gap-1.5 text-slate-600 hover:text-[#0066cc] font-medium px-2 py-1 rounded"
-            onclick="window.location.href='upload.html'">
-            <i class="w-4 h-4 text-[#0066cc]" data-lucide="cloud-upload"></i>
-            <span class="hidden sm:inline">Upload</span>
-          </button>
-          <button class="flex items-center gap-1 text-slate-600 hover:text-[#0066cc] font-medium px-2 py-1 rounded">
-            <i class="w-4 h-4 text-slate-500" data-lucide="users"></i>
-            <span class="hidden sm:inline">Community</span>
-          </button>
-          <button class="relative text-slate-500 hover:text-slate-700 p-1">
-            <i class="w-4 h-4" data-lucide="bell"></i>
-            <span class="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-          </button>
-          <!-- Guest Auth Actions -->
-          <button class="px-4 py-1.5 text-xs font-semibold text-[#0066cc] hover:text-blue-800 transition" onclick="window.location.href='login.html'">Login</button>
-          <button class="px-4 py-1.5 bg-[#0066cc] hover:bg-blue-700 text-white text-xs font-semibold rounded-full shadow-sm transition" onclick="window.location.href='register.html'">Sign Up</button>
-        </div>
+        <div class="h-4 w-[1px] bg-slate-200 hidden lg:block mr-1"></div>
+        <button class="flex items-center gap-1.5 text-slate-600 hover:text-[#0066cc] font-medium px-2 py-1 rounded"
+          onclick="window.location.href='upload.html'">
+          <i class="w-4 h-4 text-[#0066cc]" data-lucide="cloud-upload"></i>
+          <span class="hidden sm:inline">Upload</span>
+        </button>
+        <button class="hidden sm:flex items-center gap-1 text-slate-600 hover:text-[#0066cc] font-medium px-2 py-1 rounded">
+          <i class="w-4 h-4 text-slate-500" data-lucide="users"></i>
+          <span>Community</span>
+        </button>
+        <button class="relative text-slate-500 hover:text-slate-700 p-1">
+          <i class="w-4 h-4" data-lucide="bell"></i>
+          <span class="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+        </button>
+        <!-- Guest Auth Actions -->
+        <button class="px-2.5 sm:px-4 py-1.5 text-xs font-semibold text-[#0066cc] hover:text-blue-800 transition" onclick="window.location.href='login.html'">Login</button>
+        <button class="px-3 sm:px-4 py-1.5 bg-[#0066cc] hover:bg-blue-700 text-white text-xs font-semibold rounded-full shadow-sm transition" onclick="window.location.href='register.html'">Sign Up</button>
       </div>
     </div>
   </header>
@@ -129,23 +138,23 @@
 
   <!-- BEGIN: BreadcrumbBar -->
   <div class="bg-[#f8fafc] border-b border-slate-200 text-[11px] text-slate-500">
-    <div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-2 flex items-center gap-2">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-4 lg:px-6 py-2 flex items-center gap-2 overflow-x-auto scrollbar-none whitespace-nowrap">
       <a class="hover:text-[#0066cc]" href="index.html">Home</a>
-      <i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
+      <i class="w-3 h-3 text-slate-400 shrink-0" data-lucide="chevron-right"></i>
       <a class="hover:text-[#0066cc]" href="mtech.html">M.Tech</a>
-      <i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
+      <i class="w-3 h-3 text-slate-400 shrink-0" data-lucide="chevron-right"></i>
       <a class="hover:text-[#0066cc]" href="#">IIT Bombay</a>
-      <i class="w-3 h-3 text-slate-400" data-lucide="chevron-right"></i>
+      <i class="w-3 h-3 text-slate-400 shrink-0" data-lucide="chevron-right"></i>
       <span class="text-slate-700 font-medium">Computer Science &amp; Engineering</span>
     </div>
   </div>
   <!-- END: BreadcrumbBar -->
 
   <!-- Main Container -->
-  <div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-4 flex-1 w-full">
+  <div class="max-w-[1440px] mx-auto px-3 sm:px-4 lg:px-6 py-4 flex-1 w-full min-w-0">
     <div class="flex flex-col lg:flex-row gap-6">
       <!-- BEGIN: SidebarFilters -->
-      <aside class="w-full lg:w-64 shrink-0 space-y-5">
+      <aside class="w-full lg:w-64 shrink-0 space-y-5 min-w-0">
         <!-- Degree Level Switcher -->
         <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs">
           <button
@@ -252,7 +261,7 @@
       <!-- END: SidebarFilters -->
 
       <!-- Main Content Area -->
-      <main class="flex-1 space-y-4">
+      <main class="flex-1 space-y-4 min-w-0">
         <!-- BEGIN: HeroBanner -->
         <section
           class="hero-gradient border border-blue-100/80 rounded-2xl p-5 lg:p-6 relative overflow-hidden shadow-xs">

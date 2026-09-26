@@ -17,7 +17,7 @@ function updateAuthUI() {
     } catch(e) {}
 
     // Find Auth action containers across all headers
-    const navRightContainers = document.querySelectorAll('header .flex.items-center.space-x-4, header .flex.items-center.gap-4, header .flex.items-center.gap-5, header .flex.items-center.gap-3, header .flex.items-center.space-x-3');
+    const navRightContainers = document.querySelectorAll('.auth-actions-container, #auth-actions-container, header .auth-container');
     
     navRightContainers.forEach(container => {
         if (user) {
@@ -25,26 +25,23 @@ function updateAuthUI() {
             const initial = displayName.charAt(0).toUpperCase();
 
             container.innerHTML = `
-                <a class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition" href="/upload.html" title="Upload Material">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <a class="p-1.5 sm:p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition" href="/upload.html" title="Upload Material">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                 </a>
-                <a href="/vault.html" class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full hover:bg-gray-100 transition border border-gray-200">
-                    <div class="w-7 h-7 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center">
+                <a href="/vault.html" class="flex items-center gap-1.5 sm:gap-2 px-2 py-1 rounded-full hover:bg-gray-100 transition border border-gray-200">
+                    <div class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-[11px] flex items-center justify-center">
                         ${initial}
                     </div>
-                    <span class="text-xs font-bold text-gray-800">${displayName}</span>
+                    <span class="text-xs font-bold text-gray-800 max-w-[70px] sm:max-w-[100px] truncate">${displayName}</span>
                 </a>
-                <button onclick="logoutUser()" class="px-3 py-1.5 text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition" title="Logout">
+                <button onclick="logoutUser()" class="px-2 sm:px-3 py-1 text-xs font-semibold text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition" title="Logout">
                     Logout
                 </button>
             `;
         } else {
             container.innerHTML = `
-                <button aria-label="Search" class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition" type="button" onclick="const s = document.querySelector('#main-search-input, input[placeholder*=\\'Search\\']'); if(s) { s.focus(); } else { window.location.href='/btech.html'; }">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                </button>
-                <button class="px-4 py-1.5 text-xs font-semibold text-[#1d7bf5] hover:text-[#1565d8] transition" type="button" onclick="window.location.href='/login.html'">Login</button>
-                <button class="px-4 py-1.5 bg-[#1d7bf5] hover:bg-[#1565d8] text-white text-xs font-semibold rounded-full shadow-sm transition" type="button" onclick="window.location.href='/register.html'">Sign Up</button>
+                <button class="px-3 sm:px-4 py-1.5 text-xs font-semibold text-[#1d7bf5] hover:text-[#1565d8] transition" type="button" onclick="window.location.href='/login.html'">Login</button>
+                <button class="px-3 sm:px-4 py-1.5 bg-[#1d7bf5] hover:bg-[#1565d8] text-white text-xs font-semibold rounded-full shadow-sm transition" type="button" onclick="window.location.href='/register.html'">Sign Up</button>
             `;
         }
     });
