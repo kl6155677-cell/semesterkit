@@ -190,177 +190,80 @@
             </svg>
           </div>
         </div>
-        <!-- Filter Card: Select University -->
-        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-          <div class="flex items-center gap-2 font-bold text-slate-800 text-sm mb-2.5">
-            <svg class="w-4 h-4 text-slate-700" fill="currentColor" viewbox="0 0 24 24">
-              <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1M12 7C13.66 7 15 8.34 15 10C15 11.66 13.66 13 12 13C10.34 13 9 11.66 9 10C9 8.34 10.34 7 12 7Z"></path>
-            </svg>
-            <span>Select University</span>
-          </div>
-          <!-- Search box inside filter -->
-          <div class="relative mb-2.5">
-            <input class="w-full pl-7 pr-3 py-1 text-xs border border-slate-200 rounded-md placeholder-slate-400 focus:outline-none focus:border-brand-500" placeholder="Search university..." type="text"/>
-            <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-              <path d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-            </svg>
-          </div>
-          <!-- University List Checkboxes -->
-          <div class="space-y-1.5 text-xs text-slate-600 max-h-48 overflow-y-auto custom-scroll pr-1">
-            <label class="flex items-center gap-2 cursor-pointer text-brand-600 font-semibold">
-              <input checked="" class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>NIT Trichy</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>NIT Surathkal</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>NIT Warangal</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>NIT Rourkela</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>NIT Calicut</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>IIT Bombay</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>IIT Delhi</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>IIT Madras</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>IIT Kanpur</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>IIT Kharagpur</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Other Colleges</span>
-            </label>
+        <!-- Filter Card: Select University / Unit -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-2xs space-y-1.5">
+          <label class="block text-xs font-bold text-slate-800">Unit</label>
+          <div class="relative">
+            <select id="filter-college-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 appearance-none cursor-pointer">
+              <option value="">Select Unit</option>
+              <option value="NIT Trichy">NIT Trichy</option>
+              <option value="NIT Surathkal">NIT Surathkal</option>
+              <option value="NIT Warangal">NIT Warangal</option>
+              <option value="NIT Rourkela">NIT Rourkela</option>
+              <option value="NIT Calicut">NIT Calicut</option>
+              <option value="IIT Bombay">IIT Bombay</option>
+              <option value="IIT Delhi">IIT Delhi</option>
+              <option value="IIT Madras">IIT Madras</option>
+              <option value="IIT Kanpur">IIT Kanpur</option>
+              <option value="IIT Kharagpur">IIT Kharagpur</option>
+              <option value="Other">Other Colleges</option>
+            </select>
+            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </div>
         </div>
+
         <!-- Filter Card: Select Branch -->
-        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-          <div class="flex items-center gap-2 font-bold text-slate-800 text-sm mb-2.5">
-            <svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-              <path d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <span>Select Branch</span>
-          </div>
-          <div class="relative mb-2.5">
-            <input class="w-full pl-7 pr-3 py-1 text-xs border border-slate-200 rounded-md placeholder-slate-400 focus:outline-none focus:border-brand-500" placeholder="Search branch..." type="text"/>
-            <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-              <path d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-            </svg>
-          </div>
-          <div class="space-y-1.5 text-xs text-slate-600">
-            <label class="flex items-center gap-2 cursor-pointer text-brand-600 font-semibold">
-              <input checked="" class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Computer Science</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Electrical Engineering</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Electronics &amp; Comm.</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Mechanical Engineering</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Civil Engineering</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Chemical Engineering</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Other Branches</span>
-            </label>
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-2xs space-y-1.5">
+          <label class="block text-xs font-bold text-slate-800">Branch</label>
+          <div class="relative">
+            <select id="filter-branch-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 appearance-none cursor-pointer">
+              <option value="">Select Branch</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Electrical Engineering">Electrical Engineering</option>
+              <option value="Electronics & Comm.">Electronics &amp; Comm.</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Chemical Engineering">Chemical Engineering</option>
+              <option value="Other">Other Branches</option>
+            </select>
+            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </div>
         </div>
+
         <!-- Filter Card: Select Semester -->
-        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-          <div class="flex items-center gap-2 font-bold text-slate-800 text-sm mb-3">
-            <svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-              <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <span>Select Semester</span>
-          </div>
-          <!-- 1 to 8 grid -->
-          <div class="grid grid-cols-4 gap-2 text-xs font-semibold">
-            <button class="py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-center">1</button>
-            <button class="py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-center">2</button>
-            <button class="py-1.5 rounded-lg bg-brand-600 text-white text-center shadow-xs">3</button>
-            <button class="py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-center">4</button>
-            <button class="py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-center">5</button>
-            <button class="py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-center">6</button>
-            <button class="py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-center">7</button>
-            <button class="py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-center">8</button>
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-2xs space-y-1.5">
+          <label class="block text-xs font-bold text-slate-800">Semester</label>
+          <div class="relative">
+            <select id="filter-semester-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 appearance-none cursor-pointer">
+              <option value="">Select Semester</option>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+              <option value="7">Semester 7</option>
+              <option value="8">Semester 8</option>
+            </select>
+            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </div>
         </div>
+
         <!-- Filter Card: Select Subject -->
-        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-          <div class="flex items-center gap-2 font-bold text-slate-800 text-sm mb-2.5">
-            <svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
-              <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <span>Select Subject</span>
-          </div>
-          <div class="relative mb-2.5">
-            <input class="w-full pl-7 pr-3 py-1 text-xs border border-slate-200 rounded-md placeholder-slate-400 focus:outline-none focus:border-brand-500" placeholder="Search subject..." type="text"/>
-            <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-              <path d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-            </svg>
-          </div>
-          <div class="space-y-1.5 text-xs text-slate-600">
-            <label class="flex items-center gap-2 cursor-pointer text-brand-600 font-semibold">
-              <input checked="" class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Data Structures</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Operating System</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Computer Organization</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Discrete Mathematics</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>DBMS</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Design and Analysis of Algo</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800">
-              <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
-              <span>Other Subjects</span>
-            </label>
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-2xs space-y-1.5">
+          <label class="block text-xs font-bold text-slate-800">Subject</label>
+          <div class="relative">
+            <select id="filter-subject-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 appearance-none cursor-pointer">
+              <option value="">Select Subject</option>
+              <option value="Data Structures">Data Structures</option>
+              <option value="Operating System">Operating System</option>
+              <option value="Computer Organization">Computer Organization</option>
+              <option value="Discrete Mathematics">Discrete Mathematics</option>
+              <option value="DBMS">DBMS</option>
+              <option value="Design and Analysis of Algo">Design and Analysis of Algo</option>
+              <option value="Other">Other Subjects</option>
+            </select>
+            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </div>
         </div>
       </aside>

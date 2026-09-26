@@ -88,6 +88,15 @@ function setupFilterEvents() {
         });
     }
 
+    const subjectSelect = document.getElementById('filter-subject-select');
+    if (subjectSelect) {
+        subjectSelect.addEventListener('change', (e) => {
+            currentFilters.subject_id = e.target.value || null;
+            currentFilters.page = 1;
+            loadResources();
+        });
+    }
+
     document.addEventListener('change', (e) => {
         if (e.target.classList.contains('filter-college-cb')) {
             const checked = document.querySelectorAll('.filter-college-cb:checked');

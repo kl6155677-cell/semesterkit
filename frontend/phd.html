@@ -208,45 +208,22 @@
             <option>Year 3+ (Dissertation)</option>
           </select>
         </div>
-        <!-- Material Type Checkboxes -->
-        <div class="space-y-2 pt-1">
+        <!-- Material Type Dropdown -->
+        <div class="space-y-1">
           <label class="text-[11px] font-semibold text-slate-700 flex items-center gap-1.5">
             <i class="fa-solid fa-list-check text-[10px] text-slate-400"></i> Material Type
           </label>
-          <div class="space-y-1.5 pl-0.5">
-            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-              <input checked="" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-              <span>Research Papers</span>
-            </label>
-            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-              <span>Thesis &amp; Dissertations</span>
-            </label>
-            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-              <span>Research Methodology</span>
-            </label>
-            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-              <span>Lab Resources</span>
-            </label>
-            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-              <span>Datasets &amp; Code</span>
-            </label>
-            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-              <span>Conference Resources</span>
-            </label>
-            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-              <span>Proposal Templates</span>
-            </label>
-            <label class="flex items-center gap-2 text-slate-600 text-[11px] cursor-pointer">
-              <input class="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-3.5 h-3.5" type="checkbox"/>
-              <span>Other</span>
-            </label>
-          </div>
+          <select id="filter-type-select" class="w-full text-xs py-1.5 px-2.5 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option value="">All Material Types</option>
+            <option value="Research Papers">Research Papers</option>
+            <option value="Thesis & Dissertations">Thesis &amp; Dissertations</option>
+            <option value="Research Methodology">Research Methodology</option>
+            <option value="Lab Resources">Lab Resources</option>
+            <option value="Datasets & Code">Datasets &amp; Code</option>
+            <option value="Conference Resources">Conference Resources</option>
+            <option value="Proposal Templates">Proposal Templates</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
         <!-- Filter Action Buttons -->
         <div class="pt-2 flex items-center gap-2">

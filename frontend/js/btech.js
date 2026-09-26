@@ -42,25 +42,24 @@ async function loadSidebarFilters() {
             window.api.get('/meta/resource-types?program=B.Tech').catch(() => [])
         ]);
 
-        // 1. Populate Colleges Filter
-        const collegeContainer = document.querySelector('.space-y-1\\.5.text-xs.text-slate-600');
-        if (collegeContainer && colleges.length > 0) {
-            collegeContainer.innerHTML = colleges.map(c => `
-                <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800 ${currentFilters.college_id == c.id ? 'text-brand-600 font-bold' : ''}">
-                    <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5 filter-college-cb" type="checkbox" value="${c.id}" ${currentFilters.college_id == c.id ? 'checked' : ''} />
-                    <span>${c.name}</span>
-                </label>
+        const collegeSelect = document.getElementById('filter-college-select');
+        if (collegeSelect && colleges.length > 0) {
+            collegeSelect.innerHTML = `<option value="">Select Unit</option>` + colleges.map(c => `
+                <option value="${c.id}" ${currentFilters.college_id == c.id ? 'selected' : ''}>${c.name}</option>
             `).join('');
         }
 
-        // 2. Populate Branches if container exists
-        const branchContainer = document.querySelectorAll('.space-y-1\\.5.text-xs.text-slate-600')[1];
-        if (branchContainer && branches.length > 0) {
-            branchContainer.innerHTML = branches.map(b => `
-                <label class="flex items-center gap-2 cursor-pointer hover:text-slate-800 ${currentFilters.branch_id == b.id ? 'text-brand-600 font-bold' : ''}">
-                    <input class="rounded border-slate-300 text-brand-600 focus:ring-0 w-3.5 h-3.5 filter-branch-cb" type="checkbox" value="${b.id}" ${currentFilters.branch_id == b.id ? 'checked' : ''} />
-                    <span>${b.name}</span>
-                </label>
+        const branchSelect = document.getElementById('filter-branch-select');
+        if (branchSelect && branches.length > 0) {
+            branchSelect.innerHTML = `<option value="">Select Branch</option>` + branches.map(b => `
+                <option value="${b.id}" ${currentFilters.branch_id == b.id ? 'selected' : ''}>${b.name}</option>
+            `).join('');
+        }
+
+        const semesterSelect = document.getElementById('filter-semester-select');
+        if (semesterSelect && semesters.length > 0) {
+            semesterSelect.innerHTML = `<option value="">Select Semester</option>` + semesters.map(s => `
+                <option value="${s.id}" ${currentFilters.semester_id == s.id ? 'selected' : ''}>${s.name}</option>
             `).join('');
         }
     } catch (e) {
@@ -69,24 +68,44 @@ async function loadSidebarFilters() {
 }
 
 function setupFilterEvents() {
-    // College checkboxes
-    document.addEventListener('change', (e) => {
-        if (e.target.classList.contains('filter-college-cb')) {
-            const checked = document.querySelectorAll('.filter-college-cb:checked');
-            currentFilters.college_id = checked.length > 0 ? checked[0].value : null;
+    const collegeSelect = document.getElementById('filter-college-select');
+    if (collegeSelect) {
+        collegeSelect.addEventListener('change', (e) => {
+            currentFilters.college_id = e.target.value || null;
             currentFilters.page = 1;
             loadResources();
-        }
-        if (e.target.classList.contains('filter-branch-cb')) {
-            const checked = document.querySelectorAll('.filter-branch-cb:checked');
-            currentFilters.branch_id = checked.length > 0 ? checked[0].value : null;
+        });
+    }
+
+    const branchSelect = document.getElementById('filter-branch-select');
+    if (branchSelect) {
+        branchSelect.addEventListener('change', (e) => {
+            currentFilters.branch_id = e.target.value || null;
             currentFilters.page = 1;
             loadResources();
-        }
-    });
+        });
+    }
+
+    const semesterSelect = document.getElementById('filter-semester-select');
+    if (semesterSelect) {
+        semesterSelect.addEventListener('change', (e) => {
+            currentFilters.semester_id = e.target.value || null;
+            currentFilters.page = 1;
+            loadResources();
+        });
+    }
+
+    const subjectSelect = document.getElementById('filter-subject-select');
+    if (subjectSelect) {
+        subjectSelect.addEventListener('change', (e) => {
+            currentFilters.subject_id = e.target.value || null;
+            currentFilters.page = 1;
+            loadResources();
+        });
+    }
 
     // Sort select
-    const sortSelect = document.querySelector('select[aria-label*="sort"], select');
+    const sortSelect = document.querySelector('select[aria-label*="sort"], select#sort-by');
     if (sortSelect) {
         sortSelect.addEventListener('change', (e) => {
             currentFilters.sort = e.target.value.toLowerCase().includes('download') ? 'downloads' : (e.target.value.toLowerCase().includes('view') ? 'views' : 'latest');

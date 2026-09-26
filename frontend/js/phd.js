@@ -46,16 +46,24 @@ async function loadSidebarFilters() {
 }
 
 function setupFilterEvents() {
-    document.addEventListener('change', (e) => {
-        if (e.target.classList.contains('filter-college-cb')) {
-            const checked = document.querySelectorAll('.filter-college-cb:checked');
-            currentFilters.college_id = checked.length > 0 ? checked[0].value : null;
+    const typeSelect = document.getElementById('filter-type-select');
+    if (typeSelect) {
+        typeSelect.addEventListener('change', (e) => {
+            currentFilters.resource_type_id = e.target.value || null;
             currentFilters.page = 1;
             loadResources();
-        }
+        });
+    }
+
+    const selectElements = document.querySelectorAll('aside select, #filter-type-select');
+    selectElements.forEach(sel => {
+        sel.addEventListener('change', () => {
+            currentFilters.page = 1;
+            loadResources();
+        });
     });
 
-    const sortSelect = document.querySelector('select[aria-label*="sort"], select');
+    const sortSelect = document.querySelector('select[aria-label*="sort"], select#sort-by');
     if (sortSelect) {
         sortSelect.addEventListener('change', (e) => {
             currentFilters.sort = e.target.value.toLowerCase().includes('download') ? 'downloads' : (e.target.value.toLowerCase().includes('view') ? 'views' : 'latest');
