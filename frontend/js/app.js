@@ -746,64 +746,59 @@ window.closeWinnersModal = () => {
     if (modal) modal.classList.add('hidden');
 };
 
-// Universal Inside-Dropdown Searchable Select Component
-window.initSearchableDropdown = function(selectEl, placeholder = 'Search options...') {
+// Universal Combobox Searchable Dropdown Component (Dropdown with live search inside)
+window.initSearchableDropdown = function(selectEl, placeholder = 'Search & select...') {
     if (!selectEl) return;
-    if (selectEl.dataset.searchableInit === 'true') {
-        if (selectEl._searchableSync) selectEl._searchableSync();
+    if (selectEl._searchableCombobox) {
+        selectEl._searchableCombobox.sync();
         return;
     }
-    selectEl.dataset.searchableInit = 'true';
+
     selectEl.style.display = 'none';
     const parentChevron = selectEl.parentElement?.querySelector(':scope > .pointer-events-none, :scope > svg.pointer-events-none');
     if (parentChevron) parentChevron.style.display = 'none';
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'relative w-full custom-searchable-dropdown text-xs';
+    const container = document.createElement('div');
+    container.className = 'relative w-full custom-combobox-dropdown text-xs';
 
-    const trigger = document.createElement('button');
-    trigger.type = 'button';
-    trigger.className = 'w-full text-left py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 flex items-center justify-between transition shadow-2xs cursor-pointer font-normal';
-    
-    const triggerText = document.createElement('span');
-    triggerText.className = 'truncate block';
-    triggerText.textContent = selectEl.options[selectEl.selectedIndex]?.text || selectEl.getAttribute('placeholder') || 'Select option...';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.autocomplete = 'off';
+    input.className = 'w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:border-[#1d7bf5] focus:ring-1 focus:ring-[#1d7bf5] transition cursor-pointer shadow-2xs font-normal';
+    input.placeholder = placeholder || selectEl.getAttribute('placeholder') || 'Select option...';
 
-    const chevron = document.createElement('div');
-    chevron.className = 'pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 transition-transform duration-200';
-    chevron.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>`;
+    const arrowBtn = document.createElement('div');
+    arrowBtn.className = 'absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer p-0.5 transition-transform duration-200';
+    arrowBtn.innerHTML = `<svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>`;
 
-    trigger.appendChild(triggerText);
-    wrapper.appendChild(trigger);
-    wrapper.appendChild(chevron);
+    const listPanel = document.createElement('div');
+    listPanel.className = 'absolute z-[100] left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-lg shadow-xl hidden max-h-56 overflow-y-auto divide-y divide-slate-50 py-1 animate-in fade-in zoom-in-95 duration-100';
 
-    // Dropdown Panel
-    const panel = document.createElement('div');
-    panel.className = 'absolute z-[60] left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-lg shadow-xl hidden flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100';
+    container.appendChild(input);
+    container.appendChild(arrowBtn);
+    container.appendChild(listPanel);
 
-    // Search input inside dropdown panel
-    const searchHeader = document.createElement('div');
-    searchHeader.className = 'p-2 bg-slate-50 border-b border-slate-100 sticky top-0 z-10 flex items-center gap-1.5';
-    searchHeader.innerHTML = `
-        <svg class="w-3.5 h-3.5 text-slate-400 shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        <input type="text" placeholder="${placeholder}" class="w-full text-xs bg-transparent border-none p-1 focus:outline-none text-slate-800 placeholder-slate-400" />
-        <button type="button" class="text-slate-300 hover:text-slate-500 hidden text-xs px-1">✕</button>
-    `;
-    const searchInput = searchHeader.querySelector('input');
-    const clearBtn = searchHeader.querySelector('button');
+    selectEl.parentNode.insertBefore(container, selectEl.nextSibling);
 
-    const listContainer = document.createElement('div');
-    listContainer.className = 'overflow-y-auto max-h-56 py-1 divide-y divide-slate-50/50';
+    let isMenuOpen = false;
 
-    panel.appendChild(searchHeader);
-    panel.appendChild(listContainer);
-    wrapper.appendChild(panel);
+    function getSelectedOption() {
+        if (selectEl.selectedIndex >= 0 && selectEl.options[selectEl.selectedIndex]) {
+            return selectEl.options[selectEl.selectedIndex];
+        }
+        return null;
+    }
 
-    selectEl.parentNode.insertBefore(wrapper, selectEl.nextSibling);
-
-    function syncTrigger() {
-        const selected = selectEl.options[selectEl.selectedIndex];
-        triggerText.textContent = selected ? selected.text : (selectEl.getAttribute('placeholder') || 'Select option...');
+    function syncInputText() {
+        const sel = getSelectedOption();
+        if (sel && sel.value !== '') {
+            input.value = sel.text;
+        } else if (sel && sel.value === '') {
+            input.value = '';
+            input.placeholder = sel.text || placeholder;
+        } else {
+            input.value = '';
+        }
     }
 
     function renderList(query = '') {
@@ -812,118 +807,125 @@ window.initSearchableDropdown = function(selectEl, placeholder = 'Search options
         const filtered = options.filter(opt => !q || opt.text.toLowerCase().includes(q));
 
         if (filtered.length === 0) {
-            listContainer.innerHTML = `<div class="py-3 px-3 text-[11px] text-slate-400 text-center font-medium">No results found</div>`;
+            listPanel.innerHTML = `<div class="py-2.5 px-3 text-[11px] text-slate-400 text-center">No matching results</div>`;
             return;
         }
 
-        listContainer.innerHTML = filtered.map(opt => {
+        listPanel.innerHTML = filtered.map(opt => {
             const isSelected = String(opt.value) === String(selectEl.value);
             return `
-                <div data-val="${escapeHtmlAttr(opt.value)}" class="px-3 py-2 text-xs cursor-pointer hover:bg-blue-50/80 hover:text-[#1d7bf5] transition flex items-center justify-between ${isSelected ? 'bg-blue-50 font-bold text-[#1d7bf5]' : 'text-slate-700'}">
+                <div data-value="${escapeHtmlAttr(opt.value)}" class="px-3 py-2 text-xs cursor-pointer hover:bg-blue-50 hover:text-[#1d7bf5] transition flex items-center justify-between ${isSelected ? 'bg-blue-50/80 font-bold text-[#1d7bf5]' : 'text-slate-700'}">
                     <span class="truncate">${escapeHtml(opt.text)}</span>
                     ${isSelected ? '<svg class="w-3.5 h-3.5 text-[#1d7bf5] shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ''}
                 </div>
             `;
         }).join('');
 
-        listContainer.querySelectorAll('[data-val]').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const val = item.getAttribute('data-val');
+        listPanel.querySelectorAll('[data-value]').forEach(item => {
+            item.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                const val = item.getAttribute('data-value');
                 selectEl.value = val;
-                syncTrigger();
-                closeDropdown();
+                syncInputText();
+                closeMenu();
                 selectEl.dispatchEvent(new Event('change', { bubbles: true }));
             });
         });
     }
 
-    function openDropdown() {
-        document.querySelectorAll('.custom-searchable-dropdown .searchable-panel-open').forEach(p => {
+    function openMenu() {
+        document.querySelectorAll('.custom-combobox-dropdown .combobox-open').forEach(p => {
             p.classList.add('hidden');
-            p.classList.remove('searchable-panel-open');
+            p.classList.remove('combobox-open');
         });
-        document.querySelectorAll('.custom-searchable-dropdown .chevron-open').forEach(c => {
-            c.classList.remove('rotate-180', 'chevron-open');
+        document.querySelectorAll('.custom-combobox-dropdown .arrow-open').forEach(a => {
+            a.classList.remove('rotate-180', 'arrow-open');
         });
 
-        panel.classList.remove('hidden');
-        panel.classList.add('searchable-panel-open');
-        chevron.classList.add('rotate-180', 'chevron-open');
-        searchInput.value = '';
-        clearBtn.classList.add('hidden');
+        listPanel.classList.remove('hidden');
+        listPanel.classList.add('combobox-open');
+        arrowBtn.classList.add('rotate-180', 'arrow-open');
+        isMenuOpen = true;
+        renderList(input.value);
+    }
+
+    function closeMenu() {
+        listPanel.classList.add('hidden');
+        listPanel.classList.remove('combobox-open');
+        arrowBtn.classList.remove('rotate-180', 'arrow-open');
+        isMenuOpen = false;
+        syncInputText();
+    }
+
+    input.addEventListener('focus', () => {
+        openMenu();
         renderList('');
-        setTimeout(() => searchInput.focus(), 30);
-    }
+    });
 
-    function closeDropdown() {
-        panel.classList.add('hidden');
-        panel.classList.remove('searchable-panel-open');
-        chevron.classList.remove('rotate-180', 'chevron-open');
-    }
-
-    trigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (panel.classList.contains('hidden')) {
-            openDropdown();
-        } else {
-            closeDropdown();
+    input.addEventListener('click', () => {
+        if (!isMenuOpen) {
+            openMenu();
+            renderList('');
         }
     });
 
-    searchInput.addEventListener('input', (e) => {
-        const val = e.target.value;
-        clearBtn.classList.toggle('hidden', !val);
-        renderList(val);
+    arrowBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isMenuOpen) {
+            closeMenu();
+        } else {
+            input.focus();
+            openMenu();
+            renderList('');
+        }
     });
 
-    searchInput.addEventListener('keydown', (e) => {
+    input.addEventListener('input', (e) => {
+        if (!isMenuOpen) openMenu();
+        renderList(e.target.value);
+    });
+
+    input.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            closeDropdown();
+            closeMenu();
+            input.blur();
         } else if (e.key === 'Enter') {
             e.preventDefault();
-            const firstOption = listContainer.querySelector('[data-val]');
-            if (firstOption) {
-                firstOption.click();
+            const firstOpt = listPanel.querySelector('[data-value]');
+            if (firstOpt) {
+                const val = firstOpt.getAttribute('data-value');
+                selectEl.value = val;
+                syncInputText();
+                closeMenu();
+                selectEl.dispatchEvent(new Event('change', { bubbles: true }));
             }
         }
     });
 
-    clearBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        searchInput.value = '';
-        clearBtn.classList.add('hidden');
-        renderList('');
-        searchInput.focus();
-    });
-
-    searchHeader.addEventListener('click', (e) => e.stopPropagation());
-
     document.addEventListener('click', (e) => {
-        if (!wrapper.contains(e.target)) {
-            closeDropdown();
+        if (!container.contains(e.target)) {
+            closeMenu();
         }
     });
 
     selectEl.addEventListener('change', () => {
-        syncTrigger();
-        renderList(searchInput.value);
+        syncInputText();
     });
 
-    selectEl._searchableSync = () => {
-        syncTrigger();
-        renderList(searchInput.value);
+    selectEl._searchableCombobox = {
+        sync: () => {
+            syncInputText();
+            if (isMenuOpen) renderList(input.value);
+        }
     };
 
     const observer = new MutationObserver(() => {
-        syncTrigger();
-        if (!panel.classList.contains('hidden')) {
-            renderList(searchInput.value);
-        }
+        syncInputText();
+        if (isMenuOpen) renderList(input.value);
     });
     observer.observe(selectEl, { childList: true, subtree: true, attributes: true });
 
-    syncTrigger();
+    syncInputText();
 };
 
 function escapeHtmlAttr(str) {
