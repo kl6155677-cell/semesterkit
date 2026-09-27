@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
+    limits: { fileSize: 500 * 1024 * 1024 }, // Up to 500MB multer limit (dynamic limit enforced by settings)
     fileFilter: (req, file, cb) => {
         const ext = path.extname(file.originalname).toLowerCase();
         if (!['.pdf', '.doc', '.docx', '.zip', '.rar', '.ppt', '.pptx', '.jpg', '.jpeg', '.png'].includes(ext)) {

@@ -200,3 +200,21 @@ CREATE TABLE IF NOT EXISTS settings (
     setting_key VARCHAR(100) PRIMARY KEY,
     setting_value LONGTEXT
 );
+
+-- 17. Awards and Recent Winners Table
+CREATE TABLE IF NOT EXISTS awards (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    college VARCHAR(150) NULL,
+    rank_number INT DEFAULT 1,
+    reward_amount VARCHAR(50) NOT NULL,
+    month_year VARCHAR(50) NOT NULL,
+    avatar_url TEXT NULL,
+    points INT DEFAULT 0,
+    uploads_count INT DEFAULT 0,
+    downloads_count VARCHAR(50) DEFAULT '0',
+    is_top_highlight BOOLEAN DEFAULT FALSE,
+    display_order INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

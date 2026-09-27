@@ -123,6 +123,9 @@
                 <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-testimonials">
                     💬 Testimonials Manager
                 </button>
+                <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-awards">
+                    🏆 Awards & Rewards
+                </button>
                 <button class="tab-link w-full text-left text-slate-700 hover:bg-slate-100 px-3.5 py-2.5 rounded-xl font-medium transition" data-target="tab-static-pages">
                     📄 Static Pages (About/FAQ)
                 </button>
@@ -352,6 +355,91 @@
                         </thead>
                         <tbody id="table-testimonials"></tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- 5.5 TAB: Awards & Contributor Rewards Manager -->
+            <div id="tab-awards" class="tab-pane space-y-8">
+                <div class="border-b pb-4">
+                    <h2 class="text-xl font-extrabold text-gray-900">Awards & Contributor Rewards Manager</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Manage the Top Contributor highlight card, monthly reward alert banner, and Recent Award Winners on the homepage.</p>
+                </div>
+
+                <!-- 1. Top Contributor Card & Claim Banner Settings -->
+                <div class="bg-amber-50/40 p-6 rounded-2xl border border-amber-200/70 space-y-4">
+                    <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                        <span>🌟</span> Top Contributor Card & Reward Banner Configuration
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Top Contributor Name</label>
+                            <input type="text" id="setting-top-contrib-name" placeholder="e.g. HADIYA MAJEED NAJAR" class="w-full rounded-lg border-gray-300 p-2.5 text-xs bg-white" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Role / College Subtitle</label>
+                            <input type="text" id="setting-top-contrib-role" placeholder="e.g. Engineering Student" class="w-full rounded-lg border-gray-300 p-2.5 text-xs bg-white" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Points Display</label>
+                            <input type="text" id="setting-top-contrib-points" placeholder="e.g. 120" class="w-full rounded-lg border-gray-300 p-2.5 text-xs bg-white" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Uploads Count Display</label>
+                            <input type="text" id="setting-top-contrib-uploads" placeholder="e.g. 35" class="w-full rounded-lg border-gray-300 p-2.5 text-xs bg-white" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Downloads Count Display</label>
+                            <input type="text" id="setting-top-contrib-downloads" placeholder="e.g. 1.2K" class="w-full rounded-lg border-gray-300 p-2.5 text-xs bg-white" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Claim Button Text</label>
+                            <input type="text" id="setting-reward-btn-text" placeholder="e.g. Claim Reward" class="w-full rounded-lg border-gray-300 p-2.5 text-xs bg-white" />
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Reward Banner Title</label>
+                            <input type="text" id="setting-reward-title" placeholder="e.g. You have won this month's reward!" class="w-full rounded-lg border-gray-300 p-2.5 text-xs bg-white" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Reward Banner Description</label>
+                            <input type="text" id="setting-reward-subtitle" placeholder="e.g. Claim your reward now and keep contributing." class="w-full rounded-lg border-gray-300 p-2.5 text-xs bg-white" />
+                        </div>
+                    </div>
+                    <button onclick="saveRewardSettings()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow transition">
+                        Save Contributor & Reward Banner Settings
+                    </button>
+                </div>
+
+                <!-- 2. Recent Award Winners Manager Table -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <div>
+                            <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                <span>🎁</span> Recent Award Winners Leaderboard
+                            </h3>
+                            <p class="text-xs text-gray-500">Winners shown in the 3 award cards (Gold 1st, Silver 2nd, Bronze 3rd) on the homepage.</p>
+                        </div>
+                        <button onclick="openAwardModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition">
+                            + Add Winner
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-xs text-left text-gray-600">
+                            <thead class="text-[11px] text-gray-700 uppercase bg-slate-100 border-b">
+                                <tr>
+                                    <th class="px-4 py-3">Rank</th>
+                                    <th class="px-4 py-3">Student Name</th>
+                                    <th class="px-4 py-3">College / Subtitle</th>
+                                    <th class="px-4 py-3">Reward Amount</th>
+                                    <th class="px-4 py-3">Month / Year</th>
+                                    <th class="px-4 py-3">Status</th>
+                                    <th class="px-4 py-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-awards"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

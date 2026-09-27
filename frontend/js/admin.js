@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadHeroCmsSettings();
     loadStatsSettings();
     loadTestimonials();
+    loadAwardsManager();
     loadStaticPages();
     loadFooterManager();
     loadAcademicData();
@@ -450,6 +451,141 @@ async function deleteTestimonial(id) {
         showToast('Testimonial deleted');
         loadTestimonials();
     } catch (e) { showToast(e.message, 'error'); }
+}
+
+// 6.5 Awards & Contributor Rewards Manager
+async function loadAwardsManager() {
+    // 1. Load Settings
+    try {
+        const settings = await window.api.get('/meta/settings');
+        const setVal = (id, key, fallback = '') => {
+            const el = document.getElementById(id);
+            if (el) el.value = (settings && settings[key] !== undefined) ? settings[key] : fallback;
+        };
+
+        setVal('setting-top-contrib-name', 'top_contrib_name', 'HADIYA MAJEED NAJAR');
+        setVal('setting-top-contrib-role', 'top_contrib_role', 'Engineering Student');
+        setVal('setting-top-contrib-points', 'top_contrib_points', '120');
+        setVal('setting-top-contrib-uploads', 'top_contrib_uploads', '35');
+        setVal('setting-top-contrib-downloads', 'top_contrib_downloads', '1.2K');
+        setVal('setting-reward-title', 'reward_title', 'You have won this month\'s reward!');
+        setVal('setting-reward-subtitle', 'reward_subtitle', 'Claim your reward now and keep contributing.');
+        setVal('setting-reward-btn-text', 'reward_btn_text', 'Claim Reward');
+    } catch (e) {
+        console.warn('Failed to load reward settings:', e);
+    }
+
+    // 2. Load Winners Table
+    const tbody = document.getElementById('table-awards');
+    if (!tbody) return;
+    try {
+        const list = await window.api.get('/meta/admin/awards');
+        if (!list || list.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="py-6 text-center text-gray-400">No award winners found. Click "+ Add Winner" above to add one.</td></tr>';
+            return;
+        }
+
+        const medals = { 1: '🥇 1st', 2: '🥈 2nd', 3: '🥉 3rd' };
+
+        tbody.innerHTML = list.map(a => `
+            <tr class="border-b hover:bg-slate-50 transition">
+                <td class="px-4 py-3 font-bold text-slate-800">${medals[a.rank_number] || `#${a.rank_number}`}</td>
+                <td class="px-4 py-3 font-bold text-slate-900">${a.name}</td>
+                <td class="px-4 py-3 text-slate-600">${a.college || '-'}</td>
+                <td class="px-4 py-3 font-extrabold text-brand-600">${a.reward_amount}</td>
+                <td class="px-4 py-3 text-slate-500">${a.month_year}</td>
+                <td class="px-4 py-3">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold ${a.is_active ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-500'}">
+                        ${a.is_active ? 'Active' : 'Inactive'}
+                    </span>
+                </td>
+                <td class="px-4 py-3 text-right space-x-2">
+                    <button onclick="editAward(${a.id}, '${escapeHtml(a.name)}', '${escapeHtml(a.college || '')}', ${a.rank_number || 1}, '${escapeHtml(a.reward_amount)}', '${escapeHtml(a.month_year)}', ${a.points || 0}, ${a.uploads_count || 0}, '${escapeHtml(a.downloads_count || '0')}', ${a.is_active ? 1 : 0})" class="text-brand-600 hover:text-brand-800 font-semibold">Edit</button>
+                    <button onclick="deleteAward(${a.id})" class="text-rose-500 hover:text-rose-700 font-semibold">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (e) {
+        console.warn('Awards table load error:', e);
+    }
+}
+
+async function saveRewardSettings() {
+    const updates = {
+        top_contrib_name: document.getElementById('setting-top-contrib-name')?.value,
+        top_contrib_role: document.getElementById('setting-top-contrib-role')?.value,
+        top_contrib_points: document.getElementById('setting-top-contrib-points')?.value,
+        top_contrib_uploads: document.getElementById('setting-top-contrib-uploads')?.value,
+        top_contrib_downloads: document.getElementById('setting-top-contrib-downloads')?.value,
+        reward_title: document.getElementById('setting-reward-title')?.value,
+        reward_subtitle: document.getElementById('setting-reward-subtitle')?.value,
+        reward_btn_text: document.getElementById('setting-reward-btn-text')?.value
+    };
+
+    try {
+        await window.api.put('/meta/settings', updates);
+        showToast('Top Contributor & Reward banner settings saved successfully!');
+    } catch (e) {
+        showToast(e.message, 'error');
+    }
+}
+
+function openAwardModal() {
+    openGenericModal('Add Award Winner', `
+        <div><label class="block text-xs font-semibold mb-1">Rank (1: Gold, 2: Silver, 3: Bronze)</label><input type="number" id="m-a-rank" value="1" min="1" max="10" class="w-full text-xs rounded-lg border-gray-300 p-2" required /></div>
+        <div><label class="block text-xs font-semibold mb-1">Student Winner Name</label><input type="text" id="m-a-name" placeholder="e.g. HADIYA MAJEED NAJAR" class="w-full text-xs rounded-lg border-gray-300 p-2" required /></div>
+        <div><label class="block text-xs font-semibold mb-1">College / University / Role</label><input type="text" id="m-a-college" placeholder="e.g. Engineering Student, NIT Trichy" class="w-full text-xs rounded-lg border-gray-300 p-2" /></div>
+        <div><label class="block text-xs font-semibold mb-1">Reward Prize Amount</label><input type="text" id="m-a-amount" placeholder="e.g. ₹2,000, ₹1,000, ₹500" class="w-full text-xs rounded-lg border-gray-300 p-2" required /></div>
+        <div><label class="block text-xs font-semibold mb-1">Month & Year Period</label><input type="text" id="m-a-month" placeholder="e.g. September 2025" class="w-full text-xs rounded-lg border-gray-300 p-2" required /></div>
+    `, async () => {
+        const payload = {
+            rank_number: parseInt(document.getElementById('m-a-rank').value || 1, 10),
+            name: document.getElementById('m-a-name').value,
+            college: document.getElementById('m-a-college').value,
+            reward_amount: document.getElementById('m-a-amount').value,
+            month_year: document.getElementById('m-a-month').value,
+            is_active: 1
+        };
+        await window.api.post('/meta/awards', payload);
+        showToast('Award winner added!');
+        closeModal();
+        loadAwardsManager();
+    });
+}
+
+function editAward(id, name, college, rank_number, reward_amount, month_year, points, uploads_count, downloads_count, is_active) {
+    openGenericModal(`Edit Award Winner #${id}`, `
+        <div><label class="block text-xs font-semibold mb-1">Rank (1: Gold, 2: Silver, 3: Bronze)</label><input type="number" id="m-a-rank" value="${rank_number}" min="1" max="10" class="w-full text-xs rounded-lg border-gray-300 p-2" required /></div>
+        <div><label class="block text-xs font-semibold mb-1">Student Winner Name</label><input type="text" id="m-a-name" value="${name}" class="w-full text-xs rounded-lg border-gray-300 p-2" required /></div>
+        <div><label class="block text-xs font-semibold mb-1">College / University / Role</label><input type="text" id="m-a-college" value="${college}" class="w-full text-xs rounded-lg border-gray-300 p-2" /></div>
+        <div><label class="block text-xs font-semibold mb-1">Reward Prize Amount</label><input type="text" id="m-a-amount" value="${reward_amount}" class="w-full text-xs rounded-lg border-gray-300 p-2" required /></div>
+        <div><label class="block text-xs font-semibold mb-1">Month & Year Period</label><input type="text" id="m-a-month" value="${month_year}" class="w-full text-xs rounded-lg border-gray-300 p-2" required /></div>
+        <div class="flex items-center gap-2 pt-2"><input type="checkbox" id="m-a-active" ${is_active ? 'checked' : ''} class="rounded text-brand-600" /><label for="m-a-active" class="text-xs font-semibold">Active & Visible on Homepage</label></div>
+    `, async () => {
+        const payload = {
+            rank_number: parseInt(document.getElementById('m-a-rank').value || 1, 10),
+            name: document.getElementById('m-a-name').value,
+            college: document.getElementById('m-a-college').value,
+            reward_amount: document.getElementById('m-a-amount').value,
+            month_year: document.getElementById('m-a-month').value,
+            is_active: document.getElementById('m-a-active').checked ? 1 : 0
+        };
+        await window.api.put(`/meta/awards/${id}`, payload);
+        showToast('Award winner updated!');
+        closeModal();
+        loadAwardsManager();
+    });
+}
+
+async function deleteAward(id) {
+    if (!confirm('Delete this award winner?')) return;
+    try {
+        await window.api.delete(`/meta/awards/${id}`);
+        showToast('Award winner deleted');
+        loadAwardsManager();
+    } catch (e) {
+        showToast(e.message, 'error');
+    }
 }
 
 // 7. Static Pages Manager

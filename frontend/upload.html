@@ -318,14 +318,18 @@
                 </label>
                 <div class="relative">
                   <select id="upload-college" name="college_id" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required>
-                    <option selected value="1">NIT Trichy</option>
-                    <option value="2">IIT Madras</option>
-                    <option value="3">IIT Bombay</option>
-                    <option value="4">BITS Pilani</option>
+                    <option value="">Select University...</option>
+                    <option value="other">Other / Enter Manually</option>
                   </select>
                   <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                     <svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
                   </div>
+                </div>
+                <div id="manual-college-wrapper" class="hidden mt-2">
+                  <label class="block text-[11px] font-semibold text-gray-600 mb-1">
+                    Enter University / College Name <span class="text-red-500">*</span>
+                  </label>
+                  <input id="upload-college-manual" name="manual_college_name" type="text" placeholder="e.g. ABC Institute of Technology" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" />
                 </div>
               </div>
               <div>
@@ -334,10 +338,7 @@
                 </label>
                 <div class="relative">
                   <select id="upload-branch" name="branch_id" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required>
-                    <option selected value="1">Computer Science and Engineering</option>
-                    <option value="2">Electronics &amp; Communication</option>
-                    <option value="3">Mechanical Engineering</option>
-                    <option value="4">Civil Engineering</option>
+                    <option value="">Select Branch...</option>
                   </select>
                   <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                     <svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -353,14 +354,7 @@
                 </label>
                 <div class="relative">
                   <select id="upload-semester" name="semester_id" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required>
-                    <option selected value="3">3rd Semester</option>
-                    <option value="1">1st Semester</option>
-                    <option value="2">2nd Semester</option>
-                    <option value="4">4th Semester</option>
-                    <option value="5">5th Semester</option>
-                    <option value="6">6th Semester</option>
-                    <option value="7">7th Semester</option>
-                    <option value="8">8th Semester</option>
+                    <option value="">Select Semester...</option>
                   </select>
                   <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                     <svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -371,17 +365,7 @@
                 <label class="block text-xs font-semibold text-gray-700 mb-1">
                   Subject <span class="text-red-500">*</span>
                 </label>
-                <div class="relative">
-                  <select id="upload-subject" name="subject_id" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 pr-8 text-gray-800 appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required>
-                    <option selected value="1">Data Structures</option>
-                    <option value="2">Digital Logic &amp; Microprocessors</option>
-                    <option value="3">Discrete Mathematics</option>
-                    <option value="4">Algorithms</option>
-                  </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                    <svg class="w-4 h-4 stroke-current" fill="none" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-                  </div>
-                </div>
+                <input id="upload-subject" name="subject" type="text" placeholder="e.g. Data Structures, Digital Electronics..." class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" required />
               </div>
             </div>
             <!-- Material Type Selector -->
@@ -437,16 +421,16 @@
               <label class="block text-xs font-semibold text-gray-700 mb-1">
                 Title <span class="text-red-500">*</span>
               </label>
-              <input id="upload-title" name="title" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="text" value="Data Structures Complete Handwritten Notes" required/>
+              <input id="upload-title" name="title" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" type="text" placeholder="e.g. Data Structures Complete Handwritten Notes" value="" required/>
             </div>
             <!-- Description Textarea -->
             <div>
               <label class="block text-xs font-semibold text-gray-700 mb-1">
                 Description
               </label>
-              <textarea id="upload-description" name="description" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 resize-none" rows="3">These are my handwritten notes for Data Structures (CS - 3rd Sem). Covers all important topics with examples and diagrams. Useful for end semester exams.</textarea>
+              <textarea id="upload-description" name="description" class="w-full text-xs bg-white border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 resize-none" rows="3" placeholder="Briefly describe what this resource contains..."></textarea>
               <div class="flex justify-end mt-1">
-                <span class="text-[11px] text-gray-400">120/500</span>
+                <span id="desc-count" class="text-[11px] text-gray-400">0/500</span>
               </div>
             </div>
             <!-- Upload File Zone -->
@@ -469,12 +453,12 @@
                   <p class="text-[11px] text-blue-600 font-semibold cursor-pointer">
                     or click to browse
                   </p>
-                  <p class="text-[10px] text-gray-400 mt-1">
+                  <p id="upload-max-size-hint" class="text-[10px] text-gray-400 mt-1">
                     Supports PDF, DOC, DOCX, ZIP (Max 50MB)
                   </p>
                 </div>
-                <!-- Uploaded File Preview Card -->
-                <div id="upload-preview-card" class="border border-gray-200 bg-gray-50/40 rounded-lg p-3 flex items-center justify-between">
+                <!-- Uploaded File Preview Card (Hidden by default until file is selected) -->
+                <div id="upload-preview-card" class="hidden border border-gray-200 bg-gray-50/40 rounded-lg p-3 flex items-center justify-between">
                   <div class="flex items-center gap-3">
                     <div id="preview-badge" class="w-9 h-11 bg-red-500 rounded flex flex-col items-center justify-center text-white shrink-0 shadow-sm">
                       <span id="preview-type" class="text-[8px] font-bold tracking-wider">PDF</span>
@@ -483,11 +467,11 @@
                       </svg>
                     </div>
                     <div>
-                      <h4 id="preview-filename" class="text-xs font-semibold text-gray-800 leading-tight">DS_Notes_Complete.pdf</h4>
-                      <p id="preview-filesize" class="text-[11px] text-gray-400 mt-0.5 font-normal">4.2 MB</p>
+                      <h4 id="preview-filename" class="text-xs font-semibold text-gray-800 leading-tight">No file chosen</h4>
+                      <p id="preview-filesize" class="text-[11px] text-gray-400 mt-0.5 font-normal">0 MB</p>
                     </div>
                   </div>
-                  <button id="preview-remove-btn" class="text-gray-400 hover:text-gray-600 p-1" type="button" onclick="document.getElementById('upload-file-input').value=''; document.getElementById('preview-filename').textContent='No file chosen';">
+                  <button id="preview-remove-btn" class="text-gray-400 hover:text-gray-600 p-1 cursor-pointer" type="button">
                     <svg class="w-4 h-4 stroke-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                       <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
@@ -500,27 +484,7 @@
               <label class="block text-xs font-semibold text-gray-700 mb-1">
                 Add Tags (optional)
               </label>
-              <div id="tags-box" class="w-full flex flex-wrap items-center gap-1.5 p-2 bg-white border border-gray-300 rounded-md focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500">
-                <!-- Tag: important -->
-                <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
-                  important
-                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button" onclick="this.parentElement.remove()">×</button>
-                </span>
-                <!-- Tag: handwritten -->
-                <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
-                  handwritten
-                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button" onclick="this.parentElement.remove()">×</button>
-                </span>
-                <!-- Tag: exam -->
-                <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
-                  exam
-                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button" onclick="this.parentElement.remove()">×</button>
-                </span>
-                <!-- Tag: unit-wise -->
-                <span class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded text-[11px] font-medium">
-                  unit-wise
-                  <button class="hover:text-blue-800 ml-0.5 text-xs" type="button" onclick="this.parentElement.remove()">×</button>
-                </span>
+              <div id="tags-box" class="w-full flex flex-wrap items-center gap-1.5 p-2 bg-white border border-gray-300 rounded-md focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500 min-h-[38px]">
                 <input id="tag-input" class="flex-1 min-w-[120px] text-xs border-0 p-0 text-gray-700 placeholder-gray-400 focus:ring-0 focus:outline-none bg-transparent" placeholder="Type and press enter..." type="text"/>
               </div>
             </div>
@@ -628,7 +592,7 @@
           <div>
             <h4 class="text-xs font-bold text-gray-900 leading-tight">Accepted File Formats</h4>
             <p class="text-xs text-gray-700 font-medium mt-1">PDF, DOC, DOCX, ZIP</p>
-            <p class="text-[11px] text-gray-500 font-normal">Maximum file size: 50MB</p>
+            <p id="upload-guideline-max-size" class="text-[11px] text-gray-500 font-normal">Maximum file size: 50MB</p>
           </div>
         </div>
         <!-- Content Policy Card -->

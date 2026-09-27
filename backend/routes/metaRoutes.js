@@ -46,4 +46,11 @@ router.post('/resource-types', authenticateToken, authorizeAdmin, metaController
 router.put('/resource-types/:id', authenticateToken, authorizeAdmin, metaController.updateResourceType);
 router.delete('/resource-types/:id', authenticateToken, authorizeAdmin, metaController.deleteResourceType);
 
+// Awards & Contributor Rewards (Public Read, Admin Write)
+router.get('/awards', metaController.getAwards);
+router.get('/admin/awards', authenticateToken, authorizeAdmin, metaController.getAllAwardsAdmin);
+router.post('/awards', authenticateToken, authorizeAdmin, metaController.addAward);
+router.put('/awards/:id', authenticateToken, authorizeAdmin, metaController.updateAward);
+router.delete('/awards/:id', authenticateToken, authorizeAdmin, metaController.deleteAward);
+
 module.exports = router;

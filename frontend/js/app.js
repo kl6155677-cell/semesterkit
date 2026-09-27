@@ -153,12 +153,13 @@ async function loadHomePageData() {
     if (!window.api) return;
 
     try {
-        const [settings, stats, colleges, contributors, testimonials] = await Promise.all([
+        const [settings, stats, colleges, contributors, testimonials, awardsData] = await Promise.all([
             window.api.get('/meta/settings').catch(() => null),
             window.api.get('/meta/stats').catch(() => null),
             window.api.get('/meta/colleges?featured=1').catch(() => null),
             window.api.get('/meta/top-contributors').catch(() => null),
-            window.api.get('/meta/testimonials').catch(() => null)
+            window.api.get('/meta/testimonials').catch(() => null),
+            window.api.get('/meta/awards').catch(() => null)
         ]);
 
         // A. Hero Section Settings
@@ -185,27 +186,54 @@ async function loadHomePageData() {
                 renderPopularSearches(settings.popular_searches);
             }
             if (settings.hero_image_url && settings.hero_image_url.trim()) {
-                const imgContainer = document.getElementById('hero-image-container');
-                if (imgContainer) {
-                    const svgEl = imgContainer.querySelector('svg.drop-shadow-xl');
-                    if (svgEl) {
-                        svgEl.parentElement.innerHTML = `<img src="${settings.hero_image_url}" alt="SemesterKit Hero" class="w-80 sm:w-96 h-auto drop-shadow-xl rounded-2xl object-cover" />`;
-                    }
+                const heroImg = document.getElementById('hero-banner-img') || document.querySelector('#hero-image-container img');
+                if (heroImg) {
+                    heroImg.src = settings.hero_image_url;
                 }
+            }
+
+            // Degree Cards
+            if (settings.btech_card_title) {
+                const el = document.getElementById('btech-card-title');
+                if (el) el.textContent = settings.btech_card_title;
+            }
+            if (settings.btech_card_desc) {
+                const el = document.getElementById('btech-card-desc');
+                if (el) el.textContent = settings.btech_card_desc;
+            }
+            if (settings.mtech_card_title) {
+                const el = document.getElementById('mtech-card-title');
+                if (el) el.textContent = settings.mtech_card_title;
+            }
+            if (settings.mtech_card_desc) {
+                const el = document.getElementById('mtech-card-desc');
+                if (el) el.textContent = settings.mtech_card_desc;
+            }
+            if (settings.phd_card_title) {
+                const el = document.getElementById('phd-card-title');
+                if (el) el.textContent = settings.phd_card_title;
+            }
+            if (settings.phd_card_desc) {
+                const el = document.getElementById('phd-card-desc');
+                if (el) el.textContent = settings.phd_card_desc;
             }
 
             // CTA Section
             if (settings.cta_title) {
-                const ctaTitle = document.querySelector('section.max-w-7xl h3.text-lg, section.max-w-7xl h3.text-xl');
+                const ctaTitle = document.getElementById('cta-title');
                 if (ctaTitle) ctaTitle.textContent = settings.cta_title;
             }
             if (settings.cta_description) {
-                const ctaDesc = document.querySelector('section.max-w-7xl p.text-xs, section.max-w-7xl p.text-sm');
+                const ctaDesc = document.getElementById('cta-description');
                 if (ctaDesc) ctaDesc.textContent = settings.cta_description;
             }
             if (settings.cta_button_text) {
-                const ctaBtn = document.querySelector('section.max-w-7xl button.bg-\\[\\#1d7bf5\\]');
+                const ctaBtn = document.getElementById('cta-button');
                 if (ctaBtn) ctaBtn.textContent = settings.cta_button_text;
+            }
+            if (settings.cta_doodle_text) {
+                const ctaDoodle = document.getElementById('cta-doodle');
+                if (ctaDoodle) ctaDoodle.innerHTML = settings.cta_doodle_text;
             }
         }
 
@@ -225,13 +253,8 @@ async function loadHomePageData() {
             collegesContainer.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-xs">No universities listed yet. You can add universities directly from the Admin Panel.</div>';
         }
 
-        // D. Top Contributors (Ranked by approved uploads)
-        const contribContainer = document.getElementById('top-contributors-container');
-        if (contributors && Array.isArray(contributors) && contributors.length > 0) {
-            renderTopContributors(contributors);
-        } else if (contribContainer) {
-            contribContainer.innerHTML = '<div class="py-8 text-center text-slate-400 text-xs">Top student contributors will appear here as study materials are uploaded and approved.</div>';
-        }
+        // D. Top Contributors & Recent Award Winners
+        renderTopContributorsAndAwards(awardsData, contributors, settings);
 
         // E. Testimonials Slider
         const testContainer = document.querySelector('.bg-white.rounded-2xl.p-6.sm\\:p-7');
@@ -290,36 +313,122 @@ function renderTopUniversities(colleges) {
     }).join('');
 }
 
-function renderTopContributors(contributors) {
-    const container = document.getElementById('top-contributors-container');
-    if (!container) return;
+function renderTopContributorsAndAwards(awardsData, contributors, settings = {}) {
+    const contribContainer = document.getElementById('top-contributors-container');
+    const winnersContainer = document.getElementById('recent-winners-container');
 
-    const rankColors = ['bg-amber-400 text-white', 'bg-slate-300 text-gray-700', 'bg-amber-600 text-white', 'text-gray-500', 'text-gray-500'];
+    const winnersList = (awardsData && Array.isArray(awardsData.winners) && awardsData.winners.length > 0)
+        ? awardsData.winners
+        : [
+            { rank_number: 1, name: 'HADIYA MAJEED NAJAR', college: 'Engineering Student', reward_amount: '₹2,000', month_year: 'September 2025' },
+            { rank_number: 2, name: 'Aakash Sharma', college: 'NIT Trichy', reward_amount: '₹1,000', month_year: 'September 2025' },
+            { rank_number: 3, name: 'Danish Khan', college: 'NIT Srinagar', reward_amount: '₹500', month_year: 'September 2025' }
+        ];
 
-    container.innerHTML = contributors.map((c, idx) => {
-        const rankClass = rankColors[idx] || 'text-gray-500';
-        const uploadsCount = c.approved_uploads || 0;
-        const uploadStr = uploadsCount === 1 ? '1 upload' : `${uploadsCount} uploads`;
-        const initial = (c.name || 'U').charAt(0).toUpperCase();
+    // Determine Top Contributor Highlight
+    const topHighlight = (awardsData && awardsData.winners && awardsData.winners.find(w => w.is_top_highlight || w.rank_number === 1)) || winnersList[0] || {};
+    const topName = settings.top_contrib_name || topHighlight.name || 'HADIYA MAJEED NAJAR';
+    const topRole = settings.top_contrib_role || topHighlight.college || 'Engineering Student';
+    const topPoints = settings.top_contrib_points || (topHighlight.points ? String(topHighlight.points) : '120');
+    const topUploads = settings.top_contrib_uploads || (topHighlight.uploads_count ? String(topHighlight.uploads_count) : '35');
+    const topDownloads = settings.top_contrib_downloads || topHighlight.downloads_count || '1.2K';
+    const initial = topName.trim().charAt(0).toUpperCase() || 'H';
 
-        return `
-            <div class="flex items-center justify-between p-2 rounded-xl hover:bg-gray-50 transition">
+    const rewardTitle = settings.reward_title || 'You have won this month\'s reward!';
+    const rewardSubtitle = settings.reward_subtitle || 'Claim your reward now and keep contributing.';
+    const rewardBtnText = settings.reward_btn_text || 'Claim Reward';
+
+    // 1. Render Top Contributor Box
+    if (contribContainer) {
+        contribContainer.innerHTML = `
+            <!-- Top Contributor Header Row -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="flex items-center space-x-3">
-                    <span class="w-6 h-6 rounded-full ${rankClass} text-xs font-bold flex items-center justify-center">${idx + 1}</span>
-                    ${c.avatar_url ? `
-                        <img alt="${c.name}" class="w-9 h-9 rounded-full object-cover" src="${c.avatar_url}" />
-                    ` : `
-                        <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center">${initial}</div>
-                    `}
-                    <div>
-                        <h4 class="text-xs sm:text-sm font-bold text-gray-900">${c.name}</h4>
-                        <p class="text-[11px] text-gray-400">${c.college_name || 'Engineering Student'}</p>
+                    <span class="w-8 h-8 rounded-full bg-[#f5a623] text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-2xs">1</span>
+                    <div class="w-10 h-10 rounded-full bg-[#e8eef7] text-slate-800 font-bold text-sm flex items-center justify-center shrink-0 uppercase">${initial}</div>
+                    <div class="min-w-0">
+                        <h4 class="text-sm font-extrabold text-gray-900 uppercase tracking-wide truncate">${topName}</h4>
+                        <p class="text-xs text-gray-500 font-medium truncate">${topRole}</p>
                     </div>
                 </div>
-                <span class="text-xs font-semibold text-gray-600">${uploadStr}</span>
+                <!-- Stat Badges Row -->
+                <div class="flex items-center space-x-5 pl-11 sm:pl-0">
+                    <div class="text-center">
+                        <span class="block text-base font-extrabold text-[#1d7bf5] leading-tight">${topPoints}</span>
+                        <span class="block text-[11px] text-gray-500 font-medium">Points</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="block text-base font-extrabold text-gray-900 leading-tight">${topUploads}</span>
+                        <span class="block text-[11px] text-gray-500 font-medium">Uploads</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="block text-base font-extrabold text-gray-900 leading-tight">${topDownloads}</span>
+                        <span class="block text-[11px] text-gray-500 font-medium">Downloads</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward Alert Banner -->
+            <div class="bg-white rounded-xl p-3 sm:p-3.5 border border-amber-200/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs mt-2">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-orange-100/90 text-orange-600 flex items-center justify-center text-xl shrink-0">🎁</div>
+                    <div>
+                        <h5 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">${rewardTitle}</h5>
+                        <p class="text-[11px] sm:text-xs text-gray-500 mt-0.5 font-normal">${rewardSubtitle}</p>
+                    </div>
+                </div>
+                <button onclick="claimContributorReward()" class="w-full sm:w-auto px-5 py-2.5 bg-[#4f28d9] hover:bg-[#431fb3] text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
+                    <span>🎁</span>
+                    <span>${rewardBtnText}</span>
+                </button>
             </div>
         `;
-    }).join('');
+    }
+
+    // 2. Render Recent Winners 3-Card Grid
+    if (winnersContainer) {
+        const medalStyles = [
+            {
+                badgeBg: 'bg-amber-100 text-amber-700',
+                medal: '🥇',
+                cardBg: 'bg-[#fefbf6] border-amber-200/80',
+                amountColor: 'text-amber-800'
+            },
+            {
+                badgeBg: 'bg-blue-100 text-blue-700',
+                medal: '🥈',
+                cardBg: 'bg-[#f8faff] border-blue-100',
+                amountColor: 'text-blue-600'
+            },
+            {
+                badgeBg: 'bg-orange-100 text-orange-700',
+                medal: '🥉',
+                cardBg: 'bg-[#fffaf6] border-orange-100',
+                amountColor: 'text-amber-800'
+            }
+        ];
+
+        winnersContainer.innerHTML = winnersList.slice(0, 3).map((w, idx) => {
+            const style = medalStyles[idx] || medalStyles[0];
+            const wInitial = (w.name || 'W').trim().charAt(0).toUpperCase();
+            return `
+                <div class="${style.cardBg} rounded-2xl p-4 border shadow-2xs flex flex-col justify-between hover:shadow-xs transition">
+                    <div>
+                        <div class="flex items-center space-x-2.5 mb-2">
+                            <span class="text-lg shrink-0">${style.medal}</span>
+                            <div class="w-7 h-7 rounded-full bg-[#e8eef7] text-slate-800 font-bold text-xs flex items-center justify-center shrink-0 uppercase">${wInitial}</div>
+                            <div class="min-w-0 flex-1">
+                                <h4 class="text-xs font-bold text-gray-900 truncate">${w.name}</h4>
+                                <p class="text-[10px] text-gray-500 truncate">${w.college || 'Engineering Student'}</p>
+                            </div>
+                        </div>
+                        <div class="text-base sm:text-lg font-extrabold ${style.amountColor} mt-2 tracking-tight">${w.reward_amount}</div>
+                    </div>
+                    <div class="text-[10px] sm:text-[11px] text-gray-400 font-medium mt-1">${w.month_year}</div>
+                </div>
+            `;
+        }).join('');
+    }
 }
 
 function renderTestimonial(index) {
@@ -385,3 +494,9 @@ function setupTestimonialControls() {
         renderTestimonial(currentTestimonialIndex);
     };
 }
+
+function claimContributorReward() {
+    alert("Your reward claim request has been submitted successfully.");
+}
+window.claimContributorReward = claimContributorReward;
+

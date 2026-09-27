@@ -480,3 +480,157 @@ exports.deleteResourceType = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+// Helper: Ensure awards table exists and has initial data
+async function ensureAwardsTable() {
+    try {
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS awards (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(150) NOT NULL,
+                college VARCHAR(150) NULL,
+                rank_number INT DEFAULT 1,
+                reward_amount VARCHAR(50) NOT NULL,
+                month_year VARCHAR(50) NOT NULL,
+                avatar_url TEXT NULL,
+                points INT DEFAULT 0,
+                uploads_count INT DEFAULT 0,
+                downloads_count VARCHAR(50) DEFAULT '0',
+                is_top_highlight BOOLEAN DEFAULT FALSE,
+                display_order INT DEFAULT 0,
+                is_active BOOLEAN DEFAULT TRUE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+
+        const [existing] = await db.query('SELECT COUNT(*) as count FROM awards');
+        if (existing[0].count === 0) {
+            await db.query(`
+                INSERT INTO awards (name, college, rank_number, reward_amount, month_year, points, uploads_count, downloads_count, is_top_highlight, display_order, is_active)
+                VALUES 
+                ('HADIYA MAJEED NAJAR', 'Engineering Student', 1, '₹2,000', 'September 2025', 120, 35, '1.2K', 1, 1, 1),
+                ('Aakash Sharma', 'NIT Trichy', 2, '₹1,000', 'September 2025', 95, 24, '850', 0, 2, 1),
+                ('Danish Khan', 'NIT Srinagar', 3, '₹500', 'September 2025', 70, 18, '620', 0, 3, 1)
+            `);
+        }
+    } catch (e) {
+        console.warn('ensureAwardsTable notice:', e.message);
+    }
+}
+
+// 12. Awards & Contributor Rewards (Public API)
+exports.getAwards = async (req, res) => {
+    try {
+        await ensureAwardsTable();
+        const [winners] = await db.query('SELECT * FROM awards WHERE is_active = 1 ORDER BY rank_number ASC, display_order ASC');
+        
+        // Fetch top contributor reward settings
+        const [settingsRows] = await db.query('SELECT setting_key, setting_value FROM settings WHERE setting_key LIKE "reward_%" OR setting_key LIKE "top_contrib_%"');
+        const rewardSettings = {};
+        settingsRows.forEach(r => { rewardSettings[r.setting_key] = r.setting_value; });
+
+        res.json({
+            winners,
+            settings: rewardSettings
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// Admin Awards List
+exports.getAllAwardsAdmin = async (req, res) => {
+    try {
+        await ensureAwardsTable();
+        const [rows] = await db.query('SELECT * FROM awards ORDER BY rank_number ASC, display_order ASC, id DESC');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+exports.addAward = async (req, res) => {
+    try {
+        await ensureAwardsTable();
+        const { name, college, rank_number, reward_amount, month_year, points, uploads_count, downloads_count, is_top_highlight, display_order, is_active, avatar_url } = req.body;
+        
+        if (!name || !reward_amount || !month_year) {
+            return res.status(400).json({ error: 'Name, reward amount, and month/year are required.' });
+        }
+
+        const [result] = await db.query(`
+            INSERT INTO awards (name, college, rank_number, reward_amount, month_year, points, uploads_count, downloads_count, is_top_highlight, display_order, is_active, avatar_url)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [
+            name.trim(),
+            college ? college.trim() : null,
+            rank_number ? parseInt(rank_number, 10) : 1,
+            reward_amount.trim(),
+            month_year.trim(),
+            points ? parseInt(points, 10) : 0,
+            uploads_count ? parseInt(uploads_count, 10) : 0,
+            downloads_count ? String(downloads_count).trim() : '0',
+            is_top_highlight ? 1 : 0,
+            display_order ? parseInt(display_order, 10) : 0,
+            is_active !== undefined ? (is_active ? 1 : 0) : 1,
+            avatar_url || null
+        ]);
+
+        res.status(201).json({ id: result.insertId, message: 'Award winner added successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+exports.updateAward = async (req, res) => {
+    try {
+        await ensureAwardsTable();
+        const { name, college, rank_number, reward_amount, month_year, points, uploads_count, downloads_count, is_top_highlight, display_order, is_active, avatar_url } = req.body;
+
+        await db.query(`
+            UPDATE awards 
+            SET name = COALESCE(?, name),
+                college = COALESCE(?, college),
+                rank_number = COALESCE(?, rank_number),
+                reward_amount = COALESCE(?, reward_amount),
+                month_year = COALESCE(?, month_year),
+                points = COALESCE(?, points),
+                uploads_count = COALESCE(?, uploads_count),
+                downloads_count = COALESCE(?, downloads_count),
+                is_top_highlight = COALESCE(?, is_top_highlight),
+                display_order = COALESCE(?, display_order),
+                is_active = COALESCE(?, is_active),
+                avatar_url = COALESCE(?, avatar_url)
+            WHERE id = ?
+        `, [
+            name ? name.trim() : null,
+            college !== undefined ? (college ? college.trim() : null) : null,
+            rank_number !== undefined ? parseInt(rank_number, 10) : null,
+            reward_amount ? reward_amount.trim() : null,
+            month_year ? month_year.trim() : null,
+            points !== undefined ? parseInt(points, 10) : null,
+            uploads_count !== undefined ? parseInt(uploads_count, 10) : null,
+            downloads_count !== undefined ? String(downloads_count).trim() : null,
+            is_top_highlight !== undefined ? (is_top_highlight ? 1 : 0) : null,
+            display_order !== undefined ? parseInt(display_order, 10) : null,
+            is_active !== undefined ? (is_active ? 1 : 0) : null,
+            avatar_url !== undefined ? avatar_url : null,
+            req.params.id
+        ]);
+
+        res.json({ message: 'Award winner updated successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+exports.deleteAward = async (req, res) => {
+    try {
+        await ensureAwardsTable();
+        await db.query('DELETE FROM awards WHERE id = ?', [req.params.id]);
+        res.json({ message: 'Award winner deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
