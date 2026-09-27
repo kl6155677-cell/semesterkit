@@ -7,10 +7,30 @@ let currentFilters = {
     college_id: null,
     branch_id: null,
     semester_id: null,
+    subject_id: null,
     resource_type_id: null,
     query: '',
     sort: 'latest',
     page: 1
+};
+
+let globalColleges = [];
+let globalBranches = [];
+let globalSemesters = [];
+let globalSubjects = [];
+
+const collegeDescriptions = {
+    'NIT Trichy': 'National Institute of Technology, Tiruchirappalli',
+    'NIT Surathkal': 'National Institute of Technology Karnataka, Surathkal',
+    'NIT Warangal': 'National Institute of Technology, Warangal',
+    'NIT Rourkela': 'National Institute of Technology, Rourkela',
+    'NIT Calicut': 'National Institute of Technology, Calicut',
+    'IIT Bombay': 'Indian Institute of Technology Bombay',
+    'IIT Delhi': 'Indian Institute of Technology Delhi',
+    'IIT Madras': 'Indian Institute of Technology Madras',
+    'IIT Kanpur': 'Indian Institute of Technology Kanpur',
+    'IIT Kharagpur': 'Indian Institute of Technology Kharagpur',
+    'Other': 'Engineering & Technology Institutes'
 };
 
 async function initBTechPage() {
@@ -20,10 +40,14 @@ async function initBTechPage() {
     if (params.get('college_id')) currentFilters.college_id = params.get('college_id');
     if (params.get('branch_id')) currentFilters.branch_id = params.get('branch_id');
     if (params.get('semester_id')) currentFilters.semester_id = params.get('semester_id');
+    if (params.get('subject_id')) currentFilters.subject_id = params.get('subject_id');
     if (params.get('type_id')) currentFilters.resource_type_id = params.get('type_id');
 
     // Setup filter listeners
     setupFilterEvents();
+
+    // Initial banner update
+    updateBanner();
 
     // Load filters and resources in parallel for instantaneous load
     loadSidebarFilters();
@@ -33,35 +57,162 @@ async function initBTechPage() {
 async function loadSidebarFilters() {
     if (!window.api) return;
     try {
-        const [colleges, branches, semesters, resourceTypes] = await Promise.all([
+        const [colleges, branches, semesters, subjects, resourceTypes] = await Promise.all([
             window.api.get('/meta/colleges').catch(() => []),
             window.api.get('/meta/branches?program=B.Tech').catch(() => []),
             window.api.get('/meta/semesters?level=B.Tech').catch(() => []),
+            window.api.get('/meta/subjects?program=B.Tech').catch(() => []),
             window.api.get('/meta/resource-types?program=B.Tech').catch(() => [])
         ]);
 
+        globalColleges = Array.isArray(colleges) ? colleges : [];
+        globalBranches = Array.isArray(branches) ? branches : [];
+        globalSemesters = Array.isArray(semesters) ? semesters : [];
+        globalSubjects = Array.isArray(subjects) ? subjects : [];
+
         const collegeSelect = document.getElementById('filter-college-select');
-        if (collegeSelect && colleges.length > 0) {
-            collegeSelect.innerHTML = `<option value="">Select Unit</option>` + colleges.map(c => `
+        if (collegeSelect && globalColleges.length > 0) {
+            collegeSelect.innerHTML = `<option value="">Select Unit</option>` + globalColleges.map(c => `
                 <option value="${c.id}" ${currentFilters.college_id == c.id ? 'selected' : ''}>${c.name}</option>
             `).join('');
+            if (currentFilters.college_id) {
+                collegeSelect.value = currentFilters.college_id;
+            }
         }
 
         const branchSelect = document.getElementById('filter-branch-select');
-        if (branchSelect && branches.length > 0) {
-            branchSelect.innerHTML = `<option value="">Select Branch</option>` + branches.map(b => `
+        if (branchSelect && globalBranches.length > 0) {
+            branchSelect.innerHTML = `<option value="">Select Branch</option>` + globalBranches.map(b => `
                 <option value="${b.id}" ${currentFilters.branch_id == b.id ? 'selected' : ''}>${b.name}</option>
             `).join('');
+            if (currentFilters.branch_id) {
+                branchSelect.value = currentFilters.branch_id;
+            }
         }
 
         const semesterSelect = document.getElementById('filter-semester-select');
-        if (semesterSelect && semesters.length > 0) {
-            semesterSelect.innerHTML = `<option value="">Select Semester</option>` + semesters.map(s => `
+        if (semesterSelect && globalSemesters.length > 0) {
+            semesterSelect.innerHTML = `<option value="">Select Semester</option>` + globalSemesters.map(s => `
                 <option value="${s.id}" ${currentFilters.semester_id == s.id ? 'selected' : ''}>${s.name}</option>
             `).join('');
+            if (currentFilters.semester_id) {
+                semesterSelect.value = currentFilters.semester_id;
+            }
         }
+
+        const subjectSelect = document.getElementById('filter-subject-select');
+        if (subjectSelect && globalSubjects.length > 0) {
+            subjectSelect.innerHTML = `<option value="">Select Subject</option>` + globalSubjects.map(sub => `
+                <option value="${sub.id}" ${currentFilters.subject_id == sub.id ? 'selected' : ''}>${sub.name}</option>
+            `).join('');
+            if (currentFilters.subject_id) {
+                subjectSelect.value = currentFilters.subject_id;
+            }
+        }
+
+        updateBanner();
     } catch (e) {
         console.warn('Sidebar filter load error:', e);
+    }
+}
+
+function updateBanner() {
+    const collegeSelect = document.getElementById('filter-college-select');
+    const branchSelect = document.getElementById('filter-branch-select');
+    const semesterSelect = document.getElementById('filter-semester-select');
+    const subjectSelect = document.getElementById('filter-subject-select');
+
+    const collegeNameEl = document.getElementById('banner-college-name');
+    const collegeDescEl = document.getElementById('banner-college-desc');
+    const emblemTextEl = document.getElementById('banner-college-emblem-text');
+    const badgesContainer = document.getElementById('banner-badges');
+
+    if (!collegeNameEl) return;
+
+    let selectedCollegeName = '';
+    let selectedCollegeDesc = '';
+
+    const collegeVal = collegeSelect ? collegeSelect.value : currentFilters.college_id;
+    if (collegeVal) {
+        const found = globalColleges.find(c => String(c.id) === String(collegeVal) || c.name === collegeVal);
+        if (found) {
+            selectedCollegeName = found.name;
+            selectedCollegeDesc = found.description || collegeDescriptions[found.name] || `${found.name} Engineering & Academic Portal`;
+        } else if (collegeSelect && collegeSelect.selectedIndex > 0) {
+            selectedCollegeName = collegeSelect.options[collegeSelect.selectedIndex].text;
+            selectedCollegeDesc = collegeDescriptions[selectedCollegeName] || `${selectedCollegeName} Engineering & Academic Portal`;
+        } else {
+            selectedCollegeName = collegeVal;
+            selectedCollegeDesc = collegeDescriptions[collegeVal] || `${collegeVal} Engineering & Academic Portal`;
+        }
+    }
+
+    if (selectedCollegeName && selectedCollegeName !== 'Select Unit') {
+        collegeNameEl.textContent = selectedCollegeName;
+        if (collegeDescEl) {
+            collegeDescEl.textContent = selectedCollegeDesc || collegeDescriptions[selectedCollegeName] || `${selectedCollegeName} Engineering & Academic Portal`;
+        }
+        if (emblemTextEl) {
+            emblemTextEl.textContent = selectedCollegeName.toUpperCase();
+        }
+        document.title = `${selectedCollegeName} - B.Tech Resources | SemesterKit`;
+    } else {
+        collegeNameEl.textContent = 'NIT Trichy';
+        if (collegeDescEl) {
+            collegeDescEl.textContent = 'National Institute of Technology, Tiruchirappalli';
+        }
+        if (emblemTextEl) {
+            emblemTextEl.textContent = 'NIT TRICHY';
+        }
+        document.title = 'NIT Trichy - Data Structures Resources | SemesterKit';
+    }
+
+    if (badgesContainer) {
+        let badgesHtml = `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">B.Tech</span>`;
+
+        // Branch badge
+        let branchName = '';
+        if (branchSelect && branchSelect.value && branchSelect.selectedIndex > 0) {
+            branchName = branchSelect.options[branchSelect.selectedIndex].text;
+        } else if (currentFilters.branch_id) {
+            const fb = globalBranches.find(b => String(b.id) === String(currentFilters.branch_id) || b.name === currentFilters.branch_id);
+            if (fb) branchName = fb.name;
+        }
+        if (branchName && branchName !== 'Select Branch') {
+            badgesHtml += `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${branchName}</span>`;
+        } else if (!selectedCollegeName || selectedCollegeName === 'Select Unit' || selectedCollegeName === 'NIT Trichy') {
+            badgesHtml += `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">Computer Science</span>`;
+        }
+
+        // Semester badge
+        let semesterName = '';
+        if (semesterSelect && semesterSelect.value && semesterSelect.selectedIndex > 0) {
+            semesterName = semesterSelect.options[semesterSelect.selectedIndex].text;
+        } else if (currentFilters.semester_id) {
+            const fs = globalSemesters.find(s => String(s.id) === String(currentFilters.semester_id) || s.name === currentFilters.semester_id);
+            if (fs) semesterName = fs.name;
+        }
+        if (semesterName && semesterName !== 'Select Semester') {
+            badgesHtml += `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${semesterName}</span>`;
+        } else if (!selectedCollegeName || selectedCollegeName === 'Select Unit' || selectedCollegeName === 'NIT Trichy') {
+            badgesHtml += `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">3rd Semester</span>`;
+        }
+
+        // Subject badge
+        let subjectName = '';
+        if (subjectSelect && subjectSelect.value && subjectSelect.selectedIndex > 0) {
+            subjectName = subjectSelect.options[subjectSelect.selectedIndex].text;
+        } else if (currentFilters.subject_id) {
+            const fsub = globalSubjects.find(sub => String(sub.id) === String(currentFilters.subject_id) || sub.name === currentFilters.subject_id);
+            if (fsub) subjectName = fsub.name;
+        }
+        if (subjectName && subjectName !== 'Select Subject') {
+            badgesHtml += `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${subjectName}</span>`;
+        } else if ((!selectedCollegeName || selectedCollegeName === 'Select Unit' || selectedCollegeName === 'NIT Trichy') && !branchSelect?.value && !semesterSelect?.value) {
+            badgesHtml += `<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">Data Structures</span>`;
+        }
+
+        badgesContainer.innerHTML = badgesHtml;
     }
 }
 
@@ -71,6 +222,7 @@ function setupFilterEvents() {
         collegeSelect.addEventListener('change', (e) => {
             currentFilters.college_id = e.target.value || null;
             currentFilters.page = 1;
+            updateBanner();
             loadResources();
         });
     }
@@ -80,6 +232,7 @@ function setupFilterEvents() {
         branchSelect.addEventListener('change', (e) => {
             currentFilters.branch_id = e.target.value || null;
             currentFilters.page = 1;
+            updateBanner();
             loadResources();
         });
     }
@@ -89,6 +242,7 @@ function setupFilterEvents() {
         semesterSelect.addEventListener('change', (e) => {
             currentFilters.semester_id = e.target.value || null;
             currentFilters.page = 1;
+            updateBanner();
             loadResources();
         });
     }
@@ -98,6 +252,7 @@ function setupFilterEvents() {
         subjectSelect.addEventListener('change', (e) => {
             currentFilters.subject_id = e.target.value || null;
             currentFilters.page = 1;
+            updateBanner();
             loadResources();
         });
     }
@@ -138,6 +293,7 @@ async function loadResources() {
         if (currentFilters.college_id) endpoint += `&college_id=${currentFilters.college_id}`;
         if (currentFilters.branch_id) endpoint += `&branch_id=${currentFilters.branch_id}`;
         if (currentFilters.semester_id) endpoint += `&semester_id=${currentFilters.semester_id}`;
+        if (currentFilters.subject_id) endpoint += `&subject_id=${currentFilters.subject_id}`;
         if (currentFilters.resource_type_id) endpoint += `&resource_type_id=${currentFilters.resource_type_id}`;
 
         const resources = await window.api.get(endpoint);
@@ -191,8 +347,8 @@ function renderResources(resources, container) {
                       <h3 class="font-bold text-slate-900 text-sm hover:text-blue-600 cursor-pointer" onclick="window.location.href='/resource.html?id=${res.id}'">${res.title}</h3>
                       <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">${res.description || 'No description provided.'}</p>
                       <div class="flex flex-wrap gap-1.5 mt-2">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-600 border border-emerald-100">${res.resource_type_name || 'Resource'}</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-600 border border-blue-100">${res.semester_name || 'B.Tech'}</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${res.resource_type_name || 'Resource'}</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${res.semester_name || 'B.Tech'}</span>
                         ${res.is_featured ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">★ Featured</span>` : ''}
                       </div>
                     </div>
@@ -232,12 +388,22 @@ function clearFilters() {
         college_id: null,
         branch_id: null,
         semester_id: null,
+        subject_id: null,
         resource_type_id: null,
         query: '',
         sort: 'latest',
         page: 1
     };
+    const collegeSelect = document.getElementById('filter-college-select');
+    if (collegeSelect) collegeSelect.value = '';
+    const branchSelect = document.getElementById('filter-branch-select');
+    if (branchSelect) branchSelect.value = '';
+    const semesterSelect = document.getElementById('filter-semester-select');
+    if (semesterSelect) semesterSelect.value = '';
+    const subjectSelect = document.getElementById('filter-subject-select');
+    if (subjectSelect) subjectSelect.value = '';
     document.querySelectorAll('.filter-college-cb, .filter-branch-cb').forEach(cb => cb.checked = false);
+    updateBanner();
     loadResources();
 }
 
