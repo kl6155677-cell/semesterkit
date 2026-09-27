@@ -79,6 +79,9 @@ async function loadSidebarFilters() {
                 collegeSelect.value = currentFilters.college_id;
             }
         }
+        if (collegeSelect && window.initSearchableDropdown) {
+            window.initSearchableDropdown(collegeSelect, '🔍 Search university...');
+        }
 
         const branchSelect = document.getElementById('filter-branch-select');
         if (branchSelect && globalBranches.length > 0) {
@@ -88,6 +91,9 @@ async function loadSidebarFilters() {
             if (currentFilters.branch_id) {
                 branchSelect.value = currentFilters.branch_id;
             }
+        }
+        if (branchSelect && window.initSearchableDropdown) {
+            window.initSearchableDropdown(branchSelect, '🔍 Search branch...');
         }
 
         const semesterSelect = document.getElementById('filter-semester-select');
@@ -252,15 +258,8 @@ function updateBanner() {
 
 function setupFilterEvents() {
     const collegeSelect = document.getElementById('filter-college-select');
-    const collegeSearchInput = document.getElementById('filter-college-search');
-    if (collegeSearchInput && collegeSelect) {
-        collegeSearchInput.addEventListener('input', (e) => {
-            const q = e.target.value.toLowerCase().trim();
-            collegeSelect.innerHTML = `<option value="">Select University</option>` + globalColleges
-                .filter(c => !q || c.name.toLowerCase().includes(q))
-                .map(c => `<option value="${c.id}" ${currentFilters.college_id == c.id ? 'selected' : ''}>${c.name}</option>`)
-                .join('');
-        });
+    if (collegeSelect && window.initSearchableDropdown) {
+        window.initSearchableDropdown(collegeSelect, '🔍 Search university...');
     }
 
     if (collegeSelect) {
@@ -274,15 +273,8 @@ function setupFilterEvents() {
     }
 
     const branchSelect = document.getElementById('filter-branch-select');
-    const branchSearchInput = document.getElementById('filter-branch-search');
-    if (branchSearchInput && branchSelect) {
-        branchSearchInput.addEventListener('input', (e) => {
-            const q = e.target.value.toLowerCase().trim();
-            branchSelect.innerHTML = `<option value="">Select Branch</option>` + globalBranches
-                .filter(b => !q || b.name.toLowerCase().includes(q))
-                .map(b => `<option value="${b.id}" ${currentFilters.branch_id == b.id ? 'selected' : ''}>${b.name}</option>`)
-                .join('');
-        });
+    if (branchSelect && window.initSearchableDropdown) {
+        window.initSearchableDropdown(branchSelect, '🔍 Search branch...');
     }
 
     if (branchSelect) {

@@ -746,4 +746,190 @@ window.closeWinnersModal = () => {
     if (modal) modal.classList.add('hidden');
 };
 
+// Universal Inside-Dropdown Searchable Select Component
+window.initSearchableDropdown = function(selectEl, placeholder = 'Search options...') {
+    if (!selectEl) return;
+    if (selectEl.dataset.searchableInit === 'true') {
+        if (selectEl._searchableSync) selectEl._searchableSync();
+        return;
+    }
+    selectEl.dataset.searchableInit = 'true';
+    selectEl.style.display = 'none';
+    const parentChevron = selectEl.parentElement?.querySelector(':scope > .pointer-events-none, :scope > svg.pointer-events-none');
+    if (parentChevron) parentChevron.style.display = 'none';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'relative w-full custom-searchable-dropdown text-xs';
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'w-full text-left py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 flex items-center justify-between transition shadow-2xs cursor-pointer font-normal';
+    
+    const triggerText = document.createElement('span');
+    triggerText.className = 'truncate block';
+    triggerText.textContent = selectEl.options[selectEl.selectedIndex]?.text || selectEl.getAttribute('placeholder') || 'Select option...';
+
+    const chevron = document.createElement('div');
+    chevron.className = 'pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 transition-transform duration-200';
+    chevron.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>`;
+
+    trigger.appendChild(triggerText);
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(chevron);
+
+    // Dropdown Panel
+    const panel = document.createElement('div');
+    panel.className = 'absolute z-[60] left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-lg shadow-xl hidden flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-100';
+
+    // Search input inside dropdown panel
+    const searchHeader = document.createElement('div');
+    searchHeader.className = 'p-2 bg-slate-50 border-b border-slate-100 sticky top-0 z-10 flex items-center gap-1.5';
+    searchHeader.innerHTML = `
+        <svg class="w-3.5 h-3.5 text-slate-400 shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input type="text" placeholder="${placeholder}" class="w-full text-xs bg-transparent border-none p-1 focus:outline-none text-slate-800 placeholder-slate-400" />
+        <button type="button" class="text-slate-300 hover:text-slate-500 hidden text-xs px-1">✕</button>
+    `;
+    const searchInput = searchHeader.querySelector('input');
+    const clearBtn = searchHeader.querySelector('button');
+
+    const listContainer = document.createElement('div');
+    listContainer.className = 'overflow-y-auto max-h-56 py-1 divide-y divide-slate-50/50';
+
+    panel.appendChild(searchHeader);
+    panel.appendChild(listContainer);
+    wrapper.appendChild(panel);
+
+    selectEl.parentNode.insertBefore(wrapper, selectEl.nextSibling);
+
+    function syncTrigger() {
+        const selected = selectEl.options[selectEl.selectedIndex];
+        triggerText.textContent = selected ? selected.text : (selectEl.getAttribute('placeholder') || 'Select option...');
+    }
+
+    function renderList(query = '') {
+        const q = query.toLowerCase().trim();
+        const options = Array.from(selectEl.options);
+        const filtered = options.filter(opt => !q || opt.text.toLowerCase().includes(q));
+
+        if (filtered.length === 0) {
+            listContainer.innerHTML = `<div class="py-3 px-3 text-[11px] text-slate-400 text-center font-medium">No results found</div>`;
+            return;
+        }
+
+        listContainer.innerHTML = filtered.map(opt => {
+            const isSelected = String(opt.value) === String(selectEl.value);
+            return `
+                <div data-val="${escapeHtmlAttr(opt.value)}" class="px-3 py-2 text-xs cursor-pointer hover:bg-blue-50/80 hover:text-[#1d7bf5] transition flex items-center justify-between ${isSelected ? 'bg-blue-50 font-bold text-[#1d7bf5]' : 'text-slate-700'}">
+                    <span class="truncate">${escapeHtml(opt.text)}</span>
+                    ${isSelected ? '<svg class="w-3.5 h-3.5 text-[#1d7bf5] shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ''}
+                </div>
+            `;
+        }).join('');
+
+        listContainer.querySelectorAll('[data-val]').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const val = item.getAttribute('data-val');
+                selectEl.value = val;
+                syncTrigger();
+                closeDropdown();
+                selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+            });
+        });
+    }
+
+    function openDropdown() {
+        document.querySelectorAll('.custom-searchable-dropdown .searchable-panel-open').forEach(p => {
+            p.classList.add('hidden');
+            p.classList.remove('searchable-panel-open');
+        });
+        document.querySelectorAll('.custom-searchable-dropdown .chevron-open').forEach(c => {
+            c.classList.remove('rotate-180', 'chevron-open');
+        });
+
+        panel.classList.remove('hidden');
+        panel.classList.add('searchable-panel-open');
+        chevron.classList.add('rotate-180', 'chevron-open');
+        searchInput.value = '';
+        clearBtn.classList.add('hidden');
+        renderList('');
+        setTimeout(() => searchInput.focus(), 30);
+    }
+
+    function closeDropdown() {
+        panel.classList.add('hidden');
+        panel.classList.remove('searchable-panel-open');
+        chevron.classList.remove('rotate-180', 'chevron-open');
+    }
+
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (panel.classList.contains('hidden')) {
+            openDropdown();
+        } else {
+            closeDropdown();
+        }
+    });
+
+    searchInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        clearBtn.classList.toggle('hidden', !val);
+        renderList(val);
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeDropdown();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            const firstOption = listContainer.querySelector('[data-val]');
+            if (firstOption) {
+                firstOption.click();
+            }
+        }
+    });
+
+    clearBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        searchInput.value = '';
+        clearBtn.classList.add('hidden');
+        renderList('');
+        searchInput.focus();
+    });
+
+    searchHeader.addEventListener('click', (e) => e.stopPropagation());
+
+    document.addEventListener('click', (e) => {
+        if (!wrapper.contains(e.target)) {
+            closeDropdown();
+        }
+    });
+
+    selectEl.addEventListener('change', () => {
+        syncTrigger();
+        renderList(searchInput.value);
+    });
+
+    selectEl._searchableSync = () => {
+        syncTrigger();
+        renderList(searchInput.value);
+    };
+
+    const observer = new MutationObserver(() => {
+        syncTrigger();
+        if (!panel.classList.contains('hidden')) {
+            renderList(searchInput.value);
+        }
+    });
+    observer.observe(selectEl, { childList: true, subtree: true, attributes: true });
+
+    syncTrigger();
+};
+
+function escapeHtmlAttr(str) {
+    if (!str && str !== 0) return '';
+    return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+
 
