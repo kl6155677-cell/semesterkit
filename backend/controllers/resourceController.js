@@ -23,7 +23,7 @@ exports.getResources = async (req, res) => {
             LEFT JOIN semesters s ON r.semester_id = s.id
             LEFT JOIN subjects sub ON r.subject_id = sub.id
             LEFT JOIN resource_types rt ON r.resource_type_id = rt.id
-            WHERE r.status = 'approved' AND r.is_archived = 0
+            WHERE r.status = 'approved' AND (r.is_archived = 0 OR r.is_archived IS NULL)
         `;
         const params = [];
 
@@ -34,8 +34,8 @@ exports.getResources = async (req, res) => {
         }
 
         if (program) {
-            sql += ` AND r.program = ?`;
-            params.push(program);
+            sql += ` AND (r.program = ? OR LOWER(REPLACE(r.program, '.', '')) = LOWER(REPLACE(?, '.', '')))`;
+            params.push(program, program);
         }
         if (college_id) {
             sql += ` AND r.college_id = ?`;
@@ -74,16 +74,16 @@ exports.getResources = async (req, res) => {
             sql += ` ORDER BY r.created_at DESC`;
         }
 
-        const pageSize = parseInt(limit, 10) || 12;
+        const pageSize = Math.max(1, Math.min(100, parseInt(limit, 10) || 12));
         const pageNum = Math.max(1, parseInt(page, 10) || 1);
         const offset = (pageNum - 1) * pageSize;
 
-        sql += ` LIMIT ? OFFSET ?`;
-        params.push(pageSize, offset);
+        sql += ` LIMIT ${pageSize} OFFSET ${offset}`;
 
         const [rows] = await db.query(sql, params);
         res.json(rows);
     } catch (err) {
+        console.error('Error in getResources:', err);
         res.status(500).json({ error: err.message });
     }
 };

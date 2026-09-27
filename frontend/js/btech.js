@@ -137,16 +137,12 @@ async function updateSubjectsForCollege(collegeId) {
             globalSubjects = subjects;
             renderSubjectOptions(globalSubjects);
 
-            // When student selects University, pre-fill / auto-select the available subject if not yet selected
-            if (collegeId && globalSubjects.length > 0) {
+            if (currentFilters.subject_id) {
                 const alreadySelected = globalSubjects.some(s => String(s.id) === String(currentFilters.subject_id));
                 if (!alreadySelected) {
-                    currentFilters.subject_id = globalSubjects[0].id;
-                    subjectSelect.value = globalSubjects[0].id;
+                    currentFilters.subject_id = null;
+                    subjectSelect.value = '';
                 }
-            } else if (collegeId && globalSubjects.length === 0) {
-                currentFilters.subject_id = null;
-                subjectSelect.value = '';
             }
         }
     } catch (err) {
@@ -256,6 +252,17 @@ function updateBanner() {
 
 function setupFilterEvents() {
     const collegeSelect = document.getElementById('filter-college-select');
+    const collegeSearchInput = document.getElementById('filter-college-search');
+    if (collegeSearchInput && collegeSelect) {
+        collegeSearchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            collegeSelect.innerHTML = `<option value="">Select University</option>` + globalColleges
+                .filter(c => !q || c.name.toLowerCase().includes(q))
+                .map(c => `<option value="${c.id}" ${currentFilters.college_id == c.id ? 'selected' : ''}>${c.name}</option>`)
+                .join('');
+        });
+    }
+
     if (collegeSelect) {
         collegeSelect.addEventListener('change', async (e) => {
             currentFilters.college_id = e.target.value || null;
@@ -267,6 +274,17 @@ function setupFilterEvents() {
     }
 
     const branchSelect = document.getElementById('filter-branch-select');
+    const branchSearchInput = document.getElementById('filter-branch-search');
+    if (branchSearchInput && branchSelect) {
+        branchSearchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            branchSelect.innerHTML = `<option value="">Select Branch</option>` + globalBranches
+                .filter(b => !q || b.name.toLowerCase().includes(q))
+                .map(b => `<option value="${b.id}" ${currentFilters.branch_id == b.id ? 'selected' : ''}>${b.name}</option>`)
+                .join('');
+        });
+    }
+
     if (branchSelect) {
         branchSelect.addEventListener('change', async (e) => {
             currentFilters.branch_id = e.target.value || null;

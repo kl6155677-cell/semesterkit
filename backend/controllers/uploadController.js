@@ -65,7 +65,12 @@ exports.uploadResource = async (req, res) => {
             }
         }
 
-        const filePath = 'uploads/' + path.basename(req.file.path || req.file.filename);
+        let filePath = 'uploads/' + path.basename(req.file.path || req.file.filename || req.file.originalname);
+        if (req.file.path && (req.file.path.startsWith('http://') || req.file.path.startsWith('https://'))) {
+            filePath = req.file.path;
+        } else if (req.file.secure_url) {
+            filePath = req.file.secure_url;
+        }
         const fileName = req.file.originalname;
         const fileType = path.extname(req.file.originalname).replace('.', '').toLowerCase();
         const fileSize = req.file.size;

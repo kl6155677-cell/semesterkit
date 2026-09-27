@@ -561,3 +561,129 @@ function claimContributorReward() {
 }
 window.claimContributorReward = claimContributorReward;
 
+let allContributorsData = [];
+let allAwardsData = [];
+
+// Save references during loadHomePageData
+const origRenderTopContributors = renderTopContributorsAndAwards;
+renderTopContributorsAndAwards = function(awardsData, contributors, settings) {
+    allContributorsData = Array.isArray(contributors) ? contributors : [];
+    allAwardsData = (awardsData && Array.isArray(awardsData.winners)) ? awardsData.winners : [];
+    origRenderTopContributors(awardsData, contributors, settings);
+};
+
+window.openContributorsModal = async () => {
+    const modal = document.getElementById('contributors-modal');
+    const list = document.getElementById('contributors-modal-list');
+    if (!modal || !list) return;
+
+    modal.classList.remove('hidden');
+
+    if (allContributorsData.length === 0 && window.api) {
+        try {
+            const data = await window.api.get('/meta/top-contributors');
+            allContributorsData = Array.isArray(data) ? data : [];
+        } catch(e) {}
+    }
+
+    if (allContributorsData.length > 0) {
+        list.innerHTML = allContributorsData.map((c, idx) => {
+            const initial = (c.name || 'S').trim().charAt(0).toUpperCase();
+            const rankBadge = idx === 0 ? '🥇 #1' : (idx === 1 ? '🥈 #2' : (idx === 2 ? '🥉 #3' : `#${idx + 1}`));
+            const badgeBg = idx === 0 ? 'bg-amber-100 text-amber-800' : (idx === 1 ? 'bg-slate-100 text-slate-800' : (idx === 2 ? 'bg-orange-100 text-orange-800' : 'bg-slate-50 text-slate-600'));
+            
+            return `
+                <div class="flex items-center justify-between gap-3 pt-3 first:pt-0">
+                    <div class="flex items-center space-x-3 min-w-0">
+                        <span class="px-2 py-0.5 rounded-full text-xs font-bold ${badgeBg} shrink-0">${rankBadge}</span>
+                        <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center shrink-0 uppercase">${initial}</div>
+                        <div class="min-w-0">
+                            <h4 class="text-xs font-bold text-slate-900 truncate">${c.name}</h4>
+                            <p class="text-[11px] text-slate-400 truncate">${c.college_name || 'Engineering Student'}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 shrink-0 text-right">
+                        <div>
+                            <span class="block text-xs font-extrabold text-[#1d7bf5]">${c.points || 0}</span>
+                            <span class="block text-[10px] text-slate-400">Pts</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-extrabold text-slate-800">${c.approved_uploads || 0}</span>
+                            <span class="block text-[10px] text-slate-400">Uploads</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs font-extrabold text-slate-800">${c.total_downloads || 0}</span>
+                            <span class="block text-[10px] text-slate-400">Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } else {
+        list.innerHTML = `
+            <div class="text-center py-8 text-slate-400 text-xs">
+                <span class="text-3xl block mb-2">⭐</span>
+                <p class="font-bold text-slate-700 mb-1">No contributors yet</p>
+                <p class="text-slate-400">Be the first to upload verified study notes &amp; PYQs to top the leaderboard!</p>
+            </div>
+        `;
+    }
+};
+
+window.closeContributorsModal = () => {
+    const modal = document.getElementById('contributors-modal');
+    if (modal) modal.classList.add('hidden');
+};
+
+window.openWinnersModal = async () => {
+    const modal = document.getElementById('winners-modal');
+    const list = document.getElementById('winners-modal-list');
+    if (!modal || !list) return;
+
+    modal.classList.remove('hidden');
+
+    if (allAwardsData.length === 0 && window.api) {
+        try {
+            const data = await window.api.get('/meta/awards');
+            allAwardsData = (data && Array.isArray(data.winners)) ? data.winners : [];
+        } catch(e) {}
+    }
+
+    if (allAwardsData.length > 0) {
+        list.innerHTML = allAwardsData.map((w, idx) => {
+            const medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : '🏆'));
+            const initial = (w.name || 'W').trim().charAt(0).toUpperCase();
+            return `
+                <div class="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl flex items-center justify-between gap-3 hover:bg-slate-100/60 transition">
+                    <div class="flex items-center space-x-3 min-w-0">
+                        <span class="text-xl shrink-0">${medal}</span>
+                        <div class="w-8 h-8 rounded-full bg-[#e8eef7] text-slate-800 font-bold text-xs flex items-center justify-center shrink-0 uppercase">${initial}</div>
+                        <div class="min-w-0">
+                            <h4 class="text-xs font-bold text-slate-900 truncate">${w.name}</h4>
+                            <p class="text-[11px] text-slate-400 truncate">${w.college || 'Engineering Student'}</p>
+                        </div>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="block text-sm font-extrabold text-[#1d7bf5] leading-tight">${w.reward_amount}</span>
+                        <span class="block text-[10px] text-slate-400 font-medium">${w.month_year}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } else {
+        list.innerHTML = `
+            <div class="text-center py-8 text-slate-400 text-xs bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                <span class="text-3xl block mb-2">🎁</span>
+                <p class="font-bold text-slate-700 mb-1">No recent winners published yet</p>
+                <p class="text-slate-400">Award winners will be displayed once announced by the administration.</p>
+            </div>
+        `;
+    }
+};
+
+window.closeWinnersModal = () => {
+    const modal = document.getElementById('winners-modal');
+    if (modal) modal.classList.add('hidden');
+};
+
+

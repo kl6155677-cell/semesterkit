@@ -85,7 +85,7 @@ exports.moderateResource = async (req, res) => {
 
         if (action === 'approve') {
             await db.query(
-                'UPDATE resources SET status = "approved", rejection_reason = NULL, updated_at = NOW() WHERE id = ?',
+                'UPDATE resources SET status = "approved", rejection_reason = NULL, is_archived = 0, updated_at = NOW() WHERE id = ?',
                 [resourceId]
             );
             res.json({ message: 'Resource approved successfully and is now publicly visible.' });

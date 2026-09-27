@@ -25,6 +25,9 @@ async function initMTechPage() {
     await loadResources();
 }
 
+let globalColleges = [];
+let globalBranches = [];
+
 async function loadSidebarFilters() {
     if (!window.api) return;
     try {
@@ -35,16 +38,19 @@ async function loadSidebarFilters() {
             window.api.get('/meta/resource-types?program=M.Tech').catch(() => [])
         ]);
 
+        globalColleges = Array.isArray(colleges) ? colleges : [];
+        globalBranches = Array.isArray(branches) ? branches : [];
+
         const collegeSelect = document.getElementById('filter-college-select');
-        if (collegeSelect && colleges.length > 0) {
-            collegeSelect.innerHTML = `<option value="">Select University</option>` + colleges.map(c => `
+        if (collegeSelect && globalColleges.length > 0) {
+            collegeSelect.innerHTML = `<option value="">Select University</option>` + globalColleges.map(c => `
                 <option value="${c.id}" ${currentFilters.college_id == c.id ? 'selected' : ''}>${c.name}</option>
             `).join('');
         }
 
         const branchSelect = document.getElementById('filter-branch-select');
-        if (branchSelect && branches.length > 0) {
-            branchSelect.innerHTML = `<option value="">Select Branch</option>` + branches.map(b => `
+        if (branchSelect && globalBranches.length > 0) {
+            branchSelect.innerHTML = `<option value="">Select Branch</option>` + globalBranches.map(b => `
                 <option value="${b.id}" ${currentFilters.branch_id == b.id ? 'selected' : ''}>${b.name}</option>
             `).join('');
         }
@@ -62,6 +68,17 @@ async function loadSidebarFilters() {
 
 function setupFilterEvents() {
     const collegeSelect = document.getElementById('filter-college-select');
+    const collegeSearchInput = document.getElementById('filter-college-search');
+    if (collegeSearchInput && collegeSelect) {
+        collegeSearchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            collegeSelect.innerHTML = `<option value="">Select University</option>` + globalColleges
+                .filter(c => !q || c.name.toLowerCase().includes(q))
+                .map(c => `<option value="${c.id}" ${currentFilters.college_id == c.id ? 'selected' : ''}>${c.name}</option>`)
+                .join('');
+        });
+    }
+
     if (collegeSelect) {
         collegeSelect.addEventListener('change', (e) => {
             currentFilters.college_id = e.target.value || null;
@@ -71,6 +88,17 @@ function setupFilterEvents() {
     }
 
     const branchSelect = document.getElementById('filter-branch-select');
+    const branchSearchInput = document.getElementById('filter-branch-search');
+    if (branchSearchInput && branchSelect) {
+        branchSearchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            branchSelect.innerHTML = `<option value="">Select Branch</option>` + globalBranches
+                .filter(b => !q || b.name.toLowerCase().includes(q))
+                .map(b => `<option value="${b.id}" ${currentFilters.branch_id == b.id ? 'selected' : ''}>${b.name}</option>`)
+                .join('');
+        });
+    }
+
     if (branchSelect) {
         branchSelect.addEventListener('change', (e) => {
             currentFilters.branch_id = e.target.value || null;

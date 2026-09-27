@@ -178,40 +178,46 @@
         <!-- Filter Card: Select University -->
         <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-2xs space-y-1.5">
           <label class="block text-xs font-bold text-slate-800">University</label>
-          <div class="relative">
-            <select id="filter-college-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 appearance-none cursor-pointer">
-              <option value="">Select University</option>
-              <option value="NIT Trichy">NIT Trichy</option>
-              <option value="NIT Surathkal">NIT Surathkal</option>
-              <option value="NIT Warangal">NIT Warangal</option>
-              <option value="NIT Rourkela">NIT Rourkela</option>
-              <option value="NIT Calicut">NIT Calicut</option>
-              <option value="IIT Bombay">IIT Bombay</option>
-              <option value="IIT Delhi">IIT Delhi</option>
-              <option value="IIT Madras">IIT Madras</option>
-              <option value="IIT Kanpur">IIT Kanpur</option>
-              <option value="IIT Kharagpur">IIT Kharagpur</option>
-              <option value="Other">Other Colleges</option>
-            </select>
-            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          <div class="space-y-1.5">
+            <input type="text" id="filter-college-search" placeholder="🔍 Search university..." class="w-full text-xs py-1.5 px-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:bg-white transition" />
+            <div class="relative">
+              <select id="filter-college-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 appearance-none cursor-pointer">
+                <option value="">Select University</option>
+                <option value="NIT Trichy">NIT Trichy</option>
+                <option value="NIT Surathkal">NIT Surathkal</option>
+                <option value="NIT Warangal">NIT Warangal</option>
+                <option value="NIT Rourkela">NIT Rourkela</option>
+                <option value="NIT Calicut">NIT Calicut</option>
+                <option value="IIT Bombay">IIT Bombay</option>
+                <option value="IIT Delhi">IIT Delhi</option>
+                <option value="IIT Madras">IIT Madras</option>
+                <option value="IIT Kanpur">IIT Kanpur</option>
+                <option value="IIT Kharagpur">IIT Kharagpur</option>
+                <option value="Other">Other Colleges</option>
+              </select>
+              <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
           </div>
         </div>
 
         <!-- Filter Card: Select Branch -->
         <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-2xs space-y-1.5">
           <label class="block text-xs font-bold text-slate-800">Branch</label>
-          <div class="relative">
-            <select id="filter-branch-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 appearance-none cursor-pointer">
-              <option value="">Select Branch</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Electrical Engineering">Electrical Engineering</option>
-              <option value="Electronics & Comm.">Electronics &amp; Comm.</option>
-              <option value="Mechanical Engineering">Mechanical Engineering</option>
-              <option value="Civil Engineering">Civil Engineering</option>
-              <option value="Chemical Engineering">Chemical Engineering</option>
-              <option value="Other">Other Branches</option>
-            </select>
-            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          <div class="space-y-1.5">
+            <input type="text" id="filter-branch-search" placeholder="🔍 Search branch..." class="w-full text-xs py-1.5 px-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:bg-white transition" />
+            <div class="relative">
+              <select id="filter-branch-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 appearance-none cursor-pointer">
+                <option value="">Select Branch</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Electronics & Comm.">Electronics &amp; Comm.</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Chemical Engineering">Chemical Engineering</option>
+                <option value="Other">Other Branches</option>
+              </select>
+              <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
           </div>
         </div>
 
