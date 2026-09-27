@@ -578,55 +578,13 @@ exports.getAwards = async (req, res) => {
         await ensureAwardsTable();
         const [manualWinners] = await db.query('SELECT * FROM awards WHERE is_active = 1 ORDER BY rank_number ASC, display_order ASC');
         
-        let winners = manualWinners;
-
-        // If no manually managed awards in table, dynamically compute from real top contributors
-        if (!winners || winners.length === 0) {
-            const [topContribs] = await db.query(`
-                SELECT u.id, u.name, u.avatar_url, COALESCE(c.name, 'Engineering Student') as college,
-                       COUNT(r.id) as uploads_count,
-                       COALESCE(SUM(r.downloads), 0) as downloads_raw,
-                       (COUNT(r.id) * 10 + COALESCE(SUM(r.downloads), 0) * 2) as points
-                FROM users u
-                JOIN resources r ON u.id = r.contributor_id AND r.status = 'approved' AND r.is_archived = 0
-                LEFT JOIN colleges c ON u.college_id = c.id
-                WHERE u.role = 'student' AND u.status = 'active'
-                GROUP BY u.id, u.name, u.avatar_url, c.name
-                ORDER BY uploads_count DESC, downloads_raw DESC, points DESC
-                LIMIT 3
-            `);
-
-            const rewardAmounts = ['₹2,000', '₹1,000', '₹500'];
-            const currentMonthYear = new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' });
-
-            const formatDownloads = (num) => {
-                const n = Number(num) || 0;
-                if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'K';
-                return String(n);
-            };
-
-            winners = topContribs.map((tc, idx) => ({
-                id: tc.id,
-                name: tc.name,
-                college: tc.college,
-                rank_number: idx + 1,
-                reward_amount: rewardAmounts[idx] || '₹500',
-                month_year: currentMonthYear,
-                avatar_url: tc.avatar_url,
-                points: tc.points,
-                uploads_count: tc.uploads_count,
-                downloads_count: formatDownloads(tc.downloads_raw),
-                is_top_highlight: idx === 0 ? 1 : 0
-            }));
-        }
-
         // Fetch top contributor reward settings
         const [settingsRows] = await db.query('SELECT setting_key, setting_value FROM settings WHERE setting_key LIKE "reward_%" OR setting_key LIKE "top_contrib_%"');
         const rewardSettings = {};
         settingsRows.forEach(r => { rewardSettings[r.setting_key] = r.setting_value; });
 
         res.json({
-            winners,
+            winners: manualWinners || [],
             settings: rewardSettings
         });
     } catch (err) {

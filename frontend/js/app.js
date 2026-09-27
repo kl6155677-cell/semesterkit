@@ -337,47 +337,60 @@ function renderTopContributorsAndAwards(awardsData, contributors, settings = {})
     const contribContainer = document.getElementById('top-contributors-container');
     const winnersContainer = document.getElementById('recent-winners-container');
 
-    const rewardAmounts = ['₹2,000', '₹1,000', '₹500'];
-    const currentMonthYear = new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    const token = localStorage.getItem('token');
+    const userStr = localStorage.getItem('user');
+    let currentUser = null;
+    try {
+        if (token && userStr) currentUser = JSON.parse(userStr);
+    } catch (e) {}
+
     const formatDownloads = (num) => {
         const n = Number(num) || 0;
         if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'K';
         return String(n);
     };
 
-    let winnersList = [];
-    if (awardsData && Array.isArray(awardsData.winners) && awardsData.winners.length > 0) {
-        winnersList = awardsData.winners;
-    } else if (contributors && Array.isArray(contributors) && contributors.length > 0) {
-        winnersList = contributors.slice(0, 3).map((c, idx) => ({
-            id: c.id,
-            name: c.name,
-            college: c.college_name || 'Engineering Student',
-            rank_number: idx + 1,
-            reward_amount: rewardAmounts[idx] || '₹500',
-            month_year: currentMonthYear,
-            avatar_url: c.avatar_url,
-            points: c.points || (c.approved_uploads * 10),
-            uploads_count: c.approved_uploads || 0,
-            downloads_count: formatDownloads(c.total_downloads || 0),
-            is_top_highlight: idx === 0
-        }));
-    }
-
-    const rewardTitle = settings.reward_title || 'You have won this month\'s reward!';
-    const rewardSubtitle = settings.reward_subtitle || 'Claim your reward now and keep contributing.';
-    const rewardBtnText = settings.reward_btn_text || 'Claim Reward';
-
     // 1. Render Top Contributor Box
     if (contribContainer) {
-        if (winnersList.length > 0) {
-            const topHighlight = winnersList.find(w => w.is_top_highlight || w.rank_number === 1) || winnersList[0];
+        if (contributors && Array.isArray(contributors) && contributors.length > 0) {
+            const topHighlight = contributors[0];
             const topName = settings.top_contrib_name || topHighlight.name || 'Student Contributor';
-            const topRole = settings.top_contrib_role || topHighlight.college || 'Engineering Student';
+            const topRole = settings.top_contrib_role || topHighlight.college_name || 'Engineering Student';
             const topPoints = settings.top_contrib_points || (topHighlight.points !== undefined ? String(topHighlight.points) : '0');
-            const topUploads = settings.top_contrib_uploads || (topHighlight.uploads_count !== undefined ? String(topHighlight.uploads_count) : '0');
-            const topDownloads = settings.top_contrib_downloads || topHighlight.downloads_count || '0';
+            const topUploads = settings.top_contrib_uploads || (topHighlight.approved_uploads !== undefined ? String(topHighlight.approved_uploads) : '0');
+            const topDownloads = settings.top_contrib_downloads || formatDownloads(topHighlight.total_downloads || 0);
             const initial = topName.trim().charAt(0).toUpperCase() || 'S';
+
+            // Check if current user is logged in AND is an active contributor with uploads
+            const isEligibleToClaim = currentUser && (
+                (topHighlight.id && String(currentUser.id) === String(topHighlight.id)) ||
+                (currentUser.name && topHighlight.name && currentUser.name.trim().toLowerCase() === topHighlight.name.trim().toLowerCase()) ||
+                (contributors.some(c => String(c.id) === String(currentUser.id) && c.approved_uploads > 0))
+            );
+
+            const rewardTitle = settings.reward_title || 'You have won this month\'s reward!';
+            const rewardSubtitle = settings.reward_subtitle || 'Claim your reward now and keep contributing.';
+            const rewardBtnText = settings.reward_btn_text || 'Claim Reward';
+
+            let claimBannerHtml = '';
+            if (isEligibleToClaim) {
+                claimBannerHtml = `
+                    <!-- Reward Alert Banner (Visible only to eligible contributor account) -->
+                    <div class="bg-white rounded-xl p-3 sm:p-3.5 border border-amber-200/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs mt-2">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-9 h-9 rounded-xl bg-orange-100/90 text-orange-600 flex items-center justify-center text-xl shrink-0">🎁</div>
+                            <div>
+                                <h5 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">${rewardTitle}</h5>
+                                <p class="text-[11px] sm:text-xs text-gray-500 mt-0.5 font-normal">${rewardSubtitle}</p>
+                            </div>
+                        </div>
+                        <button onclick="claimContributorReward()" class="w-full sm:w-auto px-5 py-2.5 bg-[#4f28d9] hover:bg-[#431fb3] text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
+                            <span>🎁</span>
+                            <span>${rewardBtnText}</span>
+                        </button>
+                    </div>
+                `;
+            }
 
             contribContainer.innerHTML = `
                 <!-- Top Contributor Header Row -->
@@ -406,21 +419,7 @@ function renderTopContributorsAndAwards(awardsData, contributors, settings = {})
                         </div>
                     </div>
                 </div>
-
-                <!-- Reward Alert Banner -->
-                <div class="bg-white rounded-xl p-3 sm:p-3.5 border border-amber-200/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs mt-2">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-orange-100/90 text-orange-600 flex items-center justify-center text-xl shrink-0">🎁</div>
-                        <div>
-                            <h5 class="text-xs sm:text-sm font-bold text-gray-900 leading-tight">${rewardTitle}</h5>
-                            <p class="text-[11px] sm:text-xs text-gray-500 mt-0.5 font-normal">${rewardSubtitle}</p>
-                        </div>
-                    </div>
-                    <button onclick="claimContributorReward()" class="w-full sm:w-auto px-5 py-2.5 bg-[#4f28d9] hover:bg-[#431fb3] text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-1.5 shrink-0 cursor-pointer">
-                        <span>🎁</span>
-                        <span>${rewardBtnText}</span>
-                    </button>
-                </div>
+                ${claimBannerHtml}
             `;
         } else {
             contribContainer.innerHTML = `
@@ -436,8 +435,10 @@ function renderTopContributorsAndAwards(awardsData, contributors, settings = {})
         }
     }
 
-    // 2. Render Recent Winners 3-Card Grid
+    // 2. Render Recent Winners (Strictly from Admin Panel awards)
     if (winnersContainer) {
+        const winnersList = (awardsData && Array.isArray(awardsData.winners)) ? awardsData.winners : [];
+
         const medalStyles = [
             {
                 badgeBg: 'bg-amber-100 text-amber-700',
@@ -482,8 +483,9 @@ function renderTopContributorsAndAwards(awardsData, contributors, settings = {})
             }).join('');
         } else {
             winnersContainer.innerHTML = `
-                <div class="col-span-full py-4 px-4 text-center text-slate-500 text-xs bg-[#f8faff] rounded-xl border border-blue-100">
-                    Contribute study materials this month to qualify for cash rewards (1st: ₹2,000 • 2nd: ₹1,000 • 3rd: ₹500).
+                <div class="col-span-full py-5 px-4 text-center text-slate-400 text-xs bg-white rounded-2xl border border-dashed border-slate-200">
+                    <p class="font-medium text-slate-600 mb-0.5">No recent winners published yet</p>
+                    <p class="text-slate-400">Award winners will appear here once announced by the administration.</p>
                 </div>
             `;
         }
