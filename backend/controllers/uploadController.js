@@ -118,6 +118,21 @@ exports.uploadImageOnly = async (req, res) => {
         const category = req.body.category || 'general';
         const altText = req.body.alt_text || fileName;
 
+        try {
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS media (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    file_name VARCHAR(255) NOT NULL,
+                    file_path TEXT NOT NULL,
+                    file_type VARCHAR(50) NULL,
+                    file_size INT DEFAULT 0,
+                    category VARCHAR(50) DEFAULT 'general',
+                    alt_text VARCHAR(255) NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            `);
+        } catch (e) {}
+
         // Also record into media table for Admin Media Library
         const [result] = await db.query(`
             INSERT INTO media (file_name, file_path, file_type, file_size, category, alt_text)
@@ -131,6 +146,7 @@ exports.uploadImageOnly = async (req, res) => {
             message: 'Image uploaded successfully'
         });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('Error in uploadImageOnly:', err);
+        res.status(500).json({ error: err.message || 'Server error uploading image' });
     }
 };

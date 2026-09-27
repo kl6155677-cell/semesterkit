@@ -5,13 +5,24 @@ const path = require('path');
 const adminController = require('../controllers/adminController');
 const { authenticateToken, authorizeAdmin } = require('../middleware/authMiddleware');
 
+const fs = require('fs');
+
 // Storage for Media Library uploads
+const uploadDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadDir)) {
+    try { fs.mkdirSync(uploadDir, { recursive: true }); } catch (e) {}
+}
+
 const mediaStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        if (!fs.existsSync(uploadDir)) {
+            try { fs.mkdirSync(uploadDir, { recursive: true }); } catch (e) {}
+        }
+        cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        cb(null, 'media_' + Date.now() + path.extname(file.originalname));
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, 'media_' + uniqueSuffix + path.extname(file.originalname));
     }
 });
 const mediaUpload = multer({
@@ -56,7 +67,14 @@ router.delete('/footer-links/:id', adminController.deleteFooterLink);
 
 // Media Library
 router.get('/media', adminController.getMedia);
-router.post('/media', mediaUpload.single('file'), adminController.addMedia);
+router.post('/media', (req, res, next) => {
+    mediaUpload.single('file')(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({ error: err.message || 'Error uploading media file' });
+        }
+        next();
+    });
+}, adminController.addMedia);
 router.delete('/media/:id', adminController.deleteMedia);
 
 // Analytics

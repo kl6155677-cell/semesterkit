@@ -407,8 +407,28 @@ exports.deleteFooterLink = async (req, res) => {
 };
 
 // 11. Media Library Management (Admin)
+const ensureMediaTable = async () => {
+    try {
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS media (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                file_name VARCHAR(255) NOT NULL,
+                file_path TEXT NOT NULL,
+                file_type VARCHAR(50) NULL,
+                file_size INT DEFAULT 0,
+                category VARCHAR(50) DEFAULT 'general',
+                alt_text VARCHAR(255) NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+    } catch (e) {
+        console.warn('ensureMediaTable warning:', e.message);
+    }
+};
+
 exports.getMedia = async (req, res) => {
     try {
+        await ensureMediaTable();
         const { category, search } = req.query;
         let sql = 'SELECT * FROM media WHERE 1=1';
         const params = [];
@@ -425,16 +445,18 @@ exports.getMedia = async (req, res) => {
         const [rows] = await db.query(sql, params);
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('Error in getMedia:', err);
+        res.status(500).json({ error: err.message || 'Server error fetching media' });
     }
 };
 
 exports.addMedia = async (req, res) => {
     try {
+        await ensureMediaTable();
         if (!req.file) {
             return res.status(400).json({ error: 'No file uploaded' });
         }
-        const filePath = req.file.path.replace(/\\/g, '/');
+        const filePath = 'uploads/' + path.basename(req.file.path || req.file.filename);
         const fileName = req.file.originalname;
         const fileType = req.file.mimetype;
         const fileSize = req.file.size;
@@ -453,16 +475,19 @@ exports.addMedia = async (req, res) => {
             message: 'Media uploaded successfully'
         });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('Error in addMedia:', err);
+        res.status(500).json({ error: err.message || 'Server error uploading media' });
     }
 };
 
 exports.deleteMedia = async (req, res) => {
     try {
+        await ensureMediaTable();
         await db.query('DELETE FROM media WHERE id = ?', [req.params.id]);
         res.json({ message: 'Media item deleted successfully' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('Error in deleteMedia:', err);
+        res.status(500).json({ error: err.message || 'Server error deleting media' });
     }
 };
 

@@ -1101,20 +1101,23 @@ async function loadMediaLibrary() {
             return;
         }
 
-        container.innerHTML = list.map(m => `
+        container.innerHTML = list.map(m => {
+            const rawPath = (m.file_path || '').replace(/\\/g, '/');
+            const imgSrc = rawPath.startsWith('http') ? rawPath : (rawPath.startsWith('/') ? rawPath : '/' + rawPath);
+            return `
             <div class="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden group relative flex flex-col justify-between">
                 <div class="h-28 w-full overflow-hidden bg-gray-200 flex items-center justify-center">
-                    <img src="/${m.file_path}" alt="${m.alt_text}" class="w-full h-full object-cover group-hover:scale-105 transition" onerror="this.src='https://placehold.co/150x150?text=Image'" />
+                    <img src="${imgSrc}" alt="${m.alt_text || m.file_name}" class="w-full h-full object-cover group-hover:scale-105 transition" onerror="this.src='https://placehold.co/150x150?text=Image'" />
                 </div>
                 <div class="p-2 space-y-1">
                     <p class="text-[11px] font-bold text-slate-800 truncate" title="${m.file_name}">${m.file_name}</p>
                     <div class="flex justify-between items-center pt-1 border-t border-slate-200">
-                        <button onclick="copyMediaUrl('${m.file_path}')" class="text-[10px] text-brand-600 font-bold hover:underline">Copy URL</button>
+                        <button onclick="copyMediaUrl('${rawPath}')" class="text-[10px] text-brand-600 font-bold hover:underline">Copy URL</button>
                         <button onclick="deleteMediaItem(${m.id})" class="text-[10px] text-rose-500 font-semibold hover:underline">Delete</button>
                     </div>
                 </div>
             </div>
-        `).join('');
+        `;}).join('');
     } catch (e) {}
 }
 
