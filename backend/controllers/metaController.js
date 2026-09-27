@@ -39,20 +39,6 @@ exports.getPublicStats = async (req, res) => {
 
         const autoMode = settings.stats_auto_mode !== 'false';
 
-        if (!autoMode && settings.stat_resources_override) {
-            return res.json({
-                resources: settings.stat_resources_override,
-                users: settings.stat_users_override,
-                colleges: settings.stat_colleges_override,
-                downloads: settings.stat_downloads_override
-            });
-        }
-
-        const [[users]] = await db.query('SELECT COUNT(*) as count FROM users WHERE role = "student"');
-        const [[resources]] = await db.query('SELECT COUNT(*) as count FROM resources WHERE status = "approved" AND is_archived = 0');
-        const [[colleges]] = await db.query('SELECT COUNT(*) as count FROM colleges WHERE is_active = 1');
-        const [[downloads]] = await db.query('SELECT COALESCE(SUM(downloads), 0) as count FROM resources WHERE status = "approved"');
-        
         // Helper formatter for real stats (e.g. 0, 15, 1.2K+, 2.5M+)
         const formatCount = (num) => {
             const n = Number(num) || 0;
@@ -61,29 +47,75 @@ exports.getPublicStats = async (req, res) => {
             return String(n);
         };
 
+        const [[users]] = await db.query('SELECT COUNT(*) as count FROM users WHERE role = "student"');
+        const [[resources]] = await db.query('SELECT COUNT(*) as count FROM resources WHERE status = "approved" AND is_archived = 0');
+        const [[colleges]] = await db.query('SELECT COUNT(*) as count FROM colleges WHERE is_active = 1');
+        const [[downloads]] = await db.query('SELECT COALESCE(SUM(downloads), 0) as count FROM resources WHERE status = "approved"');
+        
+        // Exact real counts for homepage category tiles
+        const [catCounts] = await db.query(`
+            SELECT 
+                COALESCE(SUM(CASE WHEN LOWER(COALESCE(rt.name, '')) LIKE '%note%' OR LOWER(COALESCE(r.file_type, '')) IN ('doc','docx') THEN 1 ELSE 0 END), 0) as notes,
+                COALESCE(SUM(CASE WHEN LOWER(COALESCE(rt.name, '')) LIKE '%pyq%' OR LOWER(COALESCE(rt.name, '')) LIKE '%question%' OR LOWER(COALESCE(rt.name, '')) LIKE '%paper%' THEN 1 ELSE 0 END), 0) as pyqs,
+                COALESCE(SUM(CASE WHEN LOWER(COALESCE(rt.name, '')) LIKE '%book%' OR LOWER(COALESCE(rt.name, '')) LIKE '%textbook%' THEN 1 ELSE 0 END), 0) as books,
+                COALESCE(SUM(CASE WHEN LOWER(COALESCE(rt.name, '')) LIKE '%research%' OR r.program = 'M.Tech' THEN 1 ELSE 0 END), 0) as research,
+                COALESCE(SUM(CASE WHEN LOWER(COALESCE(rt.name, '')) LIKE '%project%' OR LOWER(COALESCE(rt.name, '')) LIKE '%code%' THEN 1 ELSE 0 END), 0) as projects,
+                COALESCE(SUM(CASE WHEN LOWER(COALESCE(rt.name, '')) LIKE '%thesis%' OR LOWER(COALESCE(rt.name, '')) LIKE '%dissertation%' OR r.program = 'PhD' THEN 1 ELSE 0 END), 0) as thesis,
+                COALESCE(SUM(CASE WHEN LOWER(COALESCE(rt.name, '')) LIKE '%lab%' OR LOWER(COALESCE(rt.name, '')) LIKE '%manual%' THEN 1 ELSE 0 END), 0) as lab,
+                COALESCE(SUM(CASE WHEN LOWER(COALESCE(rt.name, '')) LIKE '%other%' OR (rt.name IS NULL AND LOWER(COALESCE(r.file_type, '')) NOT IN ('doc','docx')) THEN 1 ELSE 0 END), 0) as other
+            FROM resources r
+            LEFT JOIN resource_types rt ON r.resource_type_id = rt.id
+            WHERE r.status = 'approved' AND r.is_archived = 0
+        `);
+
+        const cat = catCounts[0] || {};
+        const categories = {
+            notes: formatCount(cat.notes),
+            pyqs: formatCount(cat.pyqs),
+            books: formatCount(cat.books),
+            research: formatCount(cat.research),
+            projects: formatCount(cat.projects),
+            thesis: formatCount(cat.thesis),
+            lab: formatCount(cat.lab),
+            other: formatCount(cat.other)
+        };
+
+        if (!autoMode && settings.stat_resources_override) {
+            return res.json({
+                resources: settings.stat_resources_override,
+                users: settings.stat_users_override,
+                colleges: settings.stat_colleges_override,
+                downloads: settings.stat_downloads_override,
+                categories
+            });
+        }
+
         res.json({
             resources: formatCount(resources.count),
             users: formatCount(users.count),
             colleges: String(colleges.count),
-            downloads: formatCount(downloads.count)
+            downloads: formatCount(downloads.count),
+            categories
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
 
-// 3. Top Contributors (Dynamic based directly on approved uploads count)
+// 3. Top Contributors (Dynamic based directly on approved uploads and downloads)
 exports.getTopContributors = async (req, res) => {
     try {
         const [rows] = await db.query(`
-            SELECT u.id, u.name, u.avatar_url, c.name as college_name,
-                   COUNT(r.id) as approved_uploads
+            SELECT u.id, u.name, u.avatar_url, COALESCE(c.name, 'Engineering Student') as college_name,
+                   COUNT(r.id) as approved_uploads,
+                   COALESCE(SUM(r.downloads), 0) as total_downloads,
+                   (COUNT(r.id) * 10 + COALESCE(SUM(r.downloads), 0) * 2) as points
             FROM users u
             JOIN resources r ON u.id = r.contributor_id AND r.status = 'approved' AND r.is_archived = 0
             LEFT JOIN colleges c ON u.college_id = c.id
             WHERE u.role = 'student' AND u.status = 'active'
             GROUP BY u.id, u.name, u.avatar_url, c.name
-            ORDER BY approved_uploads DESC
+            ORDER BY approved_uploads DESC, total_downloads DESC, points DESC
             LIMIT 5
         `);
 
@@ -352,29 +384,60 @@ exports.deleteSemester = async (req, res) => {
 // 12. Subjects & Research Areas
 exports.getSubjects = async (req, res) => {
     try {
-        const { branch_id, semester_id, program, is_research_area } = req.query;
-        let sql = 'SELECT s.*, b.name as branch_name, sem.name as semester_name FROM subjects s LEFT JOIN branches b ON s.branch_id = b.id LEFT JOIN semesters sem ON s.semester_id = sem.id WHERE s.is_active = 1';
+        const { branch_id, semester_id, program, college_id, is_research_area } = req.query;
+        let sql = `
+            SELECT DISTINCT s.*, b.name as branch_name, sem.name as semester_name 
+            FROM subjects s 
+            LEFT JOIN branches b ON s.branch_id = b.id 
+            LEFT JOIN semesters sem ON s.semester_id = sem.id
+        `;
         const params = [];
+        const where = ['s.is_active = 1'];
+
+        if (college_id) {
+            sql += ` LEFT JOIN resources r ON r.subject_id = s.id AND r.status = 'approved' AND r.is_archived = 0`;
+            where.push('(r.college_id = ? OR s.id IN (SELECT DISTINCT subject_id FROM resources WHERE college_id = ? AND subject_id IS NOT NULL))');
+            params.push(college_id, college_id);
+        }
 
         if (branch_id) {
-            sql += ' AND s.branch_id = ?';
+            where.push('s.branch_id = ?');
             params.push(branch_id);
         }
         if (semester_id) {
-            sql += ' AND s.semester_id = ?';
+            where.push('s.semester_id = ?');
             params.push(semester_id);
         }
         if (program) {
-            sql += ' AND s.program = ?';
+            where.push('(s.program = ? OR s.program = "All")');
             params.push(program);
         }
         if (is_research_area !== undefined) {
-            sql += ' AND s.is_research_area = ?';
+            where.push('s.is_research_area = ?');
             params.push(is_research_area === '1' || is_research_area === 'true' ? 1 : 0);
         }
-        sql += ' ORDER BY s.name ASC';
+
+        sql += ' WHERE ' + where.join(' AND ') + ' ORDER BY s.name ASC';
         
-        const [rows] = await db.query(sql, params);
+        let [rows] = await db.query(sql, params);
+
+        // If college was selected and has no specific subjects linked yet, fallback to general active subjects for program
+        if (college_id && rows.length === 0) {
+            const fallbackWhere = ['s.is_active = 1'];
+            const fallbackParams = [];
+            if (program) {
+                fallbackWhere.push('(s.program = ? OR s.program = "All")');
+                fallbackParams.push(program);
+            }
+            if (branch_id) {
+                fallbackWhere.push('s.branch_id = ?');
+                fallbackParams.push(branch_id);
+            }
+            const fallbackSql = 'SELECT s.*, b.name as branch_name, sem.name as semester_name FROM subjects s LEFT JOIN branches b ON s.branch_id = b.id LEFT JOIN semesters sem ON s.semester_id = sem.id WHERE ' + fallbackWhere.join(' AND ') + ' ORDER BY s.name ASC';
+            const [fallbackRows] = await db.query(fallbackSql, fallbackParams);
+            rows = fallbackRows;
+        }
+
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -481,7 +544,7 @@ exports.deleteResourceType = async (req, res) => {
     }
 };
 
-// Helper: Ensure awards table exists and has initial data
+// Helper: Ensure awards table exists
 async function ensureAwardsTable() {
     try {
         await db.query(`
@@ -502,28 +565,61 @@ async function ensureAwardsTable() {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
-
-        const [existing] = await db.query('SELECT COUNT(*) as count FROM awards');
-        if (existing[0].count === 0) {
-            await db.query(`
-                INSERT INTO awards (name, college, rank_number, reward_amount, month_year, points, uploads_count, downloads_count, is_top_highlight, display_order, is_active)
-                VALUES 
-                ('HADIYA MAJEED NAJAR', 'Engineering Student', 1, '₹2,000', 'September 2025', 120, 35, '1.2K', 1, 1, 1),
-                ('Aakash Sharma', 'NIT Trichy', 2, '₹1,000', 'September 2025', 95, 24, '850', 0, 2, 1),
-                ('Danish Khan', 'NIT Srinagar', 3, '₹500', 'September 2025', 70, 18, '620', 0, 3, 1)
-            `);
-        }
+        // Clean out old fake seeded records if any
+        await db.query(`DELETE FROM awards WHERE name IN ('HADIYA MAJEED NAJAR', 'Aakash Sharma', 'Danish Khan')`);
     } catch (e) {
         console.warn('ensureAwardsTable notice:', e.message);
     }
 }
 
-// 12. Awards & Contributor Rewards (Public API)
+// 14. Awards & Contributor Rewards (Public API)
 exports.getAwards = async (req, res) => {
     try {
         await ensureAwardsTable();
-        const [winners] = await db.query('SELECT * FROM awards WHERE is_active = 1 ORDER BY rank_number ASC, display_order ASC');
+        const [manualWinners] = await db.query('SELECT * FROM awards WHERE is_active = 1 ORDER BY rank_number ASC, display_order ASC');
         
+        let winners = manualWinners;
+
+        // If no manually managed awards in table, dynamically compute from real top contributors
+        if (!winners || winners.length === 0) {
+            const [topContribs] = await db.query(`
+                SELECT u.id, u.name, u.avatar_url, COALESCE(c.name, 'Engineering Student') as college,
+                       COUNT(r.id) as uploads_count,
+                       COALESCE(SUM(r.downloads), 0) as downloads_raw,
+                       (COUNT(r.id) * 10 + COALESCE(SUM(r.downloads), 0) * 2) as points
+                FROM users u
+                JOIN resources r ON u.id = r.contributor_id AND r.status = 'approved' AND r.is_archived = 0
+                LEFT JOIN colleges c ON u.college_id = c.id
+                WHERE u.role = 'student' AND u.status = 'active'
+                GROUP BY u.id, u.name, u.avatar_url, c.name
+                ORDER BY uploads_count DESC, downloads_raw DESC, points DESC
+                LIMIT 3
+            `);
+
+            const rewardAmounts = ['₹2,000', '₹1,000', '₹500'];
+            const currentMonthYear = new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' });
+
+            const formatDownloads = (num) => {
+                const n = Number(num) || 0;
+                if (n >= 1000) return (n / 1000).toFixed(1).replace('.0', '') + 'K';
+                return String(n);
+            };
+
+            winners = topContribs.map((tc, idx) => ({
+                id: tc.id,
+                name: tc.name,
+                college: tc.college,
+                rank_number: idx + 1,
+                reward_amount: rewardAmounts[idx] || '₹500',
+                month_year: currentMonthYear,
+                avatar_url: tc.avatar_url,
+                points: tc.points,
+                uploads_count: tc.uploads_count,
+                downloads_count: formatDownloads(tc.downloads_raw),
+                is_top_highlight: idx === 0 ? 1 : 0
+            }));
+        }
+
         // Fetch top contributor reward settings
         const [settingsRows] = await db.query('SELECT setting_key, setting_value FROM settings WHERE setting_key LIKE "reward_%" OR setting_key LIKE "top_contrib_%"');
         const rewardSettings = {};

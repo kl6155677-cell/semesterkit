@@ -37,7 +37,7 @@ async function loadSidebarFilters() {
 
         const collegeSelect = document.getElementById('filter-college-select');
         if (collegeSelect && colleges.length > 0) {
-            collegeSelect.innerHTML = `<option value="">Select Unit</option>` + colleges.map(c => `
+            collegeSelect.innerHTML = `<option value="">Select University</option>` + colleges.map(c => `
                 <option value="${c.id}" ${currentFilters.college_id == c.id ? 'selected' : ''}>${c.name}</option>
             `).join('');
         }
