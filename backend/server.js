@@ -52,14 +52,18 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-    console.log(`Frontend accessible at:`);
-    console.log(`- Home:     http://localhost:${PORT}/index.html`);
-    console.log(`- B.Tech:   http://localhost:${PORT}/btech.html`);
-    console.log(`- M.Tech:   http://localhost:${PORT}/mtech.html`);
-    console.log(`- PhD:      http://localhost:${PORT}/phd.html`);
-    console.log(`- Upload:   http://localhost:${PORT}/upload.html`);
-    console.log(`- Login:    http://localhost:${PORT}/login.html`);
-    console.log(`- Register: http://localhost:${PORT}/register.html`);
-});
+if (!process.env.VERCEL) {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Server running at http://localhost:${PORT}`);
+        console.log(`Frontend accessible at:`);
+        console.log(`- Home:     http://localhost:${PORT}/index.html`);
+        console.log(`- B.Tech:   http://localhost:${PORT}/btech.html`);
+        console.log(`- M.Tech:   http://localhost:${PORT}/mtech.html`);
+        console.log(`- PhD:      http://localhost:${PORT}/phd.html`);
+        console.log(`- Upload:   http://localhost:${PORT}/upload.html`);
+        console.log(`- Login:    http://localhost:${PORT}/login.html`);
+        console.log(`- Register: http://localhost:${PORT}/register.html`);
+    });
+}
+
+module.exports = app;
