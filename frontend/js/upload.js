@@ -257,9 +257,6 @@ async function populateDynamicData() {
             });
             html += '<option value="other">Other / Enter Manually</option>';
             collegeSelect.innerHTML = html;
-            if (window.initSearchableDropdown) {
-                window.initSearchableDropdown(collegeSelect, '🔍 Search university...');
-            }
         }
 
         // 3. Populate Branches
@@ -270,9 +267,6 @@ async function populateDynamicData() {
                 html += `<option value="${b.id}" ${idx === 0 ? 'selected' : ''}>${b.name}</option>`;
             });
             branchSelect.innerHTML = html;
-            if (window.initSearchableDropdown) {
-                window.initSearchableDropdown(branchSelect, '🔍 Search branch...');
-            }
         }
 
         // 4. Populate Semesters

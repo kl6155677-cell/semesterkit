@@ -79,9 +79,6 @@ async function loadSidebarFilters() {
                 collegeSelect.value = currentFilters.college_id;
             }
         }
-        if (collegeSelect && window.initSearchableDropdown) {
-            window.initSearchableDropdown(collegeSelect, '🔍 Search university...');
-        }
 
         const branchSelect = document.getElementById('filter-branch-select');
         if (branchSelect && globalBranches.length > 0) {
@@ -91,9 +88,6 @@ async function loadSidebarFilters() {
             if (currentFilters.branch_id) {
                 branchSelect.value = currentFilters.branch_id;
             }
-        }
-        if (branchSelect && window.initSearchableDropdown) {
-            window.initSearchableDropdown(branchSelect, '🔍 Search branch...');
         }
 
         const semesterSelect = document.getElementById('filter-semester-select');
@@ -258,10 +252,6 @@ function updateBanner() {
 
 function setupFilterEvents() {
     const collegeSelect = document.getElementById('filter-college-select');
-    if (collegeSelect && window.initSearchableDropdown) {
-        window.initSearchableDropdown(collegeSelect, '🔍 Search university...');
-    }
-
     if (collegeSelect) {
         collegeSelect.addEventListener('change', async (e) => {
             currentFilters.college_id = e.target.value || null;
@@ -273,10 +263,6 @@ function setupFilterEvents() {
     }
 
     const branchSelect = document.getElementById('filter-branch-select');
-    if (branchSelect && window.initSearchableDropdown) {
-        window.initSearchableDropdown(branchSelect, '🔍 Search branch...');
-    }
-
     if (branchSelect) {
         branchSelect.addEventListener('change', async (e) => {
             currentFilters.branch_id = e.target.value || null;
