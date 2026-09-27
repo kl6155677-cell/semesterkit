@@ -113,7 +113,7 @@ exports.getTopContributors = async (req, res) => {
             FROM users u
             JOIN resources r ON u.id = r.contributor_id AND r.status = 'approved' AND (r.is_archived = 0 OR r.is_archived IS NULL)
             LEFT JOIN colleges c ON u.college_id = c.id
-            WHERE (u.status = 'active' OR u.status IS NULL)
+            WHERE u.role = 'student' AND (u.status = 'active' OR u.status IS NULL)
             GROUP BY u.id, u.name, u.avatar_url, c.name
             ORDER BY points DESC, approved_uploads DESC, total_downloads DESC
             LIMIT 50

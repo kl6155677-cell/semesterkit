@@ -665,15 +665,18 @@ async function loadFooterManager() {
             window.api.get('/meta/settings'),
             window.api.get('/admin/footer-links')
         ]);
-        const setVal = (id, key) => {
+        const setVal = (id, key, fallback = '') => {
             const el = document.getElementById(id);
-            if (el && settings[key] !== undefined) el.value = settings[key];
+            if (el) el.value = (settings && settings[key] !== undefined) ? settings[key] : fallback;
         };
-        setVal('setting-footer-description', 'footer_about_description');
-        setVal('setting-footer-copyright', 'footer_copyright');
-        setVal('setting-social-twitter', 'social_twitter');
-        setVal('setting-social-instagram', 'social_instagram');
-        setVal('setting-social-linkedin', 'social_linkedin');
+        setVal('setting-footer-tagline', 'footer_tagline', 'For Students. By Students.');
+        setVal('setting-footer-description', 'footer_about_description', 'A student-driven platform to access and share engineering study materials from NITs, IIITs and other colleges across India.');
+        setVal('setting-footer-copyright', 'footer_copyright', '© 2026 SemesterKit.com. All rights reserved.');
+        setVal('setting-footer-bottom-tagline', 'footer_bottom_tagline', 'Learn • Share • Grow • Together ❤️');
+        setVal('setting-social-twitter', 'social_twitter', '#');
+        setVal('setting-social-instagram', 'social_instagram', '#');
+        setVal('setting-social-youtube', 'social_youtube', '#');
+        setVal('setting-social-linkedin', 'social_linkedin', '#');
 
         const tbody = document.getElementById('table-footer-links');
         if (tbody) {
@@ -694,15 +697,18 @@ async function loadFooterManager() {
 
 async function saveFooterSettings() {
     const updates = {
+        footer_tagline: document.getElementById('setting-footer-tagline')?.value,
         footer_about_description: document.getElementById('setting-footer-description')?.value,
         footer_copyright: document.getElementById('setting-footer-copyright')?.value,
+        footer_bottom_tagline: document.getElementById('setting-footer-bottom-tagline')?.value,
         social_twitter: document.getElementById('setting-social-twitter')?.value,
         social_instagram: document.getElementById('setting-social-instagram')?.value,
+        social_youtube: document.getElementById('setting-social-youtube')?.value,
         social_linkedin: document.getElementById('setting-social-linkedin')?.value
     };
     try {
         await window.api.put('/meta/settings', updates);
-        showToast('Footer settings saved!');
+        showToast('Footer and social media settings saved successfully!');
     } catch (e) { showToast(e.message, 'error'); }
 }
 

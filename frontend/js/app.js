@@ -119,10 +119,59 @@ async function loadGlobalCMSData() {
             if (settings.seo_meta_title && document.title.includes('SemesterKit.com')) {
                 document.title = settings.seo_meta_title;
             }
+
+            // Update Footer Tagline
+            if (settings.footer_tagline) {
+                document.querySelectorAll('.footer-tagline, footer p.text-xs.text-gray-400.font-medium, footer span.text-\\[11px\\].text-slate-400.block').forEach(el => {
+                    el.textContent = settings.footer_tagline;
+                });
+            }
+
+            // Update Footer About Description
+            if (settings.footer_about_description) {
+                document.querySelectorAll('.footer-about-description, footer .text-xs.text-gray-400.leading-relaxed, footer p.text-slate-400.text-xs.leading-relaxed').forEach(el => {
+                    el.textContent = settings.footer_about_description;
+                });
+            }
+
+            // Update Footer Copyright Notice
+            if (settings.footer_copyright) {
+                document.querySelectorAll('.footer-copyright, footer .pt-6.flex > div:first-child, footer .pt-4.text-slate-500.text-\\[11px\\]').forEach(el => {
+                    el.innerHTML = settings.footer_copyright;
+                });
+            }
+
+            // Update Footer Bottom Slogan / Tagline
+            if (settings.footer_bottom_tagline) {
+                document.querySelectorAll('.footer-bottom-tagline, footer .pt-6 .font-medium, footer .text-\\[10px\\].text-slate-500.pt-2').forEach(el => {
+                    el.innerHTML = settings.footer_bottom_tagline;
+                });
+            }
+
+            // Update Footer Social Media Links
+            const twitterLinks = document.querySelectorAll('#footer-social-twitter, footer a[href*="twitter"], footer a[href*="x.com"], .footer-social-x');
+            if (settings.social_twitter) {
+                twitterLinks.forEach(el => { el.href = settings.social_twitter; el.target = '_blank'; });
+            }
+
+            const instagramLinks = document.querySelectorAll('#footer-social-instagram, footer a[href*="instagram"], .footer-social-instagram');
+            if (settings.social_instagram) {
+                instagramLinks.forEach(el => { el.href = settings.social_instagram; el.target = '_blank'; });
+            }
+
+            const youtubeLinks = document.querySelectorAll('#footer-social-youtube, footer a[href*="youtube"], .footer-social-youtube');
+            if (settings.social_youtube) {
+                youtubeLinks.forEach(el => { el.href = settings.social_youtube; el.target = '_blank'; });
+            }
+
+            const linkedinLinks = document.querySelectorAll('#footer-social-linkedin, footer a[href*="linkedin"], .footer-social-linkedin');
+            if (settings.social_linkedin) {
+                linkedinLinks.forEach(el => { el.href = settings.social_linkedin; el.target = '_blank'; });
+            }
         }
 
-        // Render dynamic footer links if footer columns container exists
-        if (footerData && footerData.columns) {
+        // Render dynamic footer navigation columns
+        if (footerData && footerData.columns && Object.keys(footerData.columns).length > 0) {
             renderDynamicFooter(footerData.columns, settings);
         }
     } catch (e) {
@@ -131,16 +180,27 @@ async function loadGlobalCMSData() {
 }
 
 function renderDynamicFooter(columns, settings = {}) {
-    const footerColumnsGrid = document.querySelector('footer .lg\\:col-span-5.grid, footer .footer-links-grid');
+    const footerColumnsGrid = document.querySelector('footer .lg\\:col-span-5.grid, footer .footer-links-grid, footer .grid.grid-cols-3');
     if (!footerColumnsGrid) return;
 
     const columnKeys = Object.keys(columns);
     if (columnKeys.length === 0) return;
 
+    // Preserve custom order if Help, Quick Links, Resources exist
+    const preferredOrder = ['Help', 'Quick Links', 'Resources'];
+    columnKeys.sort((a, b) => {
+        const idxA = preferredOrder.indexOf(a);
+        const idxB = preferredOrder.indexOf(b);
+        if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+        if (idxA !== -1) return -1;
+        if (idxB !== -1) return 1;
+        return a.localeCompare(b);
+    });
+
     footerColumnsGrid.innerHTML = columnKeys.map(colTitle => `
-        <div class="space-y-3">
-            <h5 class="text-sm font-semibold text-white">${colTitle}</h5>
-            <ul class="space-y-2 text-xs text-gray-400">
+        <div class="space-y-2.5 sm:space-y-3">
+            <h5 class="text-sm font-semibold text-white tracking-wide">${colTitle}</h5>
+            <ul class="space-y-1.5 sm:space-y-2 text-xs text-gray-400">
                 ${columns[colTitle].map(link => `
                     <li><a class="hover:text-white transition" href="${link.url}">${link.title}</a></li>
                 `).join('')}
