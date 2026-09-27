@@ -153,18 +153,16 @@ async function loadTab(tabName) {
 async function downloadResource(id) {
     try {
         const data = await window.api.post(`/resources/${id}/download`);
-        if (data && data.filePath) {
-            showToast('Download started!');
-            const a = document.createElement('a');
-            a.href = `/${data.filePath}`;
-            a.download = data.fileName || 'study_material';
-            a.target = '_blank';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-        }
+        const url = (data && data.downloadUrl) ? data.downloadUrl : `/api/resources/${id}/download-file`;
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = (data && data.fileName) || 'study_material';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        if (typeof showToast === 'function') showToast('Download started!');
     } catch (err) {
-        showToast(err.message, 'error');
+        window.location.href = `/api/resources/${id}/download-file`;
     }
 }
 

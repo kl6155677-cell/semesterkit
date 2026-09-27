@@ -15,6 +15,8 @@ const optionalAuth = (req, res, next) => {
     next();
 };
 
+router.get('/:id/download-file', optionalAuth, resourceController.getOrDownloadFile);
+router.get('/:id/file', optionalAuth, resourceController.getOrDownloadFile);
 router.post('/:id/download', optionalAuth, resourceController.downloadResource);
 router.post('/:id/bookmark', authenticateToken, resourceController.bookmarkResource);
 router.post('/:id/feedback', resourceController.feedbackResource);

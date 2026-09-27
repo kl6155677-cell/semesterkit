@@ -49,7 +49,7 @@ async function initBTechPage() {
     // Initial banner update
     updateBanner();
 
-    // Load filters and resources in parallel for instantaneous load
+    // Load filters and resources in parallel
     loadSidebarFilters();
     await loadResources();
 }
@@ -252,6 +252,17 @@ function updateBanner() {
 
 function setupFilterEvents() {
     const collegeSelect = document.getElementById('filter-college-select');
+    const collegeSearchInput = document.getElementById('filter-college-search');
+    if (collegeSearchInput && collegeSelect) {
+        collegeSearchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            const filtered = globalColleges.filter(c => !q || c.name.toLowerCase().includes(q));
+            collegeSelect.innerHTML = `<option value="">Select University</option>` + filtered.map(c => `
+                <option value="${c.id}" ${currentFilters.college_id == c.id ? 'selected' : ''}>${c.name}</option>
+            `).join('');
+        });
+    }
+
     if (collegeSelect) {
         collegeSelect.addEventListener('change', async (e) => {
             currentFilters.college_id = e.target.value || null;
@@ -263,6 +274,17 @@ function setupFilterEvents() {
     }
 
     const branchSelect = document.getElementById('filter-branch-select');
+    const branchSearchInput = document.getElementById('filter-branch-search');
+    if (branchSearchInput && branchSelect) {
+        branchSearchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase().trim();
+            const filtered = globalBranches.filter(b => !q || b.name.toLowerCase().includes(q));
+            branchSelect.innerHTML = `<option value="">Select Branch</option>` + filtered.map(b => `
+                <option value="${b.id}" ${currentFilters.branch_id == b.id ? 'selected' : ''}>${b.name}</option>
+            `).join('');
+        });
+    }
+
     if (branchSelect) {
         branchSelect.addEventListener('change', async (e) => {
             currentFilters.branch_id = e.target.value || null;
@@ -333,8 +355,8 @@ async function loadResources() {
         if (currentFilters.subject_id) endpoint += `&subject_id=${currentFilters.subject_id}`;
         if (currentFilters.resource_type_id) endpoint += `&resource_type_id=${currentFilters.resource_type_id}`;
 
-        const resources = await window.api.get(endpoint);
-        renderResources(resources, container);
+        const data = await window.api.get(endpoint);
+        renderResources(data, container);
     } catch (err) {
         container.innerHTML = `
             <div class="col-span-full text-center py-12 text-slate-500 bg-white rounded-xl border border-dashed border-slate-300">
@@ -344,8 +366,15 @@ async function loadResources() {
     }
 }
 
-function renderResources(resources, container) {
-    if (!resources || resources.length === 0) {
+function renderResources(data, container) {
+    const list = Array.isArray(data) ? data : (data && data.resources ? data.resources : []);
+    const total = (data && data.total !== undefined) ? data.total : list.length;
+    const totalPages = (data && data.totalPages !== undefined) ? data.totalPages : Math.max(1, Math.ceil(total / 12));
+    const currentPage = (data && data.page) || currentFilters.page || 1;
+
+    renderPagination(currentPage, totalPages, total);
+
+    if (!list || list.length === 0) {
         container.innerHTML = `
             <div class="col-span-full text-center py-12 text-slate-500 bg-white rounded-xl border border-dashed border-slate-300">
                 <p class="text-sm font-semibold text-slate-700">No resources found</p>
@@ -358,7 +387,7 @@ function renderResources(resources, container) {
 
     container.innerHTML = '';
 
-    resources.forEach(res => {
+    list.forEach(res => {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-xl border border-slate-200/90 p-4 hover:shadow-md transition-shadow relative flex flex-col justify-between';
         
@@ -370,22 +399,25 @@ function renderResources(resources, container) {
             typeBadgeColor = 'bg-amber-500';
         }
 
-        const bookmarkSvg = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>`;
         const firstLetter = (res.contributor_name || 'U').charAt(0).toUpperCase();
+        const isSaved = isResourceSaved(res.id);
+        const bookmarkSvg = isSaved 
+            ? `<svg class="w-5 h-5 text-brand-600 fill-brand-600" viewBox="0 0 24 24"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>`
+            : `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>`;
 
         card.innerHTML = `
             <div>
                 <div class="flex items-start justify-between gap-3">
-                  <div class="flex items-start gap-3">
+                  <div class="flex items-start space-x-3">
                     <span class="w-9 h-9 rounded-lg ${typeBadgeColor} text-white font-bold text-[11px] flex items-center justify-center flex-shrink-0 shadow-xs uppercase">
                       ${typeLabel}
                     </span>
                     <div>
-                      <h3 class="font-bold text-slate-900 text-sm hover:text-blue-600 cursor-pointer" onclick="window.location.href='/resource.html?id=${res.id}'">${res.title}</h3>
-                      <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">${res.description || 'No description provided.'}</p>
+                      <h3 class="font-bold text-slate-900 text-sm hover:text-blue-600 cursor-pointer" onclick="window.location.href='/resource.html?id=${res.id}'">${escapeHtml(res.title)}</h3>
+                      <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">${escapeHtml(res.description || 'No description provided.')}</p>
                       <div class="flex flex-wrap gap-1.5 mt-2">
-                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${res.resource_type_name || 'Resource'}</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${res.semester_name || 'B.Tech'}</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${escapeHtml(res.resource_type_name || 'Resource')}</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-brand-600 border border-blue-100">${escapeHtml(res.semester_name || 'B.Tech')}</span>
                         ${res.is_featured ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">★ Featured</span>` : ''}
                       </div>
                     </div>
@@ -399,8 +431,8 @@ function renderResources(resources, container) {
               <div class="flex items-center gap-2">
                 <div class="w-6 h-6 rounded-full bg-slate-300 text-slate-700 font-bold flex items-center justify-center text-[10px] uppercase">${firstLetter}</div>
                 <div>
-                  <span class="font-medium text-slate-800">${res.contributor_name || 'Anonymous'}</span>
-                  <span class="text-[10px] text-slate-400 block -mt-0.5">${res.college_name || 'Engineering College'}</span>
+                  <span class="font-medium text-slate-800">${escapeHtml(res.contributor_name || 'Anonymous')}</span>
+                  <span class="text-[10px] text-slate-400 block -mt-0.5">${escapeHtml(res.college_name || 'Engineering College')}</span>
                 </div>
               </div>
               <div class="flex items-center gap-3">
@@ -408,16 +440,91 @@ function renderResources(resources, container) {
                   <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                   ${res.views || 0}
                 </span>
-                <span class="flex items-center gap-1" title="Downloads">
-                  <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <button onclick="downloadResource(${res.id})" class="flex items-center gap-1 hover:text-brand-600 font-medium text-slate-600 cursor-pointer" title="Download Material">
+                  <svg class="w-3.5 h-3.5 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                   ${res.downloads || 0}
-                </span>
+                </button>
               </div>
             </div>
         `;
         container.appendChild(card);
     });
 }
+
+function renderPagination(currentPage, totalPages, total) {
+    const paginationContainer = document.getElementById('pagination-container');
+    if (!paginationContainer) return;
+
+    if (totalPages <= 1) {
+        paginationContainer.innerHTML = `
+            <button class="w-7 h-7 rounded bg-brand-600 text-white flex items-center justify-center font-bold shadow-xs">1</button>
+        `;
+        return;
+    }
+
+    let pages = [];
+    if (totalPages <= 7) {
+        for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+        pages.push(1);
+        if (currentPage > 3) pages.push('...');
+        const start = Math.max(2, currentPage - 1);
+        const end = Math.min(totalPages - 1, currentPage + 1);
+        for (let i = start; i <= end; i++) {
+            if (!pages.includes(i)) pages.push(i);
+        }
+        if (currentPage < totalPages - 2) pages.push('...');
+        if (!pages.includes(totalPages)) pages.push(totalPages);
+    }
+
+    let html = `
+        <button onclick="changePage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''} class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition ${currentPage <= 1 ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:text-brand-600 cursor-pointer'}">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+        </button>
+    `;
+
+    pages.forEach(p => {
+        if (p === '...') {
+            html += `<span class="px-1 text-slate-400">...</span>`;
+        } else {
+            const isCurrent = p === currentPage;
+            html += `
+                <button onclick="changePage(${p})" class="w-7 h-7 rounded flex items-center justify-center font-semibold transition cursor-pointer ${isCurrent ? 'bg-brand-600 text-white shadow-xs' : 'border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300'}">${p}</button>
+            `;
+        }
+    });
+
+    html += `
+        <button onclick="changePage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''} class="w-7 h-7 rounded border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition ${currentPage >= totalPages ? 'text-slate-300 cursor-not-allowed' : 'text-slate-600 hover:text-brand-600 cursor-pointer'}">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+        </button>
+    `;
+
+    paginationContainer.innerHTML = html;
+}
+
+window.changePage = (p) => {
+    if (p < 1) return;
+    currentFilters.page = p;
+    loadResources();
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+};
+
+window.downloadResource = async (id) => {
+    try {
+        const data = await window.api.post(`/resources/${id}/download`);
+        const url = (data && data.downloadUrl) ? data.downloadUrl : `/api/resources/${id}/download-file`;
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = (data && data.fileName) || 'study_material';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        if (typeof showToast === 'function') showToast('Download started!');
+    } catch(e) {
+        window.location.href = `/api/resources/${id}/download-file`;
+    }
+};
 
 function clearFilters() {
     currentFilters = {
@@ -444,6 +551,15 @@ function clearFilters() {
     loadResources();
 }
 
+function isResourceSaved(id) {
+    try {
+        const saved = JSON.parse(localStorage.getItem('saved_resources') || '[]');
+        return saved.includes(id);
+    } catch {
+        return false;
+    }
+}
+
 async function toggleBookmark(id, btnElement) {
     if (!localStorage.getItem('token')) {
         alert('Please login to save resources to your vault.');
@@ -464,4 +580,14 @@ async function toggleBookmark(id, btnElement) {
     } catch (err) {
         showToast(err.message, 'error');
     }
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }

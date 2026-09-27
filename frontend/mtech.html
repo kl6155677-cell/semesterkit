@@ -188,6 +188,7 @@
         <!-- Filter: University -->
         <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs space-y-1.5">
           <label class="block text-xs font-bold text-slate-800">University</label>
+          <input type="text" id="filter-college-search" placeholder="🔍 Search university..." class="w-full text-xs py-1.5 px-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:border-[#0066cc] focus:bg-white transition mb-1.5" />
           <div class="relative">
             <select id="filter-college-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] appearance-none cursor-pointer">
               <option value="">Select University</option>
@@ -208,6 +209,7 @@
         <!-- Filter: Branch / Specialization -->
         <div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs space-y-1.5">
           <label class="block text-xs font-bold text-slate-800">Branch</label>
+          <input type="text" id="filter-branch-search" placeholder="🔍 Search branch..." class="w-full text-xs py-1.5 px-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 placeholder-slate-400 focus:outline-none focus:border-[#0066cc] focus:bg-white transition mb-1.5" />
           <div class="relative">
             <select id="filter-branch-select" class="w-full text-xs py-2 px-3 pr-8 bg-white border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] appearance-none cursor-pointer">
               <option value="">Select Branch</option>
@@ -364,28 +366,8 @@
         <!-- BEGIN: PaginationAndUploadBanner -->
         <div class="pt-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <!-- Pagination Buttons -->
-          <div class="flex items-center gap-1 text-xs">
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-50">
-              <i class="w-4 h-4" data-lucide="chevron-left"></i>
-            </button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#0066cc] text-white font-semibold shadow-xs">1</button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">2</button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">3</button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">4</button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">5</button>
-            <span class="px-1 text-slate-400">...</span>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50">28</button>
-            <button
-              class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 hover:bg-slate-50">
-              <i class="w-4 h-4" data-lucide="chevron-right"></i>
-            </button>
+          <div id="pagination-container" class="flex items-center gap-1 text-xs">
+            <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#0066cc] text-white font-semibold shadow-xs">1</button>
           </div>
           <!-- Quick Upload Card banner -->
           <div
