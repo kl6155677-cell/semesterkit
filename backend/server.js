@@ -38,6 +38,17 @@ app.get('/api/health', (req, res) => {
 
 // Serve Frontend Static Files
 const frontendPath = path.join(__dirname, '../frontend');
+
+// Robots.txt & Sitemap for Google Search & AI bots
+app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.sendFile(path.join(frontendPath, 'robots.txt'));
+});
+app.get('/sitemap.xml', (req, res) => {
+    res.type('application/xml');
+    res.sendFile(path.join(frontendPath, 'sitemap.xml'));
+});
+
 app.use(express.static(frontendPath));
 
 // Fallback to index.html for root or SPA paths
