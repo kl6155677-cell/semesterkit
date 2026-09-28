@@ -1,0 +1,57 @@
+# robots.txt for SemesterKit
+# Allow all search engine crawlers and AI search bots for Google AI Overviews and indexing
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI Crawlers & LLM Engines (Google AI Overviews, SearchGPT, Perplexity, Claude, Copilot)
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Sitemap
+Sitemap: https://semesterkit.com/sitemap.xml
